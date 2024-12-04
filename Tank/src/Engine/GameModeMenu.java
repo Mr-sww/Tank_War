@@ -14,7 +14,7 @@ public class GameModeMenu extends JDialog {
         setLocationRelativeTo(parent);
 
         // 加载背景图片
-        backgroundImage = new ImageIcon("src/Images/2.png").getImage(); // 替换为实际路径
+        backgroundImage = new ImageIcon("src/Images/StartMenu.png").getImage(); // 替换为实际路径
 
         // 自定义面板
         BackgroundPanel backgroundPanel = new BackgroundPanel();
