@@ -196,7 +196,7 @@ public class Tank {
 				if (!tc.home.isLive()) // 将home重置生命
 					tc.home.setLive(true);
 				tc.initFrame();
-				tc.initThing();
+				tc.initThing(GameFrame.MapLevel);
 				break;
 			case KeyEvent.VK_RIGHT: // 监听向右键
 				bR = true;

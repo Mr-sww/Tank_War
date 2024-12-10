@@ -23,10 +23,11 @@ public class GameFrame extends Frame implements ActionListener {
 	public static int Fram_width = 800; // 静态全局窗口大小
 	public static int Fram_length = 600;
 	public static boolean printable = true; // 记录暂停状态，此时线程不刷新界面
+	public static int MapLevel=1;
 	MenuBar jmb = null;
-	Menu jm1 = null, jm2 = null, jm3 = null, jm4 = null;
+	Menu jm1 = null, jm2 = null, jm3 = null, jm4 = null,jm20 = null;
 	MenuItem jmi1 = null, jmi2 = null, jmi3 = null, jmi4 = null, jmi5 = null, jmi6 = null, jmi7 = null, jmi8 = null,
-			jmi9 = null;
+			jmi9 = null,jm21=null,jm22=null,jm23=null,jm24=null;
 	Image screenImage = null;
 
 	public Tank homeTank = new Tank(300, 560, true, Direction.STOP, this);// 实例化坦克
@@ -42,6 +43,7 @@ public class GameFrame extends Frame implements ActionListener {
 	public List<BrickWall> homeWall = new ArrayList<BrickWall>(); // 实例化对象容器
 	public List<BrickWall> otherWall = new ArrayList<BrickWall>();
 	public List<MetalWall> metalWall = new ArrayList<MetalWall>();
+
 
 	// 这是一个重写的方法,将由repaint()方法自动调用
 	public void update(Graphics g) {
@@ -220,6 +222,9 @@ public class GameFrame extends Frame implements ActionListener {
 		if (gameMode == null) {
 			System.exit(0); // 如果未选择模式，退出游戏
 		}
+		// 选择地图
+		GameMapMenu mapMenu = new GameMapMenu(this);
+		mapMenu.setVisible(true);
 
 		GameLevelMenu levelMenu = new GameLevelMenu(this);
 		levelMenu.setVisible(true);
@@ -261,7 +266,7 @@ public class GameFrame extends Frame implements ActionListener {
 
 		// 初始化游戏
 		initFrame();
-		initThing();
+		initThing(MapLevel);
 
 		this.addKeyListener(new KeyMonitor()); // 键盘监听
 		new Thread(new PaintThread()).start(); // 线程启动
@@ -373,9 +378,43 @@ public class GameFrame extends Frame implements ActionListener {
 			if (!home.isLive()) // 将home重置生命
 				home.setLive(true);
 			initFrame();
-			initThing();
+			initThing(MapLevel);
+		}else if (e.getActionCommand().startsWith("Map")) {
+			String selectedLevel = e.getActionCommand();
+			setMap(e.getActionCommand());
+			tanks.clear(); // 清理
+			bullets.clear();
+			trees.clear();
+			otherWall.clear();
+			homeWall.clear();
+			metalWall.clear();
+			homeTank.setLive(false);
+
+			homeTank = new Tank(300, 560, true, Direction.STOP,this);// 设置自己出现的位置
+
+			if (!home.isLive()) // 将home重置生命
+				home.setLive(true);
+			initFrame();
+			initThing(MapLevel);
 		}
 
+	}
+
+	private void setMap(String Map) {
+		switch (Map) {
+			case "Map1":
+				MapLevel=1;
+				break;
+			case "Map2":
+				MapLevel=2;
+				break;
+			case "Map3":
+				MapLevel=3;
+				break;
+			case "Map4":
+				MapLevel=4;
+				break;
+		}
 	}
 	private void setLevel(String level) {
 		switch (level) {
@@ -419,10 +458,12 @@ public class GameFrame extends Frame implements ActionListener {
 		jm2 = new Menu("暂停/继续");
 		jm3 = new Menu("帮助");
 		jm4 = new Menu("游戏级别");
+		jm20 = new Menu("游戏关卡");
 		jm1.setFont(new Font("TimesRoman", Font.BOLD, 15));// 设置菜单显示的字体
 		jm2.setFont(new Font("TimesRoman", Font.BOLD, 15));// 设置菜单显示的字体
 		jm3.setFont(new Font("TimesRoman", Font.BOLD, 15));// 设置菜单显示的字体
 		jm4.setFont(new Font("TimesRoman", Font.BOLD, 15));// 设置菜单显示的字体
+		jm20.setFont(new Font("TimesRoman", Font.BOLD, 15));// 设置菜单显示的字体
 
 		jmi1 = new MenuItem("开始新游戏");
 		jmi2 = new MenuItem("退出");
@@ -433,6 +474,10 @@ public class GameFrame extends Frame implements ActionListener {
 		jmi7 = new MenuItem("级别2");
 		jmi8 = new MenuItem("级别3");
 		jmi9 = new MenuItem("级别4");
+		jm21 = new MenuItem("关卡 1");
+		jm22 = new MenuItem("关卡 2");
+		jm23 = new MenuItem("关卡 3");
+		jm24 = new MenuItem("关卡 4");
 		jmi1.setFont(new Font("TimesRoman", Font.BOLD, 15));
 		jmi2.setFont(new Font("TimesRoman", Font.BOLD, 15));
 		jmi3.setFont(new Font("TimesRoman", Font.BOLD, 15));
@@ -448,12 +493,17 @@ public class GameFrame extends Frame implements ActionListener {
 		jm4.add(jmi7);
 		jm4.add(jmi8);
 		jm4.add(jmi9);
+		jm20.add(jm21);
+		jm20.add(jm22);
+		jm20.add(jm23);
+		jm20.add(jm24);
 
 		jmb.add(jm1);
 		jmb.add(jm2);
 
 		jmb.add(jm4);
 		jmb.add(jm3);
+		jmb.add(jm20);
 
 		jmi1.addActionListener(this);
 		jmi1.setActionCommand("NewGame");
@@ -473,6 +523,14 @@ public class GameFrame extends Frame implements ActionListener {
 		jmi8.setActionCommand("level3");
 		jmi9.addActionListener(this);
 		jmi9.setActionCommand("level4");
+		jm21.addActionListener(this);
+		jm21.setActionCommand("Map1");
+		jm22.addActionListener(this);
+		jm22.setActionCommand("Map2");
+		jm23.addActionListener(this);
+		jm23.setActionCommand("Map3");
+		jm24.addActionListener(this);
+		jm24.setActionCommand("Map4");
 
 		this.setMenuBar(jmb);// 菜单Bar放到JFrame上
 		this.setVisible(true);
@@ -492,60 +550,228 @@ public class GameFrame extends Frame implements ActionListener {
 		this.setBackground(Color.GREEN);
 		this.setVisible(true);
 	}
-	public void initThing()
+	public void initThing(int MapLevel)
 	{
-		for (int i = 0; i < 10; i++) { // 家的格局
-			if (i < 4)
-				homeWall.add(new BrickWall(350, 580 - 21 * i , this));
-			else if (i < 7)
-				homeWall.add(new BrickWall(372 + 22 * (i - 4), 517 , this));
-			else
-				homeWall.add(new BrickWall(416, 538 + (i - 7) * 21 , this));
+		switch (MapLevel)
+		{
+			case 1:
+				for (int i = 0; i < 10; i++) { // 家的格局
+					if (i < 4)
+						homeWall.add(new BrickWall(350, 580 - 21 * i , this));
+					else if (i < 7)
+						homeWall.add(new BrickWall(372 + 22 * (i - 4), 517 , this));
+					else
+						homeWall.add(new BrickWall(416, 538 + (i - 7) * 21 , this));
+				}
+
+				for (int i = 0; i < 32; i++) { // 砖墙
+					if (i < 16) {
+						otherWall.add(new BrickWall(220 + 20 * i, 300 , this)); // 砖墙布局
+						otherWall.add(new BrickWall(500 + 20 * i, 180 , this));
+						otherWall.add(new BrickWall(200, 400 + 20 * i , this));
+						otherWall.add(new BrickWall(500, 400 + 20 * i , this));
+					} else if (i < 32) {
+						otherWall.add(new BrickWall(220 + 20 * (i - 16), 320 , this));
+						otherWall.add(new BrickWall(500 + 20 * (i - 16), 220 , this));
+						otherWall.add(new BrickWall(220, 400 + 20 * (i - 16) , this));
+						otherWall.add(new BrickWall(520, 400 + 20 * (i - 16) , this));
+					}
+				}
+
+				for (int i = 0; i < 20; i++) { // 金属墙布局
+					if (i < 10) {
+						metalWall.add(new MetalWall(140 + 30 * i, 150 , this));
+						metalWall.add(new MetalWall(600, 400 + 20 * (i), this));
+					} else if (i < 20)
+						metalWall.add(new MetalWall(140 + 30 * (i - 10), 180 , this));
+					else
+						metalWall.add(new MetalWall(500 + 30 * (i - 10), 160 , this));
+				}
+
+				for (int i = 0; i < 4; i++) { // 树的布局
+					if (i < 4) {
+						trees.add(new Tree(0 + 30 * i, 360 , this));
+						trees.add(new Tree(220 + 30 * i, 360 , this));
+						trees.add(new Tree(440 + 30 * i, 360 , this));
+						trees.add(new Tree(660 + 30 * i, 360 , this));
+					}
+				}
+
+				theRiver.add(new River(85, 100, this));
+
+				for (int i = 0; i < 20; i++) { // 初始化20辆坦克
+					if (i < 9) // 设置坦克出现的位置
+						tanks.add(new Tank(150 + 70 * i, 40, false, Direction.D, this));
+					else if (i < 15)
+						tanks.add(new Tank(700, 140 + 50 * (i - 6), false, Direction.D, this));
+					else
+						tanks.add(new Tank(10, 50 * (i - 12), false, Direction.D, this));
+				}
+			break;
+
+			case 2:
+				for (int i = 0; i < 10; i++) { // 家的格局
+					if (i < 4)
+						homeWall.add(new BrickWall(350, 580 - 21 * i , this));
+					else if (i < 7)
+						homeWall.add(new BrickWall(372 + 22 * (i - 4), 517 , this));
+					else
+						homeWall.add(new BrickWall(416, 538 + (i - 7) * 21 , this));
+				}
+
+				for (int i = 0; i < 32; i++) { // 砖墙
+					if (i < 16) {
+						otherWall.add(new BrickWall(220 + 20 * i, 300 , this)); // 砖墙布局
+						otherWall.add(new BrickWall(500 + 20 * i, 180 , this));
+						otherWall.add(new BrickWall(200, 400 + 20 * i , this));
+						otherWall.add(new BrickWall(500, 400 + 20 * i , this));
+					} else if (i < 32) {
+						otherWall.add(new BrickWall(220 + 20 * (i - 16), 320 , this));
+						otherWall.add(new BrickWall(500 + 20 * (i - 16), 220 , this));
+						otherWall.add(new BrickWall(220, 400 + 20 * (i - 16) , this));
+						otherWall.add(new BrickWall(520, 400 + 20 * (i - 16) , this));
+					}
+				}
+
+				for (int i = 0; i < 20; i++) { // 金属墙布局
+					if (i < 10) {
+						metalWall.add(new MetalWall(140 + 30 * i, 150 , this));
+						metalWall.add(new MetalWall(600, 400 + 20 * (i), this));
+					} else if (i < 20)
+						metalWall.add(new MetalWall(140 + 30 * (i - 10), 180 , this));
+					else
+						metalWall.add(new MetalWall(500 + 30 * (i - 10), 160 , this));
+				}
+
+				for (int i = 0; i < 4; i++) { // 树的布局
+					if (i < 4) {
+						trees.add(new Tree(0 + 30 * i, 360 , this));
+						trees.add(new Tree(220 + 30 * i, 360 , this));
+						trees.add(new Tree(440 + 30 * i, 360 , this));
+						trees.add(new Tree(660 + 30 * i, 360 , this));
+					}
+				}
+
+				theRiver.add(new River(85, 100, this));
+
+				for (int i = 0; i < 20; i++) { // 初始化20辆坦克
+					if (i < 9) // 设置坦克出现的位置
+						tanks.add(new Tank(150 + 70 * i, 40, false, Direction.D, this));
+					else if (i < 15)
+						tanks.add(new Tank(700, 140 + 50 * (i - 6), false, Direction.D, this));
+					else
+						tanks.add(new Tank(10, 50 * (i - 12), false, Direction.D, this));
+				}
+				break;
+			case 3:
+				for (int i = 0; i < 10; i++) { // 家的格局
+					if (i < 4)
+						homeWall.add(new BrickWall(350, 580 - 21 * i , this));
+					else if (i < 7)
+						homeWall.add(new BrickWall(372 + 22 * (i - 4), 517 , this));
+					else
+						homeWall.add(new BrickWall(416, 538 + (i - 7) * 21 , this));
+				}
+
+				for (int i = 0; i < 32; i++) { // 砖墙
+					if (i < 16) {
+						otherWall.add(new BrickWall(220 + 20 * i, 300 , this)); // 砖墙布局
+						otherWall.add(new BrickWall(500 + 20 * i, 180 , this));
+						otherWall.add(new BrickWall(200, 400 + 20 * i , this));
+						otherWall.add(new BrickWall(500, 400 + 20 * i , this));
+					} else if (i < 32) {
+						otherWall.add(new BrickWall(220 + 20 * (i - 16), 320 , this));
+						otherWall.add(new BrickWall(500 + 20 * (i - 16), 220 , this));
+						otherWall.add(new BrickWall(220, 400 + 20 * (i - 16) , this));
+						otherWall.add(new BrickWall(520, 400 + 20 * (i - 16) , this));
+					}
+				}
+
+				for (int i = 0; i < 20; i++) { // 金属墙布局
+					if (i < 10) {
+						metalWall.add(new MetalWall(140 + 30 * i, 150 , this));
+						metalWall.add(new MetalWall(600, 400 + 20 * (i), this));
+					} else if (i < 20)
+						metalWall.add(new MetalWall(140 + 30 * (i - 10), 180 , this));
+					else
+						metalWall.add(new MetalWall(500 + 30 * (i - 10), 160 , this));
+				}
+
+				for (int i = 0; i < 4; i++) { // 树的布局
+					if (i < 4) {
+						trees.add(new Tree(0 + 30 * i, 360 , this));
+						trees.add(new Tree(220 + 30 * i, 360 , this));
+						trees.add(new Tree(440 + 30 * i, 360 , this));
+						trees.add(new Tree(660 + 30 * i, 360 , this));
+					}
+				}
+
+				theRiver.add(new River(85, 100, this));
+
+				for (int i = 0; i < 20; i++) { // 初始化20辆坦克
+					if (i < 9) // 设置坦克出现的位置
+						tanks.add(new Tank(150 + 70 * i, 40, false, Direction.D, this));
+					else if (i < 15)
+						tanks.add(new Tank(700, 140 + 50 * (i - 6), false, Direction.D, this));
+					else
+						tanks.add(new Tank(10, 50 * (i - 12), false, Direction.D, this));
+				}
+				break;
+			case 4:
+				for (int i = 0; i < 10; i++) { // 家的格局
+					if (i < 4)
+						homeWall.add(new BrickWall(350, 580 - 21 * i , this));
+					else if (i < 7)
+						homeWall.add(new BrickWall(372 + 22 * (i - 4), 517 , this));
+					else
+						homeWall.add(new BrickWall(416, 538 + (i - 7) * 21 , this));
+				}
+
+				for (int i = 0; i < 32; i++) { // 砖墙
+					if (i < 16) {
+						otherWall.add(new BrickWall(220 + 20 * i, 300 , this)); // 砖墙布局
+						otherWall.add(new BrickWall(500 + 20 * i, 180 , this));
+						otherWall.add(new BrickWall(200, 400 + 20 * i , this));
+						otherWall.add(new BrickWall(500, 400 + 20 * i , this));
+					} else if (i < 32) {
+						otherWall.add(new BrickWall(220 + 20 * (i - 16), 320 , this));
+						otherWall.add(new BrickWall(500 + 20 * (i - 16), 220 , this));
+						otherWall.add(new BrickWall(220, 400 + 20 * (i - 16) , this));
+						otherWall.add(new BrickWall(520, 400 + 20 * (i - 16) , this));
+					}
+				}
+
+				for (int i = 0; i < 20; i++) { // 金属墙布局
+					if (i < 10) {
+						metalWall.add(new MetalWall(140 + 30 * i, 150 , this));
+						metalWall.add(new MetalWall(600, 400 + 20 * (i), this));
+					} else if (i < 20)
+						metalWall.add(new MetalWall(140 + 30 * (i - 10), 180 , this));
+					else
+						metalWall.add(new MetalWall(500 + 30 * (i - 10), 160 , this));
+				}
+
+				for (int i = 0; i < 4; i++) { // 树的布局
+					if (i < 4) {
+						trees.add(new Tree(0 + 30 * i, 360 , this));
+						trees.add(new Tree(220 + 30 * i, 360 , this));
+						trees.add(new Tree(440 + 30 * i, 360 , this));
+						trees.add(new Tree(660 + 30 * i, 360 , this));
+					}
+				}
+
+				theRiver.add(new River(85, 100, this));
+
+				for (int i = 0; i < 20; i++) { // 初始化20辆坦克
+					if (i < 9) // 设置坦克出现的位置
+						tanks.add(new Tank(150 + 70 * i, 40, false, Direction.D, this));
+					else if (i < 15)
+						tanks.add(new Tank(700, 140 + 50 * (i - 6), false, Direction.D, this));
+					else
+						tanks.add(new Tank(10, 50 * (i - 12), false, Direction.D, this));
+				}
+				break;
+
 		}
-
-		for (int i = 0; i < 32; i++) { // 砖墙
-			if (i < 16) {
-				otherWall.add(new BrickWall(220 + 20 * i, 300 , this)); // 砖墙布局
-				otherWall.add(new BrickWall(500 + 20 * i, 180 , this));
-				otherWall.add(new BrickWall(200, 400 + 20 * i , this));
-				otherWall.add(new BrickWall(500, 400 + 20 * i , this));
-			} else if (i < 32) {
-				otherWall.add(new BrickWall(220 + 20 * (i - 16), 320 , this));
-				otherWall.add(new BrickWall(500 + 20 * (i - 16), 220 , this));
-				otherWall.add(new BrickWall(220, 400 + 20 * (i - 16) , this));
-				otherWall.add(new BrickWall(520, 400 + 20 * (i - 16) , this));
-			}
-		}
-
-		for (int i = 0; i < 20; i++) { // 金属墙布局
-			if (i < 10) {
-				metalWall.add(new MetalWall(140 + 30 * i, 150 , this));
-				metalWall.add(new MetalWall(600, 400 + 20 * (i), this));
-			} else if (i < 20)
-				metalWall.add(new MetalWall(140 + 30 * (i - 10), 180 , this));
-			else
-				metalWall.add(new MetalWall(500 + 30 * (i - 10), 160 , this));
-		}
-
-		for (int i = 0; i < 4; i++) { // 树的布局
-			if (i < 4) {
-				trees.add(new Tree(0 + 30 * i, 360 , this));
-				trees.add(new Tree(220 + 30 * i, 360 , this));
-				trees.add(new Tree(440 + 30 * i, 360 , this));
-				trees.add(new Tree(660 + 30 * i, 360 , this));
-			}
-		}
-
-		theRiver.add(new River(85, 100, this));
-
-		for (int i = 0; i < 20; i++) { // 初始化20辆坦克
-			if (i < 9) // 设置坦克出现的位置
-				tanks.add(new Tank(150 + 70 * i, 40, false, Direction.D, this));
-			else if (i < 15)
-				tanks.add(new Tank(700, 140 + 50 * (i - 6), false, Direction.D, this));
-			else
-				tanks.add(new Tank(10, 50 * (i - 12), false, Direction.D, this));
-		}
-
 	}
 }
