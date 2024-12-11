@@ -194,7 +194,6 @@ public class Bullets {
 	public boolean hitTank(Tank t) { // 当子弹打到坦克上
 
 		if (this.live && this.getRect().intersects(t.getRect()) && t.isLive() && this.good != t.isGood()) {
-
 			BombTank e = new BombTank(t.getX(), t.getY(), tc);
 			tc.bombTanks.add(e);
 			if (t.isGood()) {
@@ -202,11 +201,13 @@ public class Bullets {
 				if (t.getLife() <= 0)
 					t.setLive(false); // 当寿命为0时，设置寿命为死亡状态
 			} else {
-				t.setLive(false);
+				t.setLiveCount(50);
+				if(t.getLiveCount())
+				{
+					t.setLive(false);
+				}
 			}
-
 			this.live = false;
-
 			return true; // 射击成功，返回true
 		}
 		return false; // 否则返回false

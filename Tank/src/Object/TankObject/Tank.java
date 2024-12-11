@@ -30,6 +30,7 @@ public class Tank {
 	private int x, y;
 	private int oldX, oldY;
 	private boolean live = true; // 初始化为活着
+	private int liveCount = 50; //默认为50
 	private int life = 200; // 初始生命值
 
 	private static Random r = new Random();
@@ -66,7 +67,12 @@ public class Tank {
 		this.tc = tc;
 		this.blood = blood;
 	}
-
+	public void setLiveCount(int liveCount) { this.liveCount -= liveCount;}
+	public boolean getLiveCount()
+	{
+		if(liveCount <= 0) return true;
+		else return false;
+	}
 	public void draw(Graphics g) {
 		if (!live) {
 			if (!good) {

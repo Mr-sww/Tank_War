@@ -58,7 +58,9 @@ public class Home {
 			g.drawImage(homeImags[0], x, y, null);
 			if(tc.tanks.size()==0 && flag == 0)
 			{
-				tc.tanks.add(new Tank(400, 300, false, Direction.D, tc,500));
+				Tank t =new Tank(400, 300, false, Direction.D, tc,500);
+				t.setLiveCount(-150);
+				tc.tanks.add(t);
 				flag=1;
 			}
 			for (int i = 0; i < tc.homeWall.size(); i++) {
