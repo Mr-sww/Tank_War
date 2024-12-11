@@ -23,6 +23,7 @@ public class Tank {
 	public static final int width = 35, length = 35; // 坦克的全局大小，具有不可改变性
 	private Direction direction = Direction.STOP; // 初始化状态为静止
 	private Direction Kdirection = Direction.U; // 初始化方向为向上
+	public int blood;
 	GameFrame tc;
 
 	private boolean good;
@@ -59,10 +60,11 @@ public class Tank {
 		this.good = good;
 	}
 
-	public Tank(int x, int y, boolean good, Direction dir, GameFrame tc) {// Tank的构造函数2
+	public Tank(int x, int y, boolean good, Direction dir, GameFrame tc,int blood) {// Tank的构造函数2
 		this(x, y, good);
 		this.direction = dir;
 		this.tc = tc;
+		this.blood = blood;
 	}
 
 	public void draw(Graphics g) {
@@ -191,7 +193,7 @@ public class Tank {
 				tc.homeWall.clear();
 				tc.metalWall.clear();
 				tc.homeTank.setLive(false);
-				tc.homeTank = new Tank(300, 560, true, Direction.STOP, tc);// 设置自己出现的位置
+				tc.homeTank = new Tank(300, 560, true, Direction.STOP, tc,200);// 设置自己出现的位置
 
 				if (!tc.home.isLive()) // 将home重置生命
 					tc.home.setLive(true);
