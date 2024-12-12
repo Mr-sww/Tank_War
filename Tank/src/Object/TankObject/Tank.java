@@ -28,6 +28,7 @@ public class Tank {
 	private int x, y;
 	private int oldX, oldY;
 	private boolean live = true; // 初始化为活着
+	private int liveCount = 50; //默认为50
 	private int life = 200; // 初始生命值
 
 	private static Random r = new Random();
@@ -62,8 +63,14 @@ public class Tank {
 		this(x,y,good);
 		this.direction = dir;
 		this.tc = tc;
+		this.blood = blood;
 	}
-
+	public void setLiveCount(int liveCount) { this.liveCount -= liveCount;}
+	public boolean getLiveCount()
+	{
+		if(liveCount <= 0) return true;
+		else return false;
+	}
 	public void draw(Graphics g) {
 		if (!live) {
 			if (!good) {
@@ -191,7 +198,7 @@ public class Tank {
 				tc.homeWall.clear();
 				tc.metalWall.clear();
 				tc.homeTank.setLive(false);
-				tc.homeTank = new Tank(300, 560, true, Direction.STOP, tc);// 设置自己出现的位置
+				tc.homeTank = new Tank(300, 560, true, Direction.STOP, tc,200);// 设置自己出现的位置
 
 				if (!tc.home.isLive()) // 将home重置生命
 					tc.home.setLive(true);

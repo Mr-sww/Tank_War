@@ -11,6 +11,7 @@ public class Home {
 	private int x, y;
 	private GamePanel tc;
 	public static final int width = 30, length = 30; // 全局静态变量长宽
+	public static  int flag = 0;
 
 	private boolean live = true;
 
@@ -24,6 +25,7 @@ public class Home {
 		this.x = x;
 		this.y = y;
 		this.tc = tc; // 获得控制
+		flag = 0;
 	}
 
 	public void gameOver(Graphics g) {
@@ -51,7 +53,13 @@ public class Home {
 
 		if (live) { // 如果活着，则画出home
 			g.drawImage(homeImags[0], x, y, null);
-
+			if(tc.tanks.size()==0 && flag == 0)
+			{
+				Tank t =new Tank(400, 300, false, Direction.D, tc,500);
+				t.setLiveCount(-150);
+				tc.tanks.add(t);
+				flag=1;
+			}
 			for (int i = 0; i < tc.homeWall.size(); i++) {
 				BrickWall w = tc.homeWall.get(i);
 				w.draw(g);
