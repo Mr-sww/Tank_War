@@ -1,14 +1,13 @@
 package Object.TankObject;
 
+import Engine.*;
 import Engine.Direction;
-import Engine. *;
 import Object.StaticObject.BrickWall;
 import Object.StaticObject.Home;
 import Object.StaticObject.MetalWall;
 import Object.StaticObject.River;
 import Object.UseObject.Blood;
 import Object.UseObject.Bullets;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
@@ -23,7 +22,7 @@ public class Tank {
 	public static final int width = 35, length = 35; // 坦克的全局大小，具有不可改变性
 	private Direction direction = Direction.STOP; // 初始化状态为静止
 	private Direction Kdirection = Direction.U; // 初始化方向为向上
-	GameFrame tc;
+	GamePanel tc;
 
 	private boolean good;
 	private int x, y;
@@ -59,8 +58,8 @@ public class Tank {
 		this.good = good;
 	}
 
-	public Tank(int x, int y, boolean good, Direction dir, GameFrame tc) {// Tank的构造函数2
-		this(x, y, good);
+	public Tank(int x,int y,boolean good,Direction dir,GamePanel tc) {
+		this(x,y,good);
 		this.direction = dir;
 		this.tc = tc;
 	}
@@ -155,10 +154,10 @@ public class Tank {
 			x = 0;
 		if (y < 40) // 防止走出规定区域
 			y = 40;
-		if (x + Tank.width > GameFrame.Fram_width) // 超过区域则恢复到边界
-			x = GameFrame.Fram_width - Tank.width;
-		if (y + Tank.length > GameFrame.Fram_length)
-			y = GameFrame.Fram_length - Tank.length;
+		if (x + Tank.width > GameFrame.Frame_width) // 超过区域则恢复到边界
+			x = GameFrame.Frame_width - Tank.width;
+		if (y + Tank.length > GameFrame.Frame_length)
+			y = GameFrame.Frame_length - Tank.length;
 
 		if (!good) {
 			Direction[] directons = Direction.values();
@@ -181,7 +180,8 @@ public class Tank {
 
 	public void keyPressed(KeyEvent e) { // 接受键盘事件
 		int key = e.getKeyCode();
-		GameFrame tc = this.tc;
+		//GameFrame tc = this.tc;
+		GamePanel tc = this.tc;
 		switch (key) {
 			case KeyEvent.VK_R: // 当按下R时，重新开始游戏
 				tc.tanks.clear(); // 清理
@@ -195,8 +195,7 @@ public class Tank {
 
 				if (!tc.home.isLive()) // 将home重置生命
 					tc.home.setLive(true);
-				tc.initFrame();
-				tc.initThing(GameFrame.MapLevel);
+				tc.init();
 				break;
 			case KeyEvent.VK_RIGHT: // 监听向右键
 				bR = true;

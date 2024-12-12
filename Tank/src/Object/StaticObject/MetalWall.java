@@ -1,7 +1,6 @@
 package Object.StaticObject;
 
-import Engine.GameFrame;
-
+import Engine.GamePanel;
 import java.awt.*;
 
 /**
@@ -12,14 +11,14 @@ public class MetalWall {
 	public static final int length = 30;
 
 	private int x, y;
-	GameFrame tc;
+	GamePanel tc;
 	private static Toolkit tk = Toolkit.getDefaultToolkit();
 	private static Image[] wallImags = null;
 	static {
 		wallImags = new Image[] { tk.getImage(BrickWall.class.getResource("/Images/metalWall.gif")), };
 	}
 
-	public MetalWall(int x, int y, GameFrame tc) {// 构造函数，传递要构造的长宽并赋值
+	public MetalWall(int x, int y, GamePanel tc) {// 构造函数，传递要构造的长宽并赋值
 		this.x = x;
 		this.y = y;
 		this.tc = tc;

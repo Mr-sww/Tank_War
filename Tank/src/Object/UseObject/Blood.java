@@ -1,8 +1,6 @@
 package Object.UseObject;
 
-import Engine.GameFrame;
 import Object.StaticObject.BrickWall;
-
 import java.awt.*;
 import java.util.Random;
 
@@ -15,7 +13,6 @@ public class Blood {
 	public static final int width = 36;
 	public static final int length = 36;
 	private int x, y;
-	GameFrame tc;
 	private static Random r = new Random();
 
 	int step = 0;

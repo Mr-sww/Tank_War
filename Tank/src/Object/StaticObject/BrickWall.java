@@ -1,7 +1,6 @@
 package Object.StaticObject;
 
-import Engine.GameFrame;
-
+import Engine.GamePanel;
 import java.awt.*;
 
 /**
@@ -14,7 +13,7 @@ public class BrickWall {
 
 	int x, y;
 
-	GameFrame tc;
+	GamePanel tc;
 	private static Toolkit tk = Toolkit.getDefaultToolkit();
 	private static Image[] wallImags = null;
 	static {
@@ -22,7 +21,7 @@ public class BrickWall {
 				tk.getImage(BrickWall.class.getResource("/Images/commonWall.gif")), };
 	}
 
-	public BrickWall(int x, int y, GameFrame tc) { // 构造函数
+	public BrickWall(int x, int y, GamePanel tc) { // 构造函数
 		this.x = x;
 		this.y = y;
 		this.tc = tc; // 获得界面控制
