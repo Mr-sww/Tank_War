@@ -33,6 +33,7 @@ public class GameFrame extends JFrame implements ActionListener {
 	CardLayout cardLayout;
 	JPanel cardPanel;
 	GamePanel gamePanel;
+	MusicPlayer bgm;
 
 	public GameFrame() {
 		initFrame();
@@ -232,6 +233,14 @@ public class GameFrame extends JFrame implements ActionListener {
 		this.setVisible(true);
 		// 设置窗口是否可调整大小。false 表示窗口可调整大小
 		this.setResizable(false);
+
+
+		// 创建一个名为 bgm 的 MusicPlayer 对象，用于播放背景音乐
+		bgm = new MusicPlayer("src/Music/bgm.wav");
+
+		// 调用 bgm 对象的 playOnce 方法，播放一次背景音乐
+		bgm.playOnce();
+
 
 	}
 
