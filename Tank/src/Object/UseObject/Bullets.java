@@ -7,7 +7,6 @@ import Object.StaticObject.BrickWall;
 import Object.StaticObject.MetalWall;
 import Object.TankObject.BombTank;
 import Object.TankObject.Tank;
-
 import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
@@ -174,10 +173,6 @@ public class Bullets {
 	}
 
 
-	public boolean isLive() { // 是否还活着
-		return live;
-	}
-
 	public Rectangle getRect() {
 		return new Rectangle(x, y, width, length);
 	}
@@ -228,7 +223,6 @@ public class Bullets {
 	public boolean hitWall(MetalWall w) { // 子弹打到金属墙上
 		if (this.live && this.getRect().intersects(w.getRect())) {
 			this.live = false;
-			// this.tc.metalWall.remove(w); //子弹不能穿越金属墙
 			return true;
 		}
 		return false;

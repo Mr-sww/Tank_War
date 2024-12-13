@@ -1,17 +1,12 @@
 package Object.UseObject;
 
-import Engine.GameFrame;
 import Object.StaticObject.BrickWall;
-
 import java.awt.*;
 import java.util.Random;
 
 public class Gun {
 
-    public static final int width = 36;
-    public static final int length = 36;
     private int x, y;
-    GameFrame tc;
     private static Random r = new Random();
 
     int step = 0;
@@ -44,15 +39,4 @@ public class Gun {
 
     }
 
-    public Rectangle getRect() {
-        return new Rectangle(x, y, width, length);
-    }
-
-    public boolean isLive() {// 判断是否还活着
-        return live;
-    }
-
-    public void setLive(boolean live) { // 设置生命
-        this.live = live;
-    }
 }

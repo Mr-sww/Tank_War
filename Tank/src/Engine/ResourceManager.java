@@ -1,8 +1,8 @@
 package Engine;
 
-import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
+import javax.swing.*;
 
 public class ResourceManager {
     /**

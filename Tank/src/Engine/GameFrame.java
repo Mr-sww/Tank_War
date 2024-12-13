@@ -40,7 +40,6 @@ public class GameFrame extends JFrame implements ActionListener {
 
 
 	public void actionPerformed(ActionEvent e) {
-
 		if (e.getActionCommand().equals("NewGame")) {
 			printable = false;
 			Object[] options = {"确定", "取消"};
@@ -235,4 +234,6 @@ public class GameFrame extends JFrame implements ActionListener {
 		this.setResizable(false);
 
 	}
+
 }
+

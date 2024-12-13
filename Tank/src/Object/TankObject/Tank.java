@@ -1,14 +1,13 @@
 package Object.TankObject;
 
+import Engine.*;
 import Engine.Direction;
-import Engine. *;
 import Object.StaticObject.BrickWall;
 import Object.StaticObject.Home;
 import Object.StaticObject.MetalWall;
 import Object.StaticObject.River;
 import Object.UseObject.Blood;
 import Object.UseObject.Bullets;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
