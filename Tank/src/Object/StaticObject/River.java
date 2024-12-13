@@ -2,6 +2,7 @@ package Object.StaticObject;
 
 import Engine.GameFrame;
 
+import Engine.GamePanel;
 import java.awt.*;
 
 /**
@@ -11,7 +12,7 @@ public class River {
 	public static final int riverWidth = 40;
 	public static final int riverLength = 100;// 静态全局变量
 	private int x, y;
-	GameFrame tc;
+	GamePanel tc;
 
 	private static Toolkit tk = Toolkit.getDefaultToolkit();
 	private static Image[] riverImags = null;
@@ -20,7 +21,7 @@ public class River {
 		riverImags = new Image[] { tk.getImage(BrickWall.class.getResource("/Images/river.jpg")), };
 	}
 
-	public River(int x, int y, GameFrame tc) { // River的构造方法
+	public River(int x, int y, GamePanel tc) { // River的构造方法
 		this.x = x;
 		this.y = y;
 		this.tc = tc; // 获得控制

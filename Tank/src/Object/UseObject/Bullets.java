@@ -2,6 +2,7 @@ package Object.UseObject;
 
 import Engine.Direction;
 import Engine.GameFrame;
+import Engine.GamePanel;
 import Object.StaticObject.BrickWall;
 import Object.StaticObject.MetalWall;
 import Object.TankObject.BombTank;
@@ -29,7 +30,7 @@ public class Bullets {
 	private boolean good;
 	private boolean live = true;
 
-	private GameFrame tc;
+	private GamePanel tc;
 
 	private static Toolkit tk = Toolkit.getDefaultToolkit();
 	private static Image[] bulletImages = null;
@@ -79,7 +80,7 @@ public class Bullets {
 	}
 
 	// 构造函数2，接受另外两个参数
-	public Bullets(int x, int y, boolean good, Direction dir, GameFrame tc) {
+	public Bullets(int x, int y, boolean good, Direction dir, GamePanel tc) {
 		this(x, y, dir);
 		this.good = good;
 		this.tc = tc;
@@ -124,7 +125,7 @@ public class Bullets {
 				break;
 		}
 
-		if (x < 0 || y < 0 || x > GameFrame.Fram_width || y > GameFrame.Fram_length) {
+		if (x < 0 || y < 0 || x > GameFrame.Frame_width || y > GameFrame.Frame_length) {
 			live = false;
 		}
 	}

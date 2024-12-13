@@ -2,6 +2,7 @@ package Object.TankObject;
 
 import Engine.GameFrame;
 
+import Engine.GamePanel;
 import java.awt.*;
 
 /**
@@ -13,7 +14,7 @@ public class BombTank {
 	public static final int ORIGINAL_HEIGHT = 50; // 替换为实际爆炸图像的高度
 
 	private boolean live = true; // 初始状态为活着
-	private GameFrame tc;
+	private GamePanel tc;
 	private static Toolkit tk = Toolkit.getDefaultToolkit();
 
 	private static Image[] imgs = { // 存储爆炸图片（从小到大的爆炸效果图）
@@ -29,7 +30,7 @@ public class BombTank {
 			tk.getImage(BombTank.class.getClassLoader().getResource("Images/10.gif")), };
 	int step = 0;
 
-	public BombTank(int x, int y, GameFrame tc) { // 构造函数
+	public BombTank(int x, int y, GamePanel tc) { // 构造函数
 		this.x = x;
 		this.y = y;
 		this.tc = tc;

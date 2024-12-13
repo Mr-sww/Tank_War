@@ -2,6 +2,7 @@ package Object.StaticObject;
 
 import Engine.Direction;
 import Engine.GameFrame;
+import Engine.GamePanel;
 import Object.TankObject.Tank;
 
 import java.awt.*;
@@ -12,7 +13,7 @@ import java.awt.*;
 
 public class Home {
 	private int x, y;
-	private GameFrame tc;
+	private GamePanel tc;
 	public static final int width = 30, length = 30; // 全局静态变量长宽
 	public static  int flag = 0;
 
@@ -24,7 +25,7 @@ public class Home {
 		homeImags = new Image[] { tk.getImage(BrickWall.class.getResource("/Images/home.jpg")), };
 	}
 
-	public Home(int x, int y, GameFrame tc) {// 构造函数，传递Home的参数并赋值
+	public Home(int x, int y, GamePanel tc) {// 构造函数，传递Home的参数并赋值
 		this.x = x;
 		this.y = y;
 		this.tc = tc; // 获得控制
