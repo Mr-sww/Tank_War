@@ -21,7 +21,6 @@ public class GameFrame extends JFrame implements ActionListener {
 	public static int Frame_length = 600 + 100 - 2;
 
 	public static boolean printable = true; // 记录暂停状态，此时线程不刷新界面
-	public static int MapLevel = 1;
 	JMenuBar menubar;
 	JMenu menu1, menu2, menu3, menu4, menu5;
 	JMenuItem item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13;
@@ -81,33 +80,9 @@ public class GameFrame extends JFrame implements ActionListener {
 			gamePanel.GameStart();
 		} else if (e.getActionCommand().startsWith("Level")) {
 			setLevel(e.getActionCommand());
-			gamePanel.tanks.clear(); // 清理
-			gamePanel.bullets.clear();
-			gamePanel.trees.clear();
-			gamePanel.otherWall.clear();
-			gamePanel.homeWall.clear();
-			gamePanel.metalWall.clear();
-			gamePanel.homeTank.setLive(false);
-
-			gamePanel.homeTank = new Tank(300, 560, true, Direction.STOP, gamePanel, 50);// 设置自己出现的位置
-
-			if (!gamePanel.home.isLive()) // 将home重置生命
-				gamePanel.home.setLive(true);
 			gamePanel.init();
 		} else if (e.getActionCommand().startsWith("Map")) {
 			setMap(e.getActionCommand());
-			gamePanel.tanks.clear(); // 清理
-			gamePanel.bullets.clear();
-			gamePanel.trees.clear();
-			gamePanel.otherWall.clear();
-			gamePanel.homeWall.clear();
-			gamePanel.metalWall.clear();
-			gamePanel.homeTank.setLive(false);
-
-			gamePanel.homeTank = new Tank(300, 560, true, Direction.STOP, gamePanel, 50);// 设置自己出现的位置
-
-			if (!gamePanel.home.isLive()) // 将home重置生命
-				gamePanel.home.setLive(true);
 			gamePanel.init();
 		}
 

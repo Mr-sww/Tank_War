@@ -18,9 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
+import static java.lang.Thread.sleep;
+
 public class GamePanel extends JPanel {
     public int Frame_width = 800 + 50; // 静态全局窗口大小
     public int Frame_length = 600 + 100 - 2;
+    public static int MapLevel = 1; // 地图等级
+    public static int level = 1; //难度等级
+    private static boolean isEnd = false; // 游戏是否结束
+    public static boolean dialogShown = false; // 是否生成弹窗
     public boolean printable = true; // 记录暂停状态，此时线程不刷新界面
     // 定义一个名为 cardLayout 的 CardLayout 类型的变量，用于管理卡片的布局
     CardLayout cardLayout;
@@ -72,7 +78,22 @@ public class GamePanel extends JPanel {
      * 根据游戏难度和地图设置坦克数量、速度、子弹速度等参数，并实例化各种游戏对象。
      */
     public void init() {
+        if(tanks.size() != 0)
+        {
+            tanks.clear(); // 清理
+            bullets.clear();
+            trees.clear();
+            otherWall.clear();
+            homeWall.clear();
+            metalWall.clear();
+            homeTank.setLive(false);
+            homeTank = new Tank(300, 560, true, Direction.STOP, this, 50);// 设置自己出现的位置
+            if (!home.isLive()) // 将home重置生命
+                home.setLive(true);
+        }
 
+
+        dialogShown = false;
         switch (GameFrame.gameLevel) {
             case "Level1":
                 Tank.count = 12;
@@ -107,6 +128,7 @@ public class GamePanel extends JPanel {
         switch (GameFrame.gameMap)
         {
             case "Map1":
+                MapLevel = 1;
                 homeTank = new Tank(300, 560, true, Direction.STOP, this,50);// 实例化坦克
                 blood = new Blood(); // 实例化血包
                 home = new Home(373, 545, this);// 实例化home
@@ -166,6 +188,7 @@ public class GamePanel extends JPanel {
                 break;
 
             case "Map2":
+                MapLevel = 2;
                 homeTank = new Tank(300, 560, true, Direction.STOP, this,50);// 实例化坦克
                 blood = new Blood(); // 实例化血包
                 home = new Home(373, 545, this);// 实例化home
@@ -198,6 +221,7 @@ public class GamePanel extends JPanel {
                 }
                 break;
             case "Map3":
+                MapLevel = 3;
                 homeTank = new Tank(300, 560, true, Direction.STOP, this,50);// 实例化坦克
                 blood = new Blood(); // 实例化血包
                 home = new Home(373, 545, this);// 实例化home
@@ -222,6 +246,7 @@ public class GamePanel extends JPanel {
                 }
                 break;
             case "Map4":
+                MapLevel = 4;
                 homeTank = new Tank(300, 560, true, Direction.STOP, this,50);// 实例化坦克
                 blood = new Blood(); // 实例化血包
                 home = new Home(373, 545, this);// 实例化home
@@ -353,7 +378,7 @@ public class GamePanel extends JPanel {
             while (printable) {
                 repaint();
                 try {
-                    Thread.sleep(50);
+                    sleep(50);
                 } catch (InterruptedException e) {
                     // 捕获到 InterruptedException 时，打印异常堆栈跟踪信息
                     e.printStackTrace();
@@ -389,8 +414,20 @@ public class GamePanel extends JPanel {
      * 游戏面板绘制方法。
      * 该方法用于在游戏面板上绘制各种图形元素，包括河流、坦克、子弹、墙壁等。
      *
-     * @param g 图形对象，用于在面板上绘制图形。
+     * @paramg 图形对象，用于在面板上绘制图形。
      */
+    public void loadNextStage() {
+        // 根据关卡更新关卡地图
+        GameFrame.gameMap = "Map" + ++MapLevel;
+        init();
+    }
+    // 用于加载下一个 level
+    public void loadNextLevel() {
+        // 重置游戏状态
+        // 更新 level 和初始状态
+        GameFrame.gameLevel="Level"+ ++level;
+        init();
+    }
     public void gamePanelPaint(Graphics g) {
 
 
@@ -409,12 +446,49 @@ public class GamePanel extends JPanel {
         g.setFont(f1);
 
         // 如果玩家赢了（条件是敌方坦克全灭、大本营健在、玩家坦克仍有血量）
-        if (tanks.size() == 0 && home.isLive() && homeTank.isLive()) {
+        if(tanks.size()==0 && home.isLive() && homeTank.isLive() && isEnd == false)
+        {
+            Tank t= new Tank(400, 300, false, Direction.STOP, this,500);
+            tanks.add(t);
+            isEnd=true;
+        }
+        if (tanks.size() == 0 && home.isLive() && homeTank.isLive() && isEnd == true) {
             Font f = g.getFont();
             g.setFont(new Font("TimesRoman", Font.BOLD, 60));
             this.otherWall.clear();
             g.drawString("你赢了！ ", 310, 300);
             g.setFont(f);
+            if (!(MapLevel == 4 && level == 4)) {
+                // 确保弹窗只弹一次，可以通过设置一个标记变量来控制
+                if (!dialogShown) {
+                    dialogShown = true; // 设置弹窗已显示
+                    // 弹出对话框
+                    int option = JOptionPane.showOptionDialog(null,
+                            "想要挑战更高难度吗？",   // 弹窗标题
+                            "恭喜！你赢了！",  // 弹窗信息
+                            JOptionPane.DEFAULT_OPTION, // 默认按钮
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null, // 图标
+                            new Object[]{"下一关", "下一个level", "退出游戏"}, // 按钮
+                            "下一关"  // 默认选择
+                    );
+
+                    // 根据用户选择进行不同的处理
+                    switch (option) {
+                        case 0: // 下一关
+                            loadNextStage();  // 加载下一关
+                            break;
+                        case 1: // 下一个level
+                            loadNextLevel();  // 加载下一个level
+                            break;
+                        case 2: // 退出游戏
+                            System.exit(0);  // 退出游戏
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         }
 
         if (homeTank.isLive() == false) {
