@@ -169,8 +169,71 @@ public class Bullets {
 				g.drawImage(imgs.get("RU"), x*GameFrame.ratio, y*GameFrame.ratio, null);
 				break;
 		}
-
 		move(); // 调用子弹move()函数
+//		if(Gun.flag==true && this.isgood==true && this.isFire==false)
+//		{
+//			int x = this.x + Tank.width / 2 - Bullets.width / 2; // 开火位置
+//			int y = this.y + Tank.length / 2 - Bullets.length / 2;
+//			Bullets m;
+//			switch (diretion) { // 选择不同方向的子弹
+//				case L:
+//					m = new Bullets(x, y + 2, good, LU, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					m = new Bullets(x, y + 2, good, LD, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					break;
+//
+//				case U:
+//					m = new Bullets(x, y + 2, good, LU, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					m = new Bullets(x, y + 2, good, RU, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					break;
+//
+//				case R:
+//					m = new Bullets(x, y + 2, good, RU, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					m = new Bullets(x, y + 2, good, RD, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					break;
+//
+//				case D:
+//					m = new Bullets(x, y + 2, good, LD, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					m = new Bullets(x, y + 2, good, RD, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					break;
+//
+//				case LD:
+//					m = new Bullets(x, y + 2, good, L, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					m = new Bullets(x, y + 2, good, D, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					break;
+//
+//				case LU:
+//					m = new Bullets(x, y + 2, good, U, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					m = new Bullets(x, y + 2, good, L, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					break;
+//
+//				case RD:
+//					m = new Bullets(x, y + 2, good, R, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					m = new Bullets(x, y + 2, good, U, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					break;
+//
+//				case RU:
+//					m = new Bullets(x, y + 2, good, R, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					m = new Bullets(x, y + 2, good, U, this.tc,true); // 没有给定方向时，向原来的方向发火
+//					tc.bullets.add(m);
+//					break;
+//			}
+//			this.isFire=true; // 子弹发射完毕
+//		}
 	}
 
 
@@ -199,7 +262,7 @@ public class Bullets {
 					t.setLive(false); // 当寿命为0时，设置寿命为死亡状态
 			} else {
 				t.setLiveCount(50);
-				if(t.getLiveCount())
+				if(t.getLiveCount() && t.isGood()==false)
 				{
 					t.setLive(false);
 				}

@@ -9,6 +9,8 @@ import Object.TankObject.BombTank;
 import Object.TankObject.Tank;
 import Object.UseObject.Blood;
 import Object.UseObject.Bullets;
+import Object.UseObject.Gun;
+
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -47,6 +49,7 @@ public class GamePanel extends JPanel {
     public Home home;
     // 定义一个名为 blood 的 Blood 类型的变量，用于存储血包
     public Blood blood;
+    Gun gun = new Gun();
 
 
     // 以下集合变量在构造方法中进行了初始化
@@ -112,6 +115,7 @@ public class GamePanel extends JPanel {
 
 
         dialogShown = false;
+        isEnd = false;
         switch (GameFrame.gameLevel) {
             case "Level1":
                 Tank.count = 12;
@@ -119,6 +123,7 @@ public class GamePanel extends JPanel {
                 Tank.speedY = 6;
                 Bullets.speedX = 10;
                 Bullets.speedY = 10;
+                Tank.Tankblood = 50;
                 break;
             case "Level2":
                 Tank.count = 12;
@@ -126,6 +131,7 @@ public class GamePanel extends JPanel {
                 Tank.speedY = 10;
                 Bullets.speedX = 12;
                 Bullets.speedY = 12;
+                Tank.Tankblood = 100;
                 break;
             case "Level3":
                 Tank.count = 20;
@@ -133,6 +139,7 @@ public class GamePanel extends JPanel {
                 Tank.speedY = 14;
                 Bullets.speedX = 16;
                 Bullets.speedY = 16;
+                Tank.Tankblood = 150;
                 break;
             case "Level4":
                 Tank.count = 20;
@@ -140,6 +147,7 @@ public class GamePanel extends JPanel {
                 Tank.speedY = 16;
                 Bullets.speedX = 18;
                 Bullets.speedY = 18;
+                Tank.Tankblood = 300;
                 break;
         }
 
@@ -493,6 +501,7 @@ public class GamePanel extends JPanel {
         if(tanks.size()==0 && home.isLive() && homeTank.isLive() && isEnd == false)
         {
             Tank t= new Tank(400, 300, false, Direction.STOP, this,500);
+            t.setLiveCount(-(2*Tank.Tankblood));
             tanks.add(t);
             isEnd=true;
         }
