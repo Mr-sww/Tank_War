@@ -5,8 +5,8 @@ package Engine;
  */
 public class GameConfig {
     // 窗口大小
-    public static final int FRAME_WIDTH = 1000;
-    public static final int FRAME_HEIGHT = 800;
+    public static final int FRAME_WIDTH = 800;
+    public static final int FRAME_HEIGHT = 600;
 
     // 坦克默认速度
     public static final int TANK_SPEED = 6;

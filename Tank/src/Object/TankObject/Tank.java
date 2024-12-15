@@ -8,6 +8,8 @@ import Object.StaticObject.MetalWall;
 import Object.StaticObject.River;
 import Object.UseObject.Blood;
 import Object.UseObject.Bullets;
+import Object.UseObject.Gun;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
@@ -22,6 +24,7 @@ public class Tank {
 	public static final int width = 35, length = 35; // 坦克的全局大小，具有不可改变性
 	private Direction direction = Direction.STOP; // 初始化状态为静止
 	private Direction Kdirection = Direction.U; // 初始化方向为向上
+	public static int Tankblood=50;
 	public int blood;
 	GamePanel tc;
 
@@ -58,6 +61,11 @@ public class Tank {
 		this.oldX = x;
 		this.oldY = y;
 		this.good = good;
+		this.liveCount = Tankblood;
+	}
+	public void setBlood(int blood)
+	{
+		Tankblood-=blood;
 	}
 
 	public Tank(int x, int y, boolean good, Direction dir, GamePanel tc,int blood) {// Tank的构造函数2
@@ -401,6 +409,24 @@ public class Tank {
 		}
 		return false;
 	}
+
+	public boolean eat(Gun g) {
+		if (this.live && g.isLive() && this.getRect().intersects(g.getRect()) && Gun.flag==false) {
+			Gun.flag=true;
+			g.setLive(false);
+			return true;
+		}
+		return false;
+	}
+
+//	public boolean eat(Gun g) {
+//		if (this.live && g.isLive() && this.getRect().intersects(g.getRect()) && Gun.flag==false) {
+//			Gun.flag=true;
+//			g.setLive(false);
+//			return true;
+//		}
+//		return false;
+//	}
 
 	public int getX() {
 		return x;

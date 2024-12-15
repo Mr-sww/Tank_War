@@ -16,9 +16,9 @@ public class GameFrame extends JFrame implements ActionListener {
 
 	// TODO 窗口的大小需要确定
 	// 定义游戏窗口的宽度，800 像素宽，额外增加 50 像素的宽度
-	public static int Frame_width = 800 + 50;
+	public static int Frame_width = GameConfig.FRAME_WIDTH + 50;
 	// 定义游戏窗口的长度，600 像素长，额外增加 100 像素的长度，并减去 2 像素
-	public static int Frame_length = 600 + 100 - 2;
+	public static int Frame_length = GameConfig.FRAME_HEIGHT + 100 - 2;
 
 	public static boolean printable = true; // 记录暂停状态，此时线程不刷新界面
 	JMenuBar menubar;
