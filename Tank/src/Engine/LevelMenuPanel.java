@@ -24,13 +24,15 @@ public class LevelMenuPanel extends JPanel {
      * @param cardLayout 卡片布局管理器，用于在不同面板之间切换
      * @param cardPanel 卡片面板，包含所有需要切换的面板
      */
-    public LevelMenuPanel(CardLayout cardLayout, JPanel cardPanel) {
+    public LevelMenuPanel(CardLayout cardLayout, JPanel cardPanel,int width,int height) {
         // 加载背景图片
         this.backgroundImage = ResourceManager.loadImage("/Images/StartMenu.png");
         // 初始化卡片布局管理器
         this.cardLayout = cardLayout;
         // 初始化卡片面板
         this.cardPanel = cardPanel;
+        // 设置面板的大小
+        this.setPreferredSize(new Dimension(width,height));
 
         // 设置布局为网格袋布局
         this.setLayout(new GridBagLayout());

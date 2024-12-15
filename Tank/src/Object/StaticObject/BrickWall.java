@@ -9,8 +9,8 @@ import java.awt.*;
  * 砖墙类（子弹可打穿）
  */
 public class BrickWall {
-	public static final int width = 20; // 设置墙的固定参数
-	public static final int length = 20;
+	public static final int width = 60; // 设置墙的固定参数
+	public static final int length = 60;
 
 
 	int x, y;
@@ -30,7 +30,7 @@ public class BrickWall {
 	}
 
 	public void draw(Graphics g) {// 画commonWall
-		g.drawImage(wallImags[0], x, y, null);
+		g.drawImage(wallImags[0], x*GameFrame.ratio, y*GameFrame.ratio,60*GameFrame.ratio,60*GameFrame.ratio, null);
 	}
 
 

@@ -19,7 +19,7 @@ import java.util.Random;
 public class Tank {
 	public static int speedX = 6, speedY = 6; // 静态全局变量速度
 	public static int count = 0;
-	public static final int width = 35, length = 35; // 坦克的全局大小，具有不可改变性
+	public static final int width = 50, length = 50; // 坦克的全局大小，具有不可改变性
 	private Direction direction = Direction.STOP; // 初始化状态为静止
 	private Direction Kdirection = Direction.U; // 初始化方向为向上
 	public int blood;
@@ -86,30 +86,30 @@ public class Tank {
 		switch (Kdirection) {
 			// 根据方向选择坦克的图片
 			case D:
-				g.drawImage(tankImags[0], x, y, null);
+				g.drawImage(tankImags[0], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
 				break;
 
 			case U:
-				g.drawImage(tankImags[1], x, y, null);
+				g.drawImage(tankImags[1], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
 				break;
 			case L:
-				g.drawImage(tankImags[2], x, y, null);
+				g.drawImage(tankImags[2], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
 				break;
 
 			case R:
-				g.drawImage(tankImags[3], x, y, null);
+				g.drawImage(tankImags[3], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
 				break;
 			case LD:
-				g.drawImage(tankImags[4], x, y, null);
+				g.drawImage(tankImags[4], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
 				break;
 			case LU:
-				g.drawImage(tankImags[5], x, y, null);
+				g.drawImage(tankImags[5], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
 				break;
 			case RD:
-				g.drawImage(tankImags[6], x, y, null);
+				g.drawImage(tankImags[6], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
 				break;
 			case RU:
-				g.drawImage(tankImags[7], x, y, null);
+				g.drawImage(tankImags[7], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
 				break;
 		}
 
@@ -162,10 +162,10 @@ public class Tank {
 			x = 0;
 		if (y < 40) // 防止走出规定区域
 			y = 40;
-		if (x + Tank.width > GameFrame.Frame_width) // 超过区域则恢复到边界
-			x = GameFrame.Frame_width - Tank.width;
-		if (y + Tank.length > GameFrame.Frame_length)
-			y = GameFrame.Frame_length - Tank.length;
+		if (x + Tank.width > GameConfig.PANEL_WIDTH) // 超过区域则恢复到边界
+			x = GameConfig.PANEL_WIDTH - Tank.width;
+		if (y + Tank.length > GameConfig.PANEL_HEIGHT)
+			y = GameConfig.PANEL_HEIGHT - Tank.length;
 
 		if (!good) {
 			Direction[] directons = Direction.values();

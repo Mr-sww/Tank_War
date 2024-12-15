@@ -9,8 +9,8 @@ import java.awt.*;
  * 金属墙类（钢板,子弹不可打穿）
  */
 public class MetalWall {
-	public static final int width = 30; // 设置金属墙的长宽静态全局参数
-	public static final int length = 30;
+	public static final int width = 60; // 设置金属墙的长宽静态全局参数
+	public static final int length = 60;
 
 	private int x, y;
 	GamePanel tc;
@@ -28,7 +28,7 @@ public class MetalWall {
 
 
 	public void draw(Graphics g) { // 画金属墙
-		g.drawImage(wallImags[0], x, y, null);
+		g.drawImage(wallImags[0], x*GameFrame.ratio, y*GameFrame.ratio,60*GameFrame.ratio,60*GameFrame.ratio, null);
 	}
 
 	public Rectangle getRect() { // 构造指定参数的长方形实例

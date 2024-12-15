@@ -1,7 +1,5 @@
 package Engine;
 
-import Object.TankObject.Tank;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,14 +9,10 @@ import java.awt.event.*;
  */
 
 public class GameFrame extends JFrame implements ActionListener {
+	public static int ratio=1;
+	public static boolean isResizable=false;
 
 	private static final long serialVersionUID = 5972735870004738773L;
-
-	// TODO 窗口的大小需要确定
-	// 定义游戏窗口的宽度，800 像素宽，额外增加 50 像素的宽度
-	public static int Frame_width = 800 + 50;
-	// 定义游戏窗口的长度，600 像素长，额外增加 100 像素的长度，并减去 2 像素
-	public static int Frame_length = 600 + 100 - 2;
 
 	public static boolean printable = true; // 记录暂停状态，此时线程不刷新界面
 	JMenuBar menubar;
@@ -167,17 +161,21 @@ public class GameFrame extends JFrame implements ActionListener {
 		this.setTitle("坦克大战——(重新开始：R键  开火：F键)");
 
 		// 开始卡片布局
-		cardLayout = new CardLayout();
-		cardPanel = new JPanel(cardLayout);
+        cardLayout = new CardLayout();
+        // 创建一个新的JPanel，使用卡片布局
+        cardPanel = new JPanel(cardLayout);
+        // 设置卡片面板的首选大小为游戏配置中定义的面板宽度和高度
+        cardPanel.setPreferredSize(new Dimension(GameConfig.PANEL_WIDTH, GameConfig.PANEL_HEIGHT));
+
 
 		// 创建一个 ModeMenuPanel 实例，用于显示游戏模式菜单
-		ModeMenuPanel modeMenuPanel = new ModeMenuPanel(cardLayout, cardPanel);
+		ModeMenuPanel modeMenuPanel = new ModeMenuPanel(cardLayout, cardPanel,GameConfig.PANEL_WIDTH,GameConfig.PANEL_HEIGHT);
 		// 创建一个 MapMenuPanel 实例，用于显示游戏地图菜单
-		MapMenuPanel mapMenuPanel = new MapMenuPanel(cardLayout, cardPanel);
+		MapMenuPanel mapMenuPanel = new MapMenuPanel(cardLayout, cardPanel,GameConfig.PANEL_WIDTH,GameConfig.PANEL_HEIGHT);
 		// 创建一个 LevelMenuPanel 实例，用于显示游戏级别菜单
-		LevelMenuPanel levelMenuPanel = new LevelMenuPanel(cardLayout, cardPanel);
+		LevelMenuPanel levelMenuPanel = new LevelMenuPanel(cardLayout, cardPanel,GameConfig.PANEL_WIDTH,GameConfig.PANEL_HEIGHT);
 		// 创建一个 GamePanel 实例，用于显示游戏界面
-		gamePanel = new GamePanel(cardLayout, cardPanel);
+		gamePanel = new GamePanel(cardLayout, cardPanel,GameConfig.PANEL_WIDTH,GameConfig.PANEL_HEIGHT);
 
 		// 设置 LevelMenuPanel 中的 GamePanel 实例，以便在选择级别后可以切换到游戏界面
 		levelMenuPanel.setGamePanel(gamePanel);
@@ -194,11 +192,15 @@ public class GameFrame extends JFrame implements ActionListener {
 		// 显示游戏模式菜单
 		cardLayout.show(cardPanel, "ModeMenuPanel");
 
-		// 将 cardPanel 添加到 JFrame
-		this.getContentPane().add(cardPanel);
 
-		// 调整窗口大小以适应内容
-		this.setSize(Frame_width, Frame_length);
+
+		// 设置窗口的布局为 BorderLayout
+		this.setLayout(new BorderLayout());
+		// 将 cardPanel 添加到 JFrame 的中央位置
+		this.getContentPane().add(cardPanel, BorderLayout.CENTER);
+		// 自动调整窗口大小以适应其内容
+		this.pack();
+
 
 		// 设置窗口相对于指定组件的位置。null 参数表示窗口位于屏幕的中央
 		this.setLocationRelativeTo(null);
@@ -207,7 +209,7 @@ public class GameFrame extends JFrame implements ActionListener {
 		// 设置窗口是否可见。true 表示窗口可见
 		this.setVisible(true);
 		// 设置窗口是否可调整大小。false 表示窗口可调整大小
-		this.setResizable(false);
+		if(isResizable) this.setResizable(true);
 
 
 		// 创建一个名为 bgm 的 MusicPlayer 对象，用于播放背景音乐

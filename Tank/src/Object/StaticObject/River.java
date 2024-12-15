@@ -9,8 +9,8 @@ import java.awt.*;
  * 河流类
  */
 public class River {
-	public static final int riverWidth = 40;
-	public static final int riverLength = 100;// 静态全局变量
+	public static final int riverWidth = 60;
+	public static final int riverLength = 60;// 静态全局变量
 	private int x, y;
 	GamePanel tc;
 
@@ -18,7 +18,7 @@ public class River {
 	private static Image[] riverImags = null;
 
 	static { // 存储图片
-		riverImags = new Image[] { tk.getImage(BrickWall.class.getResource("/Images/river.jpg")), };
+		riverImags = new Image[] { tk.getImage(River.class.getResource("/Images/river.jpg")), };
 	}
 
 	public River(int x, int y, GamePanel tc) { // River的构造方法
@@ -29,7 +29,7 @@ public class River {
 
 
 	public void draw(Graphics g) {
-		g.drawImage(riverImags[0], x, y, null); // 在对应X，Y出画河
+		g.drawImage(riverImags[0], x*GameFrame.ratio, y*GameFrame.ratio,60*GameFrame.ratio,60*GameFrame.ratio, null); // 在对应X，Y出画河
 	}
 
 	public static int getRiverWidth() {

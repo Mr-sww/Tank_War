@@ -10,8 +10,8 @@ import java.awt.*;
  */
 
 public class Tree {
-	public static final int width = 30;
-	public static final int length = 30;
+	public static final int width = 60;
+	public static final int length = 60;
 
 	int x, y;
 	GamePanel tc;
@@ -28,7 +28,7 @@ public class Tree {
 	}
 
 	public void draw(Graphics g) { // »­³öÊ÷
-		g.drawImage(treeImags[0], x, y, null);
+		g.drawImage(treeImags[0], x*GameFrame.ratio, y*GameFrame.ratio,60*GameFrame.ratio,60*GameFrame.ratio, null);
 	}
 
 

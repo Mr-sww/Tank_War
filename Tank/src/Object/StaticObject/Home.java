@@ -14,7 +14,7 @@ import java.awt.*;
 public class Home {
 	private int x, y;
 	private GamePanel tc;
-	public static final int width = 30, length = 30; // 全局静态变量长宽
+	public static final int width = 60, length = 60; // 全局静态变量长宽
 	public static  int flag = 0;
 
 	private boolean live = true;
@@ -56,7 +56,7 @@ public class Home {
 	public void draw(Graphics g) {
 
 		if (live) { // 如果活着，则画出home
-			g.drawImage(homeImags[0], x, y, null);
+			g.drawImage(homeImags[0], x*GameFrame.ratio, y*GameFrame.ratio,60*GameFrame.ratio,60*GameFrame.ratio, null);
 			if(tc.tanks.size()==0 && flag == 0)
 			{
 				Tank t =new Tank(400, 300, false, Direction.D, tc,500);

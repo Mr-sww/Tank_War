@@ -16,13 +16,15 @@ public class MapMenuPanel extends JPanel {
     private JPanel cardPanel;
 
 
-        public MapMenuPanel(CardLayout cardLayout, JPanel cardPanel) {
+    public MapMenuPanel(CardLayout cardLayout, JPanel cardPanel, int width, int height) {
         // 加载背景图片
         this.backgroundImage = ResourceManager.loadImage("/Images/StartMenu.png");
         // 初始化 CardLayout 对象
         this.cardLayout = cardLayout;
         // 初始化 cardPanel 对象
         this.cardPanel = cardPanel;
+        // 设置面板的大小
+        this.setPreferredSize(new Dimension(width, height));
 
         // 设置布局为网格袋布局
         this.setLayout(new GridBagLayout());
@@ -34,7 +36,7 @@ public class MapMenuPanel extends JPanel {
         Font chineseFont = new Font("宋体", Font.BOLD, 48);
 
         // 创建地图1按钮
-        JButton map1Button = ButtonFactory.createButton("地图1",chineseFont,Color.YELLOW);
+        JButton map1Button = ButtonFactory.createButton("地图1", chineseFont, Color.YELLOW);
         // 为地图1按钮添加动作监听器
         map1Button.addActionListener(new ActionListener() {
             @Override
@@ -49,10 +51,10 @@ public class MapMenuPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 0;
         // 将地图1按钮添加到面板中
-        this.add(map1Button,gbc);
+        this.add(map1Button, gbc);
 
         // 创建地图2按钮
-        JButton map2Button = ButtonFactory.createButton("地图2",chineseFont,Color.YELLOW);
+        JButton map2Button = ButtonFactory.createButton("地图2", chineseFont, Color.YELLOW);
         // 为地图2按钮添加动作监听器
         map2Button.addActionListener(new ActionListener() {
             @Override
@@ -67,10 +69,10 @@ public class MapMenuPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 1;
         // 将地图2按钮添加到面板中
-        this.add(map2Button,gbc);
+        this.add(map2Button, gbc);
 
         // 创建地图3按钮
-        JButton map3Button = ButtonFactory.createButton("地图3",chineseFont,Color.YELLOW);
+        JButton map3Button = ButtonFactory.createButton("地图3", chineseFont, Color.YELLOW);
         // 为地图3按钮添加动作监听器
         map3Button.addActionListener(new ActionListener() {
             @Override
@@ -85,10 +87,10 @@ public class MapMenuPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 2;
         // 将地图3按钮添加到面板中
-        this.add(map3Button,gbc);
+        this.add(map3Button, gbc);
 
         // 创建地图4按钮
-        JButton map4Button = ButtonFactory.createButton("地图4",chineseFont,Color.YELLOW);
+        JButton map4Button = ButtonFactory.createButton("地图4", chineseFont, Color.YELLOW);
         // 为地图4按钮添加动作监听器
         map4Button.addActionListener(new ActionListener() {
             @Override
@@ -103,10 +105,10 @@ public class MapMenuPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 3;
         // 将地图4按钮添加到面板中
-        this.add(map4Button,gbc);
+        this.add(map4Button, gbc);
 
         // 创建返回按钮
-        JButton backButton = ButtonFactory.createButton("返回",chineseFont,Color.YELLOW);
+        JButton backButton = ButtonFactory.createButton("返回", chineseFont, Color.YELLOW);
         // 为返回按钮添加动作监听器
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -119,10 +121,10 @@ public class MapMenuPanel extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 4;
         // 将返回按钮添加到面板中
-        this.add(backButton,gbc);
+        this.add(backButton, gbc);
     }
 
-        /**
+    /**
      * 绘制组件的内容
      *
      * @param g 图形对象

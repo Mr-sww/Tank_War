@@ -1,5 +1,6 @@
 package Object.UseObject;
 
+import Engine.GameFrame;
 import Object.StaticObject.BrickWall;
 import java.awt.*;
 import java.util.Random;
@@ -10,8 +11,8 @@ import java.util.Random;
 
 public class Blood {
 
-	public static final int width = 36;
-	public static final int length = 36;
+	public static final int width = 60;
+	public static final int length = 60;
 	private int x, y;
 	private static Random r = new Random();
 
@@ -31,7 +32,7 @@ public class Blood {
 		}
 		if (!live)
 			return;
-		g.drawImage(bloodImags[0], x, y, null);
+		g.drawImage(bloodImags[0], x* GameFrame.ratio, y*GameFrame.ratio,60*GameFrame.ratio,60*GameFrame.ratio, null);
 
 	}
 

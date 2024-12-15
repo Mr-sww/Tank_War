@@ -1,6 +1,7 @@
 package Object.UseObject;
 
 import Engine.Direction;
+import Engine.GameConfig;
 import Engine.GameFrame;
 import Engine.GamePanel;
 import Object.StaticObject.BrickWall;
@@ -124,7 +125,7 @@ public class Bullets {
 				break;
 		}
 
-		if (x < 0 || y < 0 || x > GameFrame.Frame_width || y > GameFrame.Frame_length) {
+		if (x < 0 || y < 0 || x > GameConfig.PANEL_WIDTH || y > GameConfig.PANEL_HEIGHT) {
 			live = false;
 		}
 	}
@@ -137,35 +138,35 @@ public class Bullets {
 
 		switch (diretion) { // 选择不同方向的子弹
 			case L:
-				g.drawImage(imgs.get("L"), x, y, null);
+				g.drawImage(imgs.get("L"), x* GameFrame.ratio, y*GameFrame.ratio, null);
 				break;
 
 			case U:
-				g.drawImage(imgs.get("U"), x, y, null);
+				g.drawImage(imgs.get("U"), x*GameFrame.ratio, y*GameFrame.ratio, null);
 				break;
 
 			case R:
-				g.drawImage(imgs.get("R"), x, y, null);
+				g.drawImage(imgs.get("R"), x*GameFrame.ratio, y*GameFrame.ratio, null);
 				break;
 
 			case D:
-				g.drawImage(imgs.get("D"), x, y, null);
+				g.drawImage(imgs.get("D"), x*GameFrame.ratio, y*GameFrame.ratio, null);
 				break;
 
 			case LD:
-				g.drawImage(imgs.get("LD"),x, y, null);
+				g.drawImage(imgs.get("LD"),x*GameFrame.ratio, y*GameFrame.ratio, null);
 				break;
 
 			case LU:
-				g.drawImage(imgs.get("LU"),x, y, null);
+				g.drawImage(imgs.get("LU"),x*GameFrame.ratio, y*GameFrame.ratio, null);
 				break;
 
 			case RD:
-				g.drawImage(imgs.get("RD"), x, y, null);
+				g.drawImage(imgs.get("RD"), x*GameFrame.ratio, y*GameFrame.ratio, null);
 				break;
 
 			case RU:
-				g.drawImage(imgs.get("RU"), x, y, null);
+				g.drawImage(imgs.get("RU"), x*GameFrame.ratio, y*GameFrame.ratio, null);
 				break;
 		}
 

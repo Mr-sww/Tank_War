@@ -16,10 +16,12 @@ public class ModeMenuPanel extends JPanel {
     private JPanel cardPanel;
 
 
-    public ModeMenuPanel(CardLayout cardLayout, JPanel cardPanel) {
+    public ModeMenuPanel(CardLayout cardLayout, JPanel cardPanel,int width,int height) {
         this.backgroundImage = ResourceManager.loadImage("/Images/StartMenu.png");
         this.cardLayout = cardLayout;
         this.cardPanel = cardPanel;
+        // 设置面板的大小
+        this.setPreferredSize(new Dimension(width,height));
 
         this.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
