@@ -33,8 +33,8 @@ public class Tank {
 	private int x, y;
 	private int oldX, oldY;
 	private boolean live = true; // 初始化为活着
-	private int liveCount = 50; //默认为50
-	private int life = 200; // 初始生命值
+	public int liveCount = 50; //敌方坦克生命值默认为50
+	private int life = 200; // 玩家初始生命值
 
 	private static Random r = new Random();
 	private int step = r.nextInt(10) + 5; // 产生一个随机数,随机模拟坦克的移动路径
@@ -93,8 +93,6 @@ public class Tank {
 			}
 			return;
 		}
-
-		if (good)
 			new DrawBloodbBar().draw(g); // 玩家坦克的血量条
 
 		if(good&&live&&flag&& waittime >=0){
@@ -386,7 +384,15 @@ public class Tank {
 	private class DrawBloodbBar {
 		public void draw(Graphics g) {
 			Color c = g.getColor();
-			g.setColor(Color.RED);
+			if(good){
+				g.setColor(Color.green);
+				if(life<=50){
+					g.setColor(Color.RED);
+				}
+			}
+			else{
+				g.setColor(Color.pink);
+			}
 
 			// 血量条绘制在坦克上方
 			int barWidth = width; // 血条宽度与坦克宽度一致
@@ -407,7 +413,10 @@ public class Tank {
 
 			// 绘制血量数值 (xx/总血量)
 			g.setColor(Color.WHITE); // 设置文字颜色
-			g.drawString(life + "/200", barX + barWidth / 4, barY + barHeight - 2);
+			if(good)
+				g.drawString(life + "/200", barX + barWidth / 4, barY + barHeight - 2);
+			else
+				g.drawString(liveCount + "/"+Tankblood, barX + barWidth / 4, barY + barHeight - 2);
 
 			g.setColor(c); // 恢复原始颜色
 		}
@@ -450,7 +459,7 @@ public class Tank {
 	}
 
 	public boolean eat(Gun g) {
-		if (this.live && g.isLive() && this.getRect().intersects(g.getRect()) && Gun.flag==false) {
+		if (this.live && g.isLive() && this.getRect().intersects(g.getRect())) {
 			Gun.flag=true;
 			g.setLive(false);
 			return true;
@@ -459,7 +468,7 @@ public class Tank {
 	}
 
 	public boolean eat(Missle g) {
-		if (this.live && g.isLive() && this.getRect().intersects(g.getRect()) && Missle.flag==false) {
+		if (this.live && g.isLive() && this.getRect().intersects(g.getRect()) ) {
 			Missle.flag=true;
 			g.setLive(false);
 			return true;

@@ -178,8 +178,6 @@ public class Bullets {
 		move(); // 调用子弹move()函数
 		if(Gun.flag==true && this.isgood==true && this.isFire==false)
 		{
-			int x = this.x + Tank.width / 2 - Bullets.width / 2; // 开火位置
-			int y = this.y + Tank.length / 2 - Bullets.length / 2;
 			Bullets m;
 			switch (diretion) { // 选择不同方向的子弹
 				case L:
