@@ -48,7 +48,7 @@ public class BombTank {
 			return;
 		}
 
-		g.drawImage(imgs[step], x*GameFrame.ratio, y*GameFrame.ratio, null);
+		g.drawImage(imgs[step], x, y, null);
 		step++;
 	}
 

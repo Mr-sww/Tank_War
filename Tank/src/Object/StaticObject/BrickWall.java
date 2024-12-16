@@ -30,7 +30,7 @@ public class BrickWall {
 	}
 
 	public void draw(Graphics g) {// »­commonWall
-		g.drawImage(wallImags[0], x*GameFrame.ratio, y*GameFrame.ratio,60*GameFrame.ratio,60*GameFrame.ratio, null);
+		g.drawImage(wallImags[0], x, y,60,60, null);
 	}
 
 

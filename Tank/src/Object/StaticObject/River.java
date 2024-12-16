@@ -29,7 +29,7 @@ public class River {
 
 
 	public void draw(Graphics g) {
-		g.drawImage(riverImags[0], x*GameFrame.ratio, y*GameFrame.ratio,60*GameFrame.ratio,60*GameFrame.ratio, null); // 在对应X，Y出画河
+		g.drawImage(riverImags[0], x, y,60,60, null); // 在对应X，Y出画河
 	}
 
 	public static int getRiverWidth() {

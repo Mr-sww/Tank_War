@@ -151,15 +151,6 @@ public class GamePanel extends JPanel {
                 break;
         }
 
-        homeTank = new Tank(8*60, 20*60, true, Direction.STOP, this,50);// 实例化坦克
-        blood = new Blood(); // 实例化血包
-        home = new Home(10*60, 20*60, this);// 实例化home
-        homeWall.add(new BrickWall(9*60,20*60,this));
-        homeWall.add(new BrickWall(9*60,19*60,this));
-        homeWall.add(new BrickWall(10*60,19*60,this));
-        homeWall.add(new BrickWall(11*60,19*60,this));
-        homeWall.add(new BrickWall(11*60,20*60,this));
-
         HashMap<SimpleEntry<Integer, Integer>, Boolean> mp = mapGenerator.generateMap(GameFrame.gameMap);
         tankGenerator.generateTank(mp,Tank.count); // 生成地图和敌方坦克
 
@@ -378,17 +369,6 @@ public class GamePanel extends JPanel {
         this.addKeyListener(new KeyMonitor());
         // 启动绘制线程，用于不断重绘游戏面板
         new Thread(new PaintThread()).start();
-
-        // 添加窗口调整监听器，当窗口大小改变时，重新绘制游戏面板
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                if(GameFrame.isResizable){
-                    GameFrame.ratio=(getWidth()*getHeight())/(1260*1260);
-                }
-                repaint();
-            }
-        });
     }
 
     /**

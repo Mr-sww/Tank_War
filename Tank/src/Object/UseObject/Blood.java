@@ -32,7 +32,7 @@ public class Blood {
 		}
 		if (!live)
 			return;
-		g.drawImage(bloodImags[0], x* GameFrame.ratio, y*GameFrame.ratio,60*GameFrame.ratio,60*GameFrame.ratio, null);
+		g.drawImage(bloodImags[0], x, y,60,60, null);
 
 	}
 

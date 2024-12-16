@@ -138,35 +138,35 @@ public class Bullets {
 
 		switch (diretion) { // 选择不同方向的子弹
 			case L:
-				g.drawImage(imgs.get("L"), x* GameFrame.ratio, y*GameFrame.ratio, null);
+				g.drawImage(imgs.get("L"), x, y, null);
 				break;
 
 			case U:
-				g.drawImage(imgs.get("U"), x*GameFrame.ratio, y*GameFrame.ratio, null);
+				g.drawImage(imgs.get("U"), x, y, null);
 				break;
 
 			case R:
-				g.drawImage(imgs.get("R"), x*GameFrame.ratio, y*GameFrame.ratio, null);
+				g.drawImage(imgs.get("R"), x, y, null);
 				break;
 
 			case D:
-				g.drawImage(imgs.get("D"), x*GameFrame.ratio, y*GameFrame.ratio, null);
+				g.drawImage(imgs.get("D"), x, y, null);
 				break;
 
 			case LD:
-				g.drawImage(imgs.get("LD"),x*GameFrame.ratio, y*GameFrame.ratio, null);
+				g.drawImage(imgs.get("LD"),x, y, null);
 				break;
 
 			case LU:
-				g.drawImage(imgs.get("LU"),x*GameFrame.ratio, y*GameFrame.ratio, null);
+				g.drawImage(imgs.get("LU"),x, y, null);
 				break;
 
 			case RD:
-				g.drawImage(imgs.get("RD"), x*GameFrame.ratio, y*GameFrame.ratio, null);
+				g.drawImage(imgs.get("RD"), x, y, null);
 				break;
 
 			case RU:
-				g.drawImage(imgs.get("RU"), x*GameFrame.ratio, y*GameFrame.ratio, null);
+				g.drawImage(imgs.get("RU"), x, y, null);
 				break;
 		}
 		move(); // 调用子弹move()函数

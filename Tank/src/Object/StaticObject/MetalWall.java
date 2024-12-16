@@ -28,7 +28,7 @@ public class MetalWall {
 
 
 	public void draw(Graphics g) { // 画金属墙
-		g.drawImage(wallImags[0], x*GameFrame.ratio, y*GameFrame.ratio,60*GameFrame.ratio,60*GameFrame.ratio, null);
+		g.drawImage(wallImags[0], x, y,60,60, null);
 	}
 
 	public Rectangle getRect() { // 构造指定参数的长方形实例

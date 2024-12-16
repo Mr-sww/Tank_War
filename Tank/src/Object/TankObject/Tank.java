@@ -94,30 +94,30 @@ public class Tank {
 		switch (Kdirection) {
 			// 根据方向选择坦克的图片
 			case D:
-				g.drawImage(tankImags[0], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
+				g.drawImage(tankImags[0], x, y,50,50, null);
 				break;
 
 			case U:
-				g.drawImage(tankImags[1], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
+				g.drawImage(tankImags[1], x, y,50,50, null);
 				break;
 			case L:
-				g.drawImage(tankImags[2], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
+				g.drawImage(tankImags[2], x, y,50,50, null);
 				break;
 
 			case R:
-				g.drawImage(tankImags[3], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
+				g.drawImage(tankImags[3], x, y,50,50, null);
 				break;
 			case LD:
-				g.drawImage(tankImags[4], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
+				g.drawImage(tankImags[4], x, y,50,50, null);
 				break;
 			case LU:
-				g.drawImage(tankImags[5], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
+				g.drawImage(tankImags[5], x, y,50,50, null);
 				break;
 			case RD:
-				g.drawImage(tankImags[6], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
+				g.drawImage(tankImags[6], x, y,50,50, null);
 				break;
 			case RU:
-				g.drawImage(tankImags[7], x*GameFrame.ratio, y*GameFrame.ratio,50*GameFrame.ratio,50*GameFrame.ratio, null);
+				g.drawImage(tankImags[7], x, y,50,50, null);
 				break;
 		}
 

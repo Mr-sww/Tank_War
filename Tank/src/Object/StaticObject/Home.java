@@ -56,7 +56,7 @@ public class Home {
 	public void draw(Graphics g) {
 
 		if (live) { // 如果活着，则画出home
-			g.drawImage(homeImags[0], x*GameFrame.ratio, y*GameFrame.ratio,60*GameFrame.ratio,60*GameFrame.ratio, null);
+			g.drawImage(homeImags[0], x, y,60,60, null);
 			if(tc.tanks.size()==0 && flag == 0)
 			{
 				Tank t =new Tank(400, 300, false, Direction.D, tc,500);

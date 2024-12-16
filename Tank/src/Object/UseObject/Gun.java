@@ -8,8 +8,8 @@ import java.util.Random;
 
 public class Gun {
 
-    public static final int width = 36;
-    public static final int length = 36;
+    public static final int width = 60;
+    public static final int length = 60;
     public static  boolean flag = false;
     private int x, y;
     GameFrame tc;
@@ -31,7 +31,7 @@ public class Gun {
         }
         if (!live)
             return;
-        g.drawImage(bloodImags[0], x, y, null);
+        g.drawImage(bloodImags[0], x, y,60,60, null);
 
     }
 

@@ -9,8 +9,6 @@ import java.awt.event.*;
  */
 
 public class GameFrame extends JFrame implements ActionListener {
-	public static int ratio=1;
-	public static boolean isResizable=false;
 
 	private static final long serialVersionUID = 5972735870004738773L;
 
@@ -208,8 +206,8 @@ public class GameFrame extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// 设置窗口是否可见。true 表示窗口可见
 		this.setVisible(true);
-		// 设置窗口是否可调整大小。false 表示窗口可调整大小
-		if(isResizable) this.setResizable(true);
+		// 设置窗口是否可调整大小。false 表示窗口不可调整大小
+		this.setResizable(false);
 
 
 		// 创建一个名为 bgm 的 MusicPlayer 对象，用于播放背景音乐
