@@ -6,11 +6,9 @@ import Object.StaticObject.BrickWall;
 import Object.StaticObject.Home;
 import Object.StaticObject.MetalWall;
 import Object.StaticObject.River;
-import Object.UseObject.Blood;
-import Object.UseObject.Bullets;
-import Object.UseObject.Gun;
-import Object.UseObject.Missle;
+import Object.UseObject.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
@@ -28,6 +26,9 @@ public class Tank {
 	public static int Tankblood=50;
 	public int blood;
 	GamePanel tc;
+	private volatile Thread cooldownThread1;
+	private volatile Thread cooldownThread2;
+	private volatile Thread cooldownThread3; // 定义volatile 的线程用来避免线程的同步问题
 
 	private boolean good;
 	private int x, y;
@@ -446,7 +447,7 @@ public class Tank {
 	}
 
 
-	public boolean eat(Blood b) {
+	public boolean eat(Blood b) {//血包
 		if (this.live && b.isLive() && this.getRect().intersects(b.getRect())) {
 			if (this.life <= 100)
 				this.life = this.life + 100; // 每吃一个，增加100生命点
@@ -458,24 +459,143 @@ public class Tank {
 		return false;
 	}
 
-	public boolean eat(Gun g) {
+	public boolean eat(Gun g) {//霰弹枪
 		if (this.live && g.isLive() && this.getRect().intersects(g.getRect())) {
-			Gun.flag=true;
-			g.setLive(false);
+			g.setLive(false); // 设置枪为不可用
+
+			// 检查当前是否有倒计时线程在运行
+			if (cooldownThread1 != null && cooldownThread1.isAlive()) {
+				// 如果正在运行，先中断旧线程
+				cooldownThread1.interrupt();
+			}
+
+			// 启动新的倒计时线程
+			cooldownThread1 = new Thread(() -> {
+				int countdown = 10; // 倒计时
+				for (int i = countdown; i > 0; i--) {
+					// 这里要检查线程是否被中断
+					if (Thread.currentThread().isInterrupted()) {
+						return; // 如果被中断，退出线程
+					}
+					// 更新标签
+					int finalI = i;
+					SwingUtilities.invokeLater(() -> {
+						if (GamePanel.countdownLabel1!= null) {
+							GamePanel.countdownLabel1.setText("三连发枪的有效时间：" + finalI + "秒");
+						}
+					});
+					try {
+						Thread.sleep(1000); // 每秒休眠
+					} catch (InterruptedException e) {
+						// 如果休眠被中断，则结束线程
+						return;
+					}
+				}
+				Gun.flag = false; // 倒计时结束，将 flag 设置为 false
+				SwingUtilities.invokeLater(() -> {
+					if (GamePanel.countdownLabel1 != null) {
+						GamePanel.countdownLabel1.setText("三连发枪的有效时间已结束！");
+					}
+				});
+			});
+			cooldownThread1.start(); // 启动新的倒计时线程
+			Gun.flag = true; // 激活枪标记
 			return true;
 		}
 		return false;
 	}
 
-	public boolean eat(Missle g) {
-		if (this.live && g.isLive() && this.getRect().intersects(g.getRect()) ) {
-			Missle.flag=true;
-			g.setLive(false);
+	public boolean eat(Missle g) {//导弹
+		if (this.live && g.isLive() && this.getRect().intersects(g.getRect())) {
+			g.setLive(false); // 设置枪为不可用
+
+			// 检查当前是否有倒计时线程在运行
+			if (cooldownThread2 != null && cooldownThread2.isAlive()) {
+				// 如果正在运行，先中断旧线程
+				cooldownThread2.interrupt();
+			}
+
+			// 启动新的倒计时线程
+			cooldownThread2 = new Thread(() -> {
+				int countdown = 10; // 倒计时
+				for (int i = countdown; i > 0; i--) {
+					// 这里要检查线程是否被中断
+					if (Thread.currentThread().isInterrupted()) {
+						return; // 如果被中断，退出线程
+					}
+					// 更新标签
+					int finalI = i;
+					SwingUtilities.invokeLater(() -> {
+						if (GamePanel.countdownLabel2 != null) {
+							GamePanel.countdownLabel2.setText("导弹的有效时间：" + finalI + "秒");
+						}
+					});
+					try {
+						Thread.sleep(1000); // 每秒休眠
+					} catch (InterruptedException e) {
+						// 如果休眠被中断，则结束线程
+						return;
+					}
+				}
+				Missle.flag = false; // 倒计时结束，将 flag 设置为 false
+				SwingUtilities.invokeLater(() -> {
+					if (GamePanel.countdownLabel2 != null) {
+						GamePanel.countdownLabel2.setText("霰弹枪的有效时间已结束！");
+					}
+				});
+			});
+			cooldownThread2.start(); // 启动新的倒计时线程
+			Missle.flag = true; // 激活枪标记
 			return true;
 		}
 		return false;
 	}
 
+	public boolean eat(Laser g) {//激光
+		if (this.live && g.isLive() && this.getRect().intersects(g.getRect())) {
+			g.setLive(false); // 设置枪为不可用
+
+			// 检查当前是否有倒计时线程在运行
+			if (cooldownThread3 != null && cooldownThread3.isAlive()) {
+				// 如果正在运行，先中断旧线程
+				cooldownThread3.interrupt();
+			}
+
+			// 启动新的倒计时线程
+			cooldownThread3 = new Thread(() -> {
+				int countdown = 10; // 倒计时
+				for (int i = countdown; i > 0; i--) {
+					// 这里要检查线程是否被中断
+					if (Thread.currentThread().isInterrupted()) {
+						return; // 如果被中断，退出线程
+					}
+					// 更新标签
+					int finalI = i;
+					SwingUtilities.invokeLater(() -> {
+						if (GamePanel.countdownLabel3 != null) {
+							GamePanel.countdownLabel3.setText("激光的有效时间：" + finalI + "秒");
+						}
+					});
+					try {
+						Thread.sleep(1000); // 每秒休眠
+					} catch (InterruptedException e) {
+						// 如果休眠被中断，则结束线程
+						return;
+					}
+				}
+				Laser.flag = false; // 倒计时结束，将 flag 设置为 false
+				SwingUtilities.invokeLater(() -> {
+					if (GamePanel.countdownLabel3 != null) {
+						GamePanel.countdownLabel3.setText("导弹的有效时间已结束！");
+					}
+				});
+			});
+			cooldownThread3.start(); // 启动新的倒计时线程
+			Laser.flag = true; // 激活枪标记
+			return true;
+		}
+		return false;
+	}
 
 	public int getX() {
 		return x;

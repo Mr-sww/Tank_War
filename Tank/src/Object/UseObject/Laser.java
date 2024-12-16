@@ -6,7 +6,7 @@ import Object.StaticObject.BrickWall;
 import java.awt.*;
 import java.util.Random;
 
-public class Gun {
+public class Laser {
 
     public static final int width = 60;
     public static final int length = 60;
@@ -19,7 +19,7 @@ public class Gun {
     private boolean live = false;
 
     private static Toolkit tk = Toolkit.getDefaultToolkit();
-    private Image[] bloodImags = new Image[] { tk.getImage(BrickWall.class.getResource("/Images/Gun.png")), };
+    private Image[] bloodImags = new Image[] { tk.getImage(BrickWall.class.getResource("/Images/Laster.jpg")), };
 
     private int[][] poition = { { 155, 196 }, { 500, 58 }, { 80, 340 }, { 99, 199 }, { 345, 456 }, { 123, 321 },
             { 258, 413 } };

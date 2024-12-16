@@ -7,10 +7,7 @@ import Object.StaticObject.River;
 import Object.StaticObject.Tree;
 import Object.TankObject.BombTank;
 import Object.TankObject.Tank;
-import Object.UseObject.Blood;
-import Object.UseObject.Bullets;
-import Object.UseObject.Gun;
-import Object.UseObject.Missle;
+import Object.UseObject.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -32,6 +29,9 @@ public class GamePanel extends JPanel {
     public boolean printable = true; // 记录暂停状态，此时线程不刷新界面
     // 定义一个名为 cardLayout 的 CardLayout 类型的变量，用于管理卡片的布局
     CardLayout cardLayout;
+    public static JLabel countdownLabel1; // 倒计时标签
+    public static JLabel countdownLabel2; // 倒计时标签
+    public static JLabel countdownLabel3; // 倒计时标签
     // 定义一个名为 cardPanel 的 JPanel 类型的变量，用于存储卡片
     JPanel cardPanel;
 
@@ -48,6 +48,7 @@ public class GamePanel extends JPanel {
     // 定义一个名为 blood 的 Blood 类型的变量，用于存储血包
     public Blood blood;
     Gun gun = new Gun();
+    Laser laser=new Laser();
     private Missle missle=new Missle();
     // 定义一个计时器
     private Timer gameTimer;
@@ -97,6 +98,18 @@ public class GamePanel extends JPanel {
         tankGenerator = new TankGenerator();
         // 将当前的 GamePanel 实例设置给 tankGenerator，以便 tankGenerator 可以访问和修改 GamePanel 的属性和方法
         tankGenerator.setGamePanel(this);
+        countdownLabel1 = new JLabel("未获得三连发枪");
+        countdownLabel1.setFont(new Font("TimesRoman", Font.BOLD, 20));
+        countdownLabel1.setForeground(Color.RED);
+        this.add(countdownLabel1);
+        countdownLabel2 = new JLabel("未获得霰弹枪");
+        countdownLabel2.setFont(new Font("TimesRoman", Font.BOLD, 20));
+        countdownLabel2.setForeground(Color.RED);
+        this.add(countdownLabel2);
+        countdownLabel3 = new JLabel("未获得导弹");
+        countdownLabel3.setFont(new Font("TimesRoman", Font.BOLD, 20));
+        countdownLabel3.setForeground(Color.RED);
+        this.add(countdownLabel3);
 
     }
 
@@ -390,6 +403,7 @@ public class GamePanel extends JPanel {
         homeTank.eat(blood);// 加血--生命值
         homeTank.eat(gun);
         homeTank.eat(missle);
+        homeTank.eat(laser);
         for (int i = 0; i < bullets.size(); i++) { // 对每一个子弹
             Bullets m = bullets.get(i);
             m.hitTanks(tanks); // 每一个子弹打到坦克上
@@ -448,6 +462,7 @@ public class GamePanel extends JPanel {
         blood.draw(g);// 画出加血包
         gun.draw(g);// 画出子弹包
         missle.draw(g);// 画出导弹包
+        laser.draw(g);// 画出激光包
 
         for (int i = 0; i < trees.size(); i++) { // 画出trees
             Tree tr = trees.get(i);
