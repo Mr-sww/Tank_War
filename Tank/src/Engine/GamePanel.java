@@ -10,6 +10,7 @@ import Object.TankObject.Tank;
 import Object.UseObject.Blood;
 import Object.UseObject.Bullets;
 import Object.UseObject.Gun;
+import Object.UseObject.Missle;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -47,6 +48,7 @@ public class GamePanel extends JPanel {
     // 定义一个名为 blood 的 Blood 类型的变量，用于存储血包
     public Blood blood;
     Gun gun = new Gun();
+    private Missle missle=new Missle();
     // 定义一个计时器
     private Timer gameTimer;
     // 定义一个用于记录时间的变量
@@ -108,6 +110,7 @@ public class GamePanel extends JPanel {
             tanks.clear(); // 清理
             bullets.clear();
             trees.clear();
+            theRiver.clear();
             otherWall.clear();
             homeWall.clear();
             metalWall.clear();
@@ -120,6 +123,8 @@ public class GamePanel extends JPanel {
 
         dialogShown = false;
         isEnd = false;
+        Gun.flag = false;
+        Missle.flag = false;
         switch (GameFrame.gameLevel) {
             case "Level1":
                 Tank.count = 12;
@@ -384,7 +389,7 @@ public class GamePanel extends JPanel {
         homeTank.draw(g); // 画出自己家的坦克
         homeTank.eat(blood);// 加血--生命值
         homeTank.eat(gun);
-
+        homeTank.eat(missle);
         for (int i = 0; i < bullets.size(); i++) { // 对每一个子弹
             Bullets m = bullets.get(i);
             m.hitTanks(tanks); // 每一个子弹打到坦克上
@@ -442,6 +447,7 @@ public class GamePanel extends JPanel {
 
         blood.draw(g);// 画出加血包
         gun.draw(g);// 画出子弹包
+        missle.draw(g);// 画出导弹包
 
         for (int i = 0; i < trees.size(); i++) { // 画出trees
             Tree tr = trees.get(i);

@@ -9,6 +9,7 @@ import Object.StaticObject.River;
 import Object.UseObject.Blood;
 import Object.UseObject.Bullets;
 import Object.UseObject.Gun;
+import Object.UseObject.Missle;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -457,14 +458,15 @@ public class Tank {
 		return false;
 	}
 
-//	public boolean eat(Gun g) {
-//		if (this.live && g.isLive() && this.getRect().intersects(g.getRect()) && Gun.flag==false) {
-//			Gun.flag=true;
-//			g.setLive(false);
-//			return true;
-//		}
-//		return false;
-//	}
+	public boolean eat(Missle g) {
+		if (this.live && g.isLive() && this.getRect().intersects(g.getRect()) && Missle.flag==false) {
+			Missle.flag=true;
+			g.setLive(false);
+			return true;
+		}
+		return false;
+	}
+
 
 	public int getX() {
 		return x;
