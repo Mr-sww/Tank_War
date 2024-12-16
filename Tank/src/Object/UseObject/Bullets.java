@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static Engine.Direction.*;
+
 /**
  * 子弹类
  */
@@ -29,6 +31,8 @@ public class Bullets {
 
 	private boolean good;
 	private boolean live = true;
+	private boolean isgood=false; // 是否是玩家射出的子弹
+	private boolean isFire=false; // 是否已经发射过
 
 	private GamePanel tc;
 
@@ -73,15 +77,17 @@ public class Bullets {
 		imgs.put("RU", bulletImages[7]);
 	}
 
-	public Bullets(int x, int y, Direction dir) { // 构造函数1，传递位置和方向
+	public Bullets(int x, int y, Direction dir,boolean isgood,boolean isFire) { // 构造函数1，传递位置和方向
 		this.x = x;
 		this.y = y;
 		this.diretion = dir;
+		this.isgood=isgood;
+		this.isFire=isFire;
 	}
 
 	// 构造函数2，接受另外两个参数
-	public Bullets(int x, int y, boolean good, Direction dir, GamePanel tc) {
-		this(x, y, dir);
+	public Bullets(int x, int y, boolean good, Direction dir, GamePanel tc,boolean isFire) {
+		this(x, y,dir,good,isFire);
 		this.good = good;
 		this.tc = tc;
 	}
@@ -170,70 +176,72 @@ public class Bullets {
 				break;
 		}
 		move(); // 调用子弹move()函数
-//		if(Gun.flag==true && this.isgood==true && this.isFire==false)
-//		{
-//			int x = this.x + Tank.width / 2 - Bullets.width / 2; // 开火位置
-//			int y = this.y + Tank.length / 2 - Bullets.length / 2;
-//			Bullets m;
-//			switch (diretion) { // 选择不同方向的子弹
-//				case L:
-//					m = new Bullets(x, y + 2, good, LU, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					m = new Bullets(x, y + 2, good, LD, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					break;
-//
-//				case U:
-//					m = new Bullets(x, y + 2, good, LU, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					m = new Bullets(x, y + 2, good, RU, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					break;
-//
-//				case R:
-//					m = new Bullets(x, y + 2, good, RU, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					m = new Bullets(x, y + 2, good, RD, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					break;
-//
-//				case D:
-//					m = new Bullets(x, y + 2, good, LD, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					m = new Bullets(x, y + 2, good, RD, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					break;
-//
-//				case LD:
-//					m = new Bullets(x, y + 2, good, L, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					m = new Bullets(x, y + 2, good, D, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					break;
-//
-//				case LU:
-//					m = new Bullets(x, y + 2, good, U, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					m = new Bullets(x, y + 2, good, L, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					break;
-//
-//				case RD:
-//					m = new Bullets(x, y + 2, good, R, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					m = new Bullets(x, y + 2, good, U, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					break;
-//
-//				case RU:
-//					m = new Bullets(x, y + 2, good, R, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					m = new Bullets(x, y + 2, good, U, this.tc,true); // 没有给定方向时，向原来的方向发火
-//					tc.bullets.add(m);
-//					break;
-//			}
-//			this.isFire=true; // 子弹发射完毕
-//		}
+		if(Gun.flag==true && this.isgood==true && this.isFire==false)
+		{
+			int x = this.x + Tank.width / 2 - Bullets.width / 2; // 开火位置
+			int y = this.y + Tank.length / 2 - Bullets.length / 2;
+			Bullets m;
+			switch (diretion) { // 选择不同方向的子弹
+				case L:
+					m = new Bullets(x, y + 2, good, LU, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					m = new Bullets(x, y + 2, good, LD, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					break;
+
+				case U:
+					m = new Bullets(x, y + 2, good, LU, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					m = new Bullets(x, y + 2, good, RU, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					break;
+
+				case R:
+					m = new Bullets(x, y + 2, good, RU, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					m = new Bullets(x, y + 2, good, RD, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					break;
+
+				case D:
+					m = new Bullets(x, y + 2, good, LD, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					m = new Bullets(x, y + 2, good, RD, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					break;
+
+				case LD:
+					m = new Bullets(x, y + 2, good, L, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					m = new Bullets(x, y + 2, good, D, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					break;
+
+				case STOP:
+					break;
+				case LU:
+					m = new Bullets(x, y + 2, good, U, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					m = new Bullets(x, y + 2, good, L, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					break;
+
+				case RD:
+					m = new Bullets(x, y + 2, good, R, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					m = new Bullets(x, y + 2, good, D, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					break;
+
+				case RU:
+					m = new Bullets(x, y + 2, good, R, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					m = new Bullets(x, y + 2, good, U, this.tc,true); // 没有给定方向时，向原来的方向发火
+					tc.bullets.add(m);
+					break;
+			}
+			this.isFire=true; // 子弹发射完毕
+		}
 	}
 
 

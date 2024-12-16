@@ -7,6 +7,8 @@ import Object.StaticObject.River;
 import Object.StaticObject.Tree;
 import Object.TankObject.Tank;
 import Object.UseObject.Blood;
+import Object.UseObject.Gun;
+
 import java.util.AbstractMap.SimpleEntry;
 import java.util.HashMap;
 
@@ -160,6 +162,7 @@ public class MapGenerator {
         // 从 mp 中获取指定名称的地图数组
         int[][] map = mp.get(gameMap);
         gamePanel.blood=new Blood();
+        gamePanel.gun=new Gun();
         // 遍历地图数组的每一行
         for (int i = 0; i < map.length; i++) {
             // 遍历当前行的每一列

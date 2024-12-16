@@ -168,190 +168,6 @@ public class GamePanel extends JPanel {
                 MapLevel = 4;
                 break;
         }
-
-
-//        switch (GameFrame.gameMap)
-//        {
-//            case "Map1":
-//                MapLevel = 1;
-//                homeTank = new Tank(300, 560, true, Direction.STOP, this,50);// 实例化坦克
-//                blood = new Blood(); // 实例化血包
-//                home = new Home(373, 545, this);// 实例化home
-//
-//                for (int i = 0; i < 10; i++) { // 家的格局
-//                    if (i < 4)
-//                        homeWall.add(new BrickWall(350, 580 - 21 * i , this));
-//                    else if (i < 7)
-//                        homeWall.add(new BrickWall(372 + 22 * (i - 4), 517 , this));
-//                    else
-//                        homeWall.add(new BrickWall(416, 538 + (i - 7) * 21 , this));
-//                }
-//
-//                for (int i = 0; i < 32; i++) { // 砖墙
-//                    if (i < 16) {
-//                        otherWall.add(new BrickWall(220 + 20 * i, 300 , this)); // 砖墙布局
-//                        otherWall.add(new BrickWall(500 + 20 * i, 180 , this));
-//                        otherWall.add(new BrickWall(200, 400 + 20 * i , this));
-//                        otherWall.add(new BrickWall(500, 400 + 20 * i , this));
-//                    } else if (i < 32) {
-//                        otherWall.add(new BrickWall(220 + 20 * (i - 16), 320 , this));
-//                        otherWall.add(new BrickWall(500 + 20 * (i - 16), 220 , this));
-//                        otherWall.add(new BrickWall(220, 400 + 20 * (i - 16) , this));
-//                        otherWall.add(new BrickWall(520, 400 + 20 * (i - 16) , this));
-//                    }
-//                }
-//
-//                for (int i = 0; i < 20; i++) { // 金属墙布局
-//                    if (i < 10) {
-//                        metalWall.add(new MetalWall(140 + 30 * i, 150 , this));
-//                        metalWall.add(new MetalWall(600, 400 + 20 * (i), this));
-//                    } else if (i < 20)
-//                        metalWall.add(new MetalWall(140 + 30 * (i - 10), 180 , this));
-//                    else
-//                        metalWall.add(new MetalWall(500 + 30 * (i - 10), 160 , this));
-//                }
-//
-//                for (int i = 0; i < 4; i++) { // 树的布局
-//                    if (i < 4) {
-//                        trees.add(new Tree(0 + 30 * i, 360 , this));
-//                        trees.add(new Tree(220 + 30 * i, 360 , this));
-//                        trees.add(new Tree(440 + 30 * i, 360 , this));
-//                        trees.add(new Tree(660 + 30 * i, 360 , this));
-//                    }
-//                }
-//
-//                theRiver.add(new River(85, 100, this));
-//
-//                for (int i = 0; i < 20; i++) { // 初始化20辆坦克
-//                    if (i < 9) // 设置坦克出现的位置
-//                        tanks.add(new Tank(150 + 70 * i, 40, false, Direction.D, this,50));
-//                    else if (i < 15)
-//                        tanks.add(new Tank(700, 140 + 50 * (i - 6), false, Direction.D, this,50));
-//                    else
-//                        tanks.add(new Tank(10, 50 * (i - 12), false, Direction.D, this,50));
-//                }
-//                break;
-//
-//            case "Map2":
-//                MapLevel = 2;
-//                homeTank = new Tank(300, 560, true, Direction.STOP, this,50);// 实例化坦克
-//                blood = new Blood(); // 实例化血包
-//                home = new Home(373, 545, this);// 实例化home
-//
-//                for (int i = 0; i < 10; i++) { // 家的格局
-//                    if (i < 4)
-//                        homeWall.add(new BrickWall(350, 580 - 21 * i , this));
-//                    else if (i < 7)
-//                        homeWall.add(new BrickWall(372 + 22 * (i - 4), 517 , this));
-//                    else
-//                        homeWall.add(new BrickWall(416, 538 + (i - 7) * 21 , this));
-//                }
-//
-//                // 创建川形状布局：中间是通道，四周有砖墙
-//                // 纵向两侧墙体
-//                //坦克的长度为40，1个砖墙的宽度是20
-//                for (int i = 0; i < 10; i++) {  //整张地图的川形布局
-//                    for(int j=0;j<30;j++)
-//                    {
-//                        otherWall.add(new BrickWall(40+100*i, 0 + j * 20, this));  // 左侧竖墙
-//                    }
-//                }
-//                for (int i = 0; i < 20; i++) { // 初始化20辆坦克
-//                    if (i < 9) // 设置坦克出现的位置
-//                        tanks.add(new Tank(150 + 70 * i, 40, false, Direction.D, this,50));
-//                    else if (i < 15)
-//                        tanks.add(new Tank(700, 140 + 50 * (i - 6), false, Direction.D, this,50));
-//                    else
-//                        tanks.add(new Tank(10, 50 * (i - 12), false, Direction.D, this,50));
-//                }
-//                break;
-//            case "Map3":
-//                MapLevel = 3;
-//                homeTank = new Tank(300, 560, true, Direction.STOP, this,50);// 实例化坦克
-//                blood = new Blood(); // 实例化血包
-//                home = new Home(373, 545, this);// 实例化home
-//
-//                for (int i = 0; i < 10; i++) { // 家的格局
-//                    if (i < 4)
-//                        homeWall.add(new BrickWall(350, 400 - 21 * i , this));
-//                    else if (i < 7)
-//                        homeWall.add(new BrickWall(372 + 22 * (i - 4), 372 , this));
-//                    else
-//                        homeWall.add(new BrickWall(416, 538 + (i - 7) * 21 , this));
-//                }
-//                theRiver.add(new River(85, 100, this));
-//
-//                for (int i = 0; i < 20; i++) { // 初始化20辆坦克
-//                    if (i < 9) // 设置坦克出现的位置
-//                        tanks.add(new Tank(150 + 70 * i, 40, false, Direction.D, this,50));
-//                    else if (i < 15)
-//                        tanks.add(new Tank(700, 140 + 50 * (i - 6), false, Direction.D, this,50));
-//                    else
-//                        tanks.add(new Tank(10, 50 * (i - 12), false, Direction.D, this,50));
-//                }
-//                break;
-//            case "Map4":
-//                MapLevel = 4;
-//                homeTank = new Tank(300, 560, true, Direction.STOP, this,50);// 实例化坦克
-//                blood = new Blood(); // 实例化血包
-//                home = new Home(373, 545, this);// 实例化home
-//
-//                for (int i = 0; i < 10; i++) { // 家的格局
-//                    if (i < 4)
-//                        homeWall.add(new BrickWall(350, 580 - 21 * i , this));
-//                    else if (i < 7)
-//                        homeWall.add(new BrickWall(372 + 22 * (i - 4), 517 , this));
-//                    else
-//                        homeWall.add(new BrickWall(416, 538 + (i - 7) * 21 , this));
-//                }
-//
-//                for (int i = 0; i < 32; i++) { // 砖墙
-//                    if (i < 16) {
-//                        otherWall.add(new BrickWall(220 + 20 * i, 300 , this)); // 砖墙布局
-//                        otherWall.add(new BrickWall(500 + 20 * i, 180 , this));
-//                        otherWall.add(new BrickWall(200, 400 + 20 * i , this));
-//                        otherWall.add(new BrickWall(500, 400 + 20 * i , this));
-//                    } else if (i < 32) {
-//                        otherWall.add(new BrickWall(220 + 20 * (i - 16), 320 , this));
-//                        otherWall.add(new BrickWall(500 + 20 * (i - 16), 220 , this));
-//                        otherWall.add(new BrickWall(220, 400 + 20 * (i - 16) , this));
-//                        otherWall.add(new BrickWall(520, 400 + 20 * (i - 16) , this));
-//                    }
-//                }
-//
-//                for (int i = 0; i < 20; i++) { // 金属墙布局
-//                    if (i < 10) {
-//                        metalWall.add(new MetalWall(140 + 30 * i, 150 , this));
-//                        metalWall.add(new MetalWall(600, 400 + 20 * (i), this));
-//                    } else if (i < 20)
-//                        metalWall.add(new MetalWall(140 + 30 * (i - 10), 180 , this));
-//                    else
-//                        metalWall.add(new MetalWall(500 + 30 * (i - 10), 160 , this));
-//                }
-//
-//                for (int i = 0; i < 4; i++) { // 树的布局
-//                    if (i < 4) {
-//                        trees.add(new Tree(0 + 30 * i, 360 , this));
-//                        trees.add(new Tree(220 + 30 * i, 360 , this));
-//                        trees.add(new Tree(440 + 30 * i, 360 , this));
-//                        trees.add(new Tree(660 + 30 * i, 360 , this));
-//                    }
-//                }
-//
-//                theRiver.add(new River(85, 100, this));
-//
-//                for (int i = 0; i < 20; i++) { // 初始化20辆坦克
-//                    if (i < 9) // 设置坦克出现的位置
-//                        tanks.add(new Tank(150 + 70 * i, 40, false, Direction.D, this,50));
-//                    else if (i < 15)
-//                        tanks.add(new Tank(700, 140 + 50 * (i - 6), false, Direction.D, this,50));
-//                    else
-//                        tanks.add(new Tank(10, 50 * (i - 12), false, Direction.D, this,50));
-//                }
-//                break;
-//
-//        }
-
     }
 
     /**
@@ -548,6 +364,7 @@ public class GamePanel extends JPanel {
         home.draw(g); // 画出home
         homeTank.draw(g); // 画出自己家的坦克
         homeTank.eat(blood);// 加血--生命值
+        homeTank.eat(gun);
 
         for (int i = 0; i < bullets.size(); i++) { // 对每一个子弹
             Bullets m = bullets.get(i);
@@ -605,6 +422,7 @@ public class GamePanel extends JPanel {
         }
 
         blood.draw(g);// 画出加血包
+        gun.draw(g);// 画出子弹包
 
         for (int i = 0; i < trees.size(); i++) { // 画出trees
             Tree tr = trees.get(i);

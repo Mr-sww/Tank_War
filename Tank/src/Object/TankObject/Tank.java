@@ -21,7 +21,7 @@ import java.util.Random;
 public class Tank {
 	public static int speedX = 6, speedY = 6; // 静态全局变量速度
 	public static int count = 0;
-	public static final int width = 50, length = 50; // 坦克的全局大小，具有不可改变性
+	public static final int width = 35, length = 35; // 坦克的全局大小，具有不可改变性
 	private Direction direction = Direction.STOP; // 初始化状态为静止
 	private Direction Kdirection = Direction.U; // 初始化方向为向上
 	public static int Tankblood=50;
@@ -94,30 +94,30 @@ public class Tank {
 		switch (Kdirection) {
 			// 根据方向选择坦克的图片
 			case D:
-				g.drawImage(tankImags[0], x, y,50,50, null);
+				g.drawImage(tankImags[0], x, y, null);
 				break;
 
 			case U:
-				g.drawImage(tankImags[1], x, y,50,50, null);
+				g.drawImage(tankImags[1], x, y, null);
 				break;
 			case L:
-				g.drawImage(tankImags[2], x, y,50,50, null);
+				g.drawImage(tankImags[2], x, y, null);
 				break;
 
 			case R:
-				g.drawImage(tankImags[3], x, y,50,50, null);
+				g.drawImage(tankImags[3], x, y, null);
 				break;
 			case LD:
-				g.drawImage(tankImags[4], x, y,50,50, null);
+				g.drawImage(tankImags[4], x, y, null);
 				break;
 			case LU:
-				g.drawImage(tankImags[5], x, y,50,50, null);
+				g.drawImage(tankImags[5], x, y, null);
 				break;
 			case RD:
-				g.drawImage(tankImags[6], x, y,50,50, null);
+				g.drawImage(tankImags[6], x, y, null);
 				break;
 			case RU:
-				g.drawImage(tankImags[7], x, y,50,50, null);
+				g.drawImage(tankImags[7], x, y, null);
 				break;
 		}
 
@@ -289,7 +289,7 @@ public class Tank {
 			return null;
 		int x = this.x + Tank.width / 2 - Bullets.width / 2; // 开火位置
 		int y = this.y + Tank.length / 2 - Bullets.length / 2;
-		Bullets m = new Bullets(x, y + 2, good, Kdirection, this.tc); // 没有给定方向时，向原来的方向发火
+		Bullets m = new Bullets(x, y + 2, good, Kdirection, this.tc,false); // 没有给定方向时，向原来的方向发火
 		tc.bullets.add(m);
 		return m;
 	}
