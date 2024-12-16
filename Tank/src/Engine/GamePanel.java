@@ -12,10 +12,7 @@ import Object.UseObject.Bullets;
 import Object.UseObject.Gun;
 
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +47,10 @@ public class GamePanel extends JPanel {
     // 定义一个名为 blood 的 Blood 类型的变量，用于存储血包
     public Blood blood;
     Gun gun = new Gun();
+    // 定义一个计时器
+    private Timer gameTimer;
+    // 定义一个用于记录时间的变量
+    private int elapsedTime = 0;
 
 
     // 以下集合变量在构造方法中进行了初始化
@@ -82,6 +83,8 @@ public class GamePanel extends JPanel {
         this.cardLayout = cardLayout;
         // 初始化 cardPanel 变量，用于存储卡片
         this.cardPanel = cardPanel;
+        // 初始化计时器
+        gameTimer = new Timer(1000, new TimerListener());
         //设置面板大小
         this.setPreferredSize(new Dimension(width,height));
         // 创建一个 MapGenerator 类的实例，用于生成游戏地图
@@ -92,6 +95,7 @@ public class GamePanel extends JPanel {
         tankGenerator = new TankGenerator();
         // 将当前的 GamePanel 实例设置给 tankGenerator，以便 tankGenerator 可以访问和修改 GamePanel 的属性和方法
         tankGenerator.setGamePanel(this);
+
     }
 
     /**
@@ -167,6 +171,11 @@ public class GamePanel extends JPanel {
             case "Map4":
                 MapLevel = 4;
                 break;
+        }
+        // 重置计时器
+        elapsedTime = 0;
+        if (!gameTimer.isRunning()) {
+            gameTimer.start();
         }
     }
 
@@ -284,6 +293,12 @@ public class GamePanel extends JPanel {
 
         Font f1 = g.getFont();
         g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+        g.drawString("游戏耗时: ", 20, 70);
+        g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
+        g.drawString("" + elapsedTime + "秒", 120, 70);
+        g.setFont(f1);
+
+        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
         g.drawString("区域内还有敌方坦克: ", 200, 70);
         g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
         g.drawString("" + tanks.size(), 400, 70);
@@ -291,6 +306,9 @@ public class GamePanel extends JPanel {
         g.drawString("剩余生命值: ", 500, 70);
         g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
         g.drawString("" + homeTank.getLife(), 650, 70);
+        g.drawString("剩余子弹个数：" , 100, 30);
+        g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
+        g.drawString("" + homeTank.BulletsNumber, 400, 30);
         g.setFont(f1);
 
         // 如果玩家赢了（条件是敌方坦克全灭、大本营健在、玩家坦克仍有血量）
@@ -346,6 +364,7 @@ public class GamePanel extends JPanel {
             tanks.clear();
             bullets.clear();
             g.setFont(f);
+            gameTimer.stop();
         }
         g.setColor(c);
 
@@ -465,6 +484,15 @@ public class GamePanel extends JPanel {
             w.draw(g);
         }
 
+    }
+    // 计时器监听器
+    private class TimerListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            if (printable) {
+                elapsedTime++;
+                repaint(); // 每秒重绘一次面板以更新时间显示
+            }
+        }
     }
 
 }

@@ -38,6 +38,11 @@ public class Tank {
 	private static Random r = new Random();
 	private int step = r.nextInt(10) + 5; // 产生一个随机数,随机模拟坦克的移动路径
 
+
+	public  int BulletsNumber=30;   //初始化坦克的可用子弹数量
+	public  int waittime =45;      //等待时间
+	private boolean flag =false;    //判断现在是否子弹数量为0
+
 	private boolean bL = false, bU = false, bR = false, bD = false;
 
 	private static Toolkit tk = Toolkit.getDefaultToolkit();// 控制面板
@@ -90,6 +95,10 @@ public class Tank {
 
 		if (good)
 			new DrawBloodbBar().draw(g); // 玩家坦克的血量条
+
+		if(good&&live&&flag&& waittime >=0){
+			new DrawLoadBullets().draw(g);
+		}
 
 		switch (Kdirection) {
 			// 根据方向选择坦克的图片
@@ -287,11 +296,18 @@ public class Tank {
 	public Bullets fire() { // 开火方法
 		if (!live)
 			return null;
-		int x = this.x + Tank.width / 2 - Bullets.width / 2; // 开火位置
-		int y = this.y + Tank.length / 2 - Bullets.length / 2;
-		Bullets m = new Bullets(x, y + 2, good, Kdirection, this.tc,false); // 没有给定方向时，向原来的方向发火
-		tc.bullets.add(m);
-		return m;
+		if(live&&BulletsNumber==0){
+			flag=true;
+		}
+		else{
+			int x = this.x + Tank.width / 2 - Bullets.width / 2; // 开火位置
+			int y = this.y + Tank.length / 2 - Bullets.length / 2;
+			Bullets m = new Bullets(x, y + 2, good, Kdirection, this.tc,false); // 没有给定方向时，向原来的方向发火
+			tc.bullets.add(m);
+			BulletsNumber--;
+			return m;
+		}
+		return  null;
 	}
 
 	public Rectangle getRect() {
@@ -396,6 +412,28 @@ public class Tank {
 		}
 	}
 
+
+	private  class  DrawLoadBullets{
+		public void draw(Graphics g){
+			Color c = g.getColor();
+			g.setColor(Color.blue);
+			int lbheight=5;
+			int lbwidth=45;
+			int offsetY=40;
+			int offsetx=-5;
+			int blx = x+offsetx;
+			int bly = y+offsetY;
+			int currentwidth = --waittime;
+			if(waittime==0){
+				flag=false;
+				waittime =lbwidth;
+				BulletsNumber=30;
+			}
+			g.drawRect(blx, bly, lbwidth, lbheight);
+			g.fillRect(blx, bly,currentwidth,lbheight);
+			g.setColor(c); // 恢复原始颜色
+		}
+	}
 
 
 	public boolean eat(Blood b) {
