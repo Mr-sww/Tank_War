@@ -40,6 +40,7 @@ public class Tank {
 	private boolean live = true; // 初始化为活着
 	public int liveCount = 50; //敌方坦克生命值默认为50
 	private int life = 200; // 玩家初始生命值
+	public int no; // 坦克编号
 
 	private static Random r = new Random();
 	private int step = r.nextInt(10) + 5; // 产生一个随机数,随机模拟坦克的移动路径
@@ -80,11 +81,12 @@ public class Tank {
 		Tankblood-=blood;
 	}
 
-	public Tank(int x, int y, boolean good, Direction dir, GamePanel tc,int blood) {// Tank的构造函数2
+	public Tank(int x, int y, boolean good, Direction dir, GamePanel tc,int blood,int no) {// Tank的构造函数2
 		this(x, y, good);
 		this.direction = dir;
 		this.tc = tc;
 		this.blood = blood;
+		this.no=no;
 	}
 	public void setLiveCount(int liveCount) { this.liveCount -= liveCount;}
 	public boolean getLiveCount()
@@ -218,42 +220,84 @@ public class Tank {
 	public void keyPressed(KeyEvent e) { // 接受键盘事件
 		int key = e.getKeyCode();
 		GamePanel tc = this.tc;
-		switch (key) {
-			case KeyEvent.VK_R: // 当按下R时，重新开始游戏
-				tc.tanks.clear(); // 清理
-				tc.bullets.clear();
-				tc.trees.clear();
-				tc.otherWall.clear();
-				tc.homeWall.clear();
-				tc.metalWall.clear();
-				tc.homeTank.setLive(false);
-				tc.homeTank = new Tank(300, 560, true, Direction.STOP, tc,200);// 设置自己出现的位置
+		if(this.isGood() && this.no==1)
+		{
+			switch (key) {
+				case KeyEvent.VK_R: // 当按下R时，重新开始游戏
+					tc.tanks.clear(); // 清理
+					tc.bullets.clear();
+					tc.trees.clear();
+					tc.otherWall.clear();
+					tc.homeWall.clear();
+					tc.metalWall.clear();
+					tc.homeTank.setLive(false);
+					tc.homeTank = new Tank(300, 560, true, Direction.STOP, tc,200,1);// 设置自己出现的位置
 
-				if (!tc.home.isLive()) // 将home重置生命
-					tc.home.setLive(true);
-				tc.init();
-				break;
-			case KeyEvent.VK_RIGHT: // 监听向右键
-				bR = true;
-				break;
+					if (!tc.home.isLive()) // 将home重置生命
+						tc.home.setLive(true);
+					tc.init();
+					break;
+				case KeyEvent.VK_D: // 监听向右键
+					bR = true;
+					break;
 
-			case KeyEvent.VK_LEFT:// 监听向左键
-				bL = true;
-				break;
+				case KeyEvent.VK_A:// 监听向左键
+					bL = true;
+					break;
 
-			case KeyEvent.VK_UP: // 监听向上键
-				bU = true;
-				break;
+				case KeyEvent.VK_W: // 监听向上键
+					bU = true;
+					break;
 
-			case KeyEvent.VK_DOWN:// 监听向下键
-				bD = true;
-				break;
-			case KeyEvent.VK_G: // 加速键
-				if (good==true&&live) { // 仅在玩家坦克时加速
-					sspeedx = 20; // 加速
-					sspeedy = 20; // 加速
-				}
-				break;
+				case KeyEvent.VK_S:// 监听向下键
+					bD = true;
+					break;
+				case KeyEvent.VK_G: // 加速键
+					if (good==true&&live) { // 仅在玩家坦克时加速
+						sspeedx = 20; // 加速
+						sspeedy = 20; // 加速
+					}
+					break;
+			}
+		}
+		else if(this.isGood() && this.no==2){
+			switch (key) {
+				case KeyEvent.VK_R: // 当按下R时，重新开始游戏
+					tc.tanks.clear(); // 清理
+					tc.bullets.clear();
+					tc.trees.clear();
+					tc.otherWall.clear();
+					tc.homeWall.clear();
+					tc.metalWall.clear();
+					tc.homeTank.setLive(false);
+					tc.homeTank = new Tank(300, 560, true, Direction.STOP, tc,200,1);// 设置自己出现的位置
+
+					if (!tc.home.isLive()) // 将home重置生命
+						tc.home.setLive(true);
+					tc.init();
+					break;
+				case KeyEvent.VK_RIGHT: // 监听向右键
+					bR = true;
+					break;
+
+				case KeyEvent.VK_LEFT:// 监听向左键
+					bL = true;
+					break;
+
+				case KeyEvent.VK_UP: // 监听向上键
+					bU = true;
+					break;
+
+				case KeyEvent.VK_DOWN:// 监听向下键
+					bD = true;
+					break;
+				case KeyEvent.VK_L: // 加速键
+					if (good==true&&live) { // 仅在玩家坦克时加速
+						sspeedx = 20; // 加速
+						sspeedy = 20; // 加速
+					}
+					break;
+			}
 		}
 		decideDirection();// 调用函数确定移动方向
 	}
@@ -285,35 +329,67 @@ public class Tank {
 
 	public void keyReleased(KeyEvent e) { // 键盘释放监听
 		int key = e.getKeyCode();
-		switch (key) {
+		if(this.isGood() && this.no==1)
+		{
+			switch (key) {
+				case KeyEvent.VK_F:
+					fire();
+					break;
 
-			case KeyEvent.VK_F:
-				fire();
-				break;
+				case KeyEvent.VK_D:
+					bR = false;
+					break;
 
-			case KeyEvent.VK_RIGHT:
-				bR = false;
-				break;
+				case KeyEvent.VK_A:
+					bL = false;
+					break;
 
-			case KeyEvent.VK_LEFT:
-				bL = false;
-				break;
+				case KeyEvent.VK_W:
+					bU = false;
+					break;
 
-			case KeyEvent.VK_UP:
-				bU = false;
-				break;
+				case KeyEvent.VK_S:
+					bD = false;
+					break;
 
-			case KeyEvent.VK_DOWN:
-				bD = false;
-				break;
+				case KeyEvent.VK_G: // 释放加速键
+					if(good==true&&live){
+						sspeedx = oldSpeedX;
+						sspeedy = oldSpeedY;
+					}
+					break;
+			}
+		} else if (this.isGood() && this.no==2) {
+			switch (key) {
+				case KeyEvent.VK_K:
+					fire();
+					break;
 
-			case KeyEvent.VK_G: // 释放加速键
-				if(good==true&&live){
-					sspeedx = oldSpeedX;
-					sspeedy = oldSpeedY;
-				}
-				break;
+				case KeyEvent.VK_RIGHT:
+					bR = false;
+					break;
+
+				case KeyEvent.VK_LEFT:
+					bL = false;
+					break;
+
+				case KeyEvent.VK_UP:
+					bU = false;
+					break;
+
+				case KeyEvent.VK_DOWN:
+					bD = false;
+					break;
+
+				case KeyEvent.VK_L: // 释放加速键
+					if(good==true&&live){
+						sspeedx = oldSpeedX;
+						sspeedy = oldSpeedY;
+					}
+					break;
+			}
 		}
+
 		decideDirection(); // 释放键盘后确定移动方向
 	}
 

@@ -34,28 +34,28 @@ public class GamePanel extends JPanel {
     public static JLabel countdownLabel3; // 倒计时标签
     // 定义一个名为 cardPanel 的 JPanel 类型的变量，用于存储卡片
     JPanel cardPanel;
-    private MapMenuPanel mapMenuPanel=new MapMenuPanel();
 
     // 声明一个 MapGenerator 类型的变量，用于生成游戏地图
     MapGenerator mapGenerator;
     // 声明一个 TankGenerator 类型的变量，用于生成游戏敌方坦克
     TankGenerator tankGenerator;
 
-    private  int Game_time_all=30; //游戏总用时默认为30秒
+    private int Game_time_all = 30; //游戏总用时默认为30秒
     // 定义一个名为 homeTank 的 Tank 类型的变量，用于存储玩家坦克
     public Tank homeTank;
+    public Tank player2Tank; // 第二个玩家的坦克
+
     // 定义一个名为 home 的 Home 类型的变量，用于存储大本营
     public Home home;
     // 定义一个名为 blood 的 Blood 类型的变量，用于存储血包
     public Blood blood;
     Gun gun = new Gun();
-    Laser laser=new Laser();
-    private Missle missle=new Missle();
+    Laser laser = new Laser();
+    private Missle missle = new Missle();
     // 定义一个计时器
     private Timer gameTimer;
     // 定义一个用于记录时间的变量
     private int elapsedTime = 0;
-
 
     // 以下集合变量在构造方法中进行了初始化
     // 定义一个名为 theRiver 的 List 类型的变量，用于存储 River 对象
@@ -82,7 +82,7 @@ public class GamePanel extends JPanel {
      * @param cardLayout 卡片布局管理器，用于管理多个面板的切换。
      * @param cardPanel  卡片面板，包含多个游戏面板。
      */
-    public GamePanel(CardLayout cardLayout, JPanel cardPanel,int width, int height) {
+    public GamePanel(CardLayout cardLayout, JPanel cardPanel, int width, int height) {
         // 初始化 cardLayout 变量，用于管理卡片布局
         this.cardLayout = cardLayout;
         // 初始化 cardPanel 变量，用于存储卡片
@@ -90,7 +90,7 @@ public class GamePanel extends JPanel {
         // 初始化计时器
         gameTimer = new Timer(1000, new TimerListener());
         //设置面板大小
-        this.setPreferredSize(new Dimension(width,height));
+        this.setPreferredSize(new Dimension(width, height));
         // 创建一个 MapGenerator 类的实例，用于生成游戏地图
         mapGenerator = new MapGenerator();
         // 将当前的 GamePanel 实例设置给 mapGenerator，以便 mapGenerator 可以访问和修改 GamePanel 的属性和方法
@@ -119,8 +119,7 @@ public class GamePanel extends JPanel {
      * 根据游戏难度和地图设置坦克数量、速度、子弹速度等参数，并实例化各种游戏对象。
      */
     public void init() {
-        if(tanks.size() != 0)
-        {
+        if (tanks.size() != 0) {
             tanks.clear(); // 清理
             bullets.clear();
             trees.clear();
@@ -129,24 +128,32 @@ public class GamePanel extends JPanel {
             homeWall.clear();
             metalWall.clear();
             homeTank.setLive(false);
-            homeTank = new Tank(300, 560, true, Direction.STOP, this, 50);// 设置自己出现的位置
+            if ("Single".equals(GameFrame.gameMode)) {
+                homeTank = new Tank(300, 560, true, Direction.STOP, this, 200, 1); // 单人模式玩家坦克
+            } else if ("Versus".equals(GameFrame.gameMode)) {
+                homeTank = new Tank(300, 560, true, Direction.STOP, this, 200, 1); // 玩家1坦克
+                Tank player2Tank = new Tank(600, 560, true, Direction.STOP, this, 200, 2); // 玩家2坦克
+                System.out.println("1111");
+            }
             if (!home.isLive()) // 将home重置生命
                 home.setLive(true);
         }
+
+
         dialogShown = false;
         isEnd = false;
         Gun.flag = false;
         Missle.flag = false;
         switch (GameFrame.gameLevel) {
             case "Level1":
-                Tank.count = 12;
+                Tank.count = 15;
                 Tank.speedX = 6;
                 Tank.speedY = 6;
                 Bullets.speedX = 10;
                 Bullets.speedY = 10;
                 Tank.Tankblood = 100;
-                this.Game_time_all=60;
-                Tank.BulletsNumber=30;
+                this.Game_time_all = 60;
+                Tank.BulletsNumber = 30;
                 break;
             case "Level2":
                 Tank.count = 15;
@@ -155,8 +162,8 @@ public class GamePanel extends JPanel {
                 Bullets.speedX = 12;
                 Bullets.speedY = 12;
                 Tank.Tankblood = 50;
-                this.Game_time_all=90;
-                Tank.BulletsNumber=28;
+                this.Game_time_all = 90;
+                Tank.BulletsNumber = 28;
                 break;
             case "Level3":
                 Tank.count = 18;
@@ -165,8 +172,8 @@ public class GamePanel extends JPanel {
                 Bullets.speedX = 16;
                 Bullets.speedY = 16;
                 Tank.Tankblood = 150;
-                this.Game_time_all=90;
-                Tank.BulletsNumber=25;
+                this.Game_time_all = 90;
+                Tank.BulletsNumber = 25;
                 break;
             case "Level4":
                 Tank.count = 20;
@@ -175,15 +182,15 @@ public class GamePanel extends JPanel {
                 Bullets.speedX = 18;
                 Bullets.speedY = 18;
                 Tank.Tankblood = 300;
-                this.Game_time_all=90;
-                Tank.BulletsNumber=23;
+                this.Game_time_all = 90;
+                Tank.BulletsNumber = 23;
                 break;
         }
 
         HashMap<SimpleEntry<Integer, Integer>, Boolean> mp = mapGenerator.generateMap(GameFrame.gameMap);
-        tankGenerator.generateTank(mp,Tank.count); // 生成地图和敌方坦克
+        tankGenerator.generateTank(mp, Tank.count); // 生成地图和敌方坦克
 
-        switch (GameFrame.gameMap){
+        switch (GameFrame.gameMap) {
             case "Map1":
                 MapLevel = 1;
                 break;
@@ -234,6 +241,9 @@ public class GamePanel extends JPanel {
          */
         public void keyReleased(KeyEvent e) { // 监听键盘释放
             homeTank.keyReleased(e);
+            if ("Versus".equals(GameFrame.gameMode)) {
+                player2Tank.keyReleased(e); // 玩家2的键盘按下事件
+            }
         }
 
         /**
@@ -244,6 +254,9 @@ public class GamePanel extends JPanel {
          */
         public void keyPressed(KeyEvent e) { // 监听键盘按下
             homeTank.keyPressed(e);
+            if ("Versus".equals(GameFrame.gameMode)) {
+                player2Tank.keyPressed(e); // 玩家2的键盘按下事件
+            }
         }
     }
 
@@ -303,13 +316,15 @@ public class GamePanel extends JPanel {
         GameFrame.gameMap = "Map" + ++MapLevel;
         init();
     }
+
     // 用于加载下一个 level
     public void loadNextLevel() {
         // 重置游戏状态
         // 更新 level 和初始状态
-        GameFrame.gameLevel="Level"+ ++level;
+        GameFrame.gameLevel = "Level" + ++level;
         init();
     }
+
     public void gamePanelPaint(Graphics g) {
 
 
@@ -335,72 +350,17 @@ public class GamePanel extends JPanel {
         g.drawString("剩余生命值: ", 500, 70);
         g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
         g.drawString("" + homeTank.getLife(), 650, 70);
-        g.drawString("剩余子弹个数：" , 100, 30);
+        g.drawString("剩余子弹个数：", 100, 30);
         g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
         g.drawString("" + homeTank.BulletsNumber, 400, 30);
         g.setFont(f1);
 
         // 如果玩家赢了（条件是敌方坦克全灭、大本营健在、玩家坦克仍有血量）
-        if (tanks.size() == 0 && home.isLive() && homeTank.isLive()  ) {
-            if(isEnd==false)
-            {
-                Tank t= new Tank(400, 300, false, Direction.STOP, this,500);
-                t.setLiveCount(-(2*Tank.Tankblood));
-                tanks.add(t);
-                isEnd=true;
-            }
-            else {
-                Font f = g.getFont();
-                g.setFont(new Font("TimesRoman", Font.BOLD, 60));
-                this.otherWall.clear();
-                g.drawString("你赢了！ ", 310, 300);
-                g.setFont(f);
-                if(MapLevel==1){
-                    MapMenuPanel.mapCleared[1]=true;
-                }
-                if(MapLevel==2){
-                    MapMenuPanel.mapCleared[2]=true;
-                }
-                if(MapLevel==3){
-                    MapMenuPanel.mapCleared[3]=true;
-                }
-                if(MapLevel==4){
-                    MapMenuPanel.mapCleared[4]=true;
-                }
-                mapMenuPanel.resetMapBackground();
-                if (!(MapLevel == 4 && level == 4)) {
-                    // 确保弹窗只弹一次，可以通过设置一个标记变量来控制
-                    if (!dialogShown) {
-                        dialogShown = true; // 设置弹窗已显示
-                        // 弹出对话框
-                        int option = JOptionPane.showOptionDialog(null,
-                                "想要挑战更高难度吗？",   // 弹窗标题
-                                "恭喜！你赢了！",  // 弹窗信息
-                                JOptionPane.DEFAULT_OPTION, // 默认按钮
-                                JOptionPane.INFORMATION_MESSAGE,
-                                null, // 图标
-                                new Object[]{"下一关", "下一个level", "退出游戏"}, // 按钮
-                                "下一关"  // 默认选择
-                        );
-
-                        // 根据用户选择进行不同的处理
-                        switch (option) {
-                            case 0: // 下一关
-                                loadNextStage();  // 加载下一关
-                                break;
-                            case 1: // 下一个level
-                                loadNextLevel();  // 加载下一个level
-                                break;
-                            case 2: // 退出游戏
-                                System.exit(0);  // 退出游戏
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
-
+        if (GameFrame.gameMode.equals("Single") &&tanks.size() == 0 && home.isLive() && homeTank.isLive()) {
+            isWin(g);
+        }
+        else if (GameFrame.gameMode.equals("Versus") && tanks.size() == 0 && home.isLive() && (homeTank.isLive() || player2Tank.isLive())) {
+            isWin(g);
         }
 
         if (homeTank.isLive() == false) {
@@ -431,11 +391,26 @@ public class GamePanel extends JPanel {
         homeTank.eat(gun);
         homeTank.eat(missle);
         homeTank.eat(laser);
+        if (GameFrame.gameMode.equals("Versus")) {
+            if (player2Tank != null) {
+                player2Tank.draw(g);
+            } else {
+                System.out.println("player2Tank is null!");
+            }
+            player2Tank.eat(blood);// 加血--生命值
+            player2Tank.eat(gun);
+            player2Tank.eat(missle);
+            player2Tank.eat(laser);
+        }
         for (int i = 0; i < bullets.size(); i++) { // 对每一个子弹
             Bullets m = bullets.get(i);
             m.hitTanks(tanks); // 每一个子弹打到坦克上
             m.hitTank(homeTank); // 每一个子弹打到自己家的坦克上时
+            if (GameFrame.gameMode.equals("Versus")) {
+                m.hitTank(player2Tank);
+            }
             m.hitHome(); // 每一个子弹打到家里时
+
 
             for (int j = 0; j < metalWall.size(); j++) { // 每一个子弹打到金属墙上
                 MetalWall mw = metalWall.get(j);
@@ -513,33 +488,49 @@ public class GamePanel extends JPanel {
 
         homeTank.collideWithTanks(tanks);
         homeTank.collideHome(home);
+        if (GameFrame.gameMode.equals("Versus")) {
+            player2Tank.collideWithTanks(tanks);
+            player2Tank.collideHome(home);
+        }
+
 
         for (int i = 0; i < metalWall.size(); i++) {// 撞到金属墙
             MetalWall w = metalWall.get(i);
             homeTank.collideWithWall(w);
+            if (GameFrame.gameMode.equals("Versus")) {
+                player2Tank.collideWithWall(w);
+            }
             w.draw(g);
         }
 
         for (int i = 0; i < otherWall.size(); i++) {
             BrickWall cw = otherWall.get(i);
             homeTank.collideWithWall(cw);
+            if (GameFrame.gameMode.equals("Versus")) {
+                player2Tank.collideWithWall(cw);
+                ;
+            }
             cw.draw(g);
         }
 
         for (int i = 0; i < homeWall.size(); i++) { // 家里的坦克撞到自己家
             BrickWall w = homeWall.get(i);
             homeTank.collideWithWall(w);
+            if (GameFrame.gameMode.equals("Versus")) {
+                player2Tank.collideWithWall(w);
+            }
             w.draw(g);
         }
 
     }
+
     // 计时器监听器
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             if (printable) {
                 elapsedTime++;
                 Game_time_all--;
-                if(Game_time_all<=0){
+                if (Game_time_all <= 0) {
                     home.setLive(false);
                 }
                 repaint(); // 每秒重绘一次面板以更新时间显示
@@ -547,4 +538,65 @@ public class GamePanel extends JPanel {
         }
     }
 
+    private void isWin(Graphics g) {
+        gameTimer.stop();
+        if (isEnd == false) {
+            Tank t = new Tank(400, 300, false, Direction.STOP, this, 500, 1);
+            t.setLiveCount(-(2 * Tank.Tankblood));
+            tanks.add(t);
+            isEnd = true;
+
+        } else {
+            gameTimer.stop();
+            GameFrame.recordWin("地图" + MapLevel, "等级" + level, elapsedTime * 1000); // 替换为实际地图和等级
+            Font f = g.getFont();
+            g.setFont(new Font("TimesRoman", Font.BOLD, 60));
+            this.otherWall.clear();
+            g.drawString("你赢了！ ", 310, 300);
+            g.setFont(f);
+            if (MapLevel == 1) {
+                MapMenuPanel.mapCleared[1] = true;
+            }
+            if (MapLevel == 2) {
+                MapMenuPanel.mapCleared[2] = true;
+            }
+            if (MapLevel == 3) {
+                MapMenuPanel.mapCleared[3] = true;
+            }
+            if (MapLevel == 4) {
+                MapMenuPanel.mapCleared[4] = true;
+            }
+            if (!(MapLevel == 4 && level == 4)) {
+                // 确保弹窗只弹一次，可以通过设置一个标记变量来控制
+                if (!dialogShown) {
+                    dialogShown = true; // 设置弹窗已显示
+                    // 弹出对话框
+                    int option = JOptionPane.showOptionDialog(null,
+                            "想要挑战更高难度吗？",   // 弹窗标题
+                            "恭喜！你赢了！",  // 弹窗信息
+                            JOptionPane.DEFAULT_OPTION, // 默认按钮
+                            JOptionPane.INFORMATION_MESSAGE,
+                            null, // 图标
+                            new Object[]{"下一关", "下一个level", "退出游戏"}, // 按钮
+                            "下一关"  // 默认选择
+                    );
+
+                    // 根据用户选择进行不同的处理
+                    switch (option) {
+                        case 0: // 下一关
+                            loadNextStage();  // 加载下一关
+                            break;
+                        case 1: // 下一个level
+                            loadNextLevel();  // 加载下一个level
+                            break;
+                        case 2: // 退出游戏
+                            System.exit(0);  // 退出游戏
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+    }
 }

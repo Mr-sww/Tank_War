@@ -20,16 +20,15 @@ public class MapMenuPanel extends JPanel {
     // 设置中文字体
     Font chineseFont = new Font("宋体", Font.BOLD, 48);
     // 创建地图1按钮
-    JButton map1Button = ButtonFactory.createButton("地图1", chineseFont, Color.YELLOW);
+    JButton map1Button = ButtonFactory.createButton("", chineseFont, Color.YELLOW);
     // 创建地图2按钮
-    JButton map2Button = ButtonFactory.createButton("地图2", chineseFont, Color.YELLOW);
+    JButton map2Button = ButtonFactory.createButton("", chineseFont, Color.YELLOW);
     // 创建地图2按钮
-    JButton map3Button = ButtonFactory.createButton("地图3", chineseFont, Color.YELLOW);
+    JButton map3Button = ButtonFactory.createButton("", chineseFont, Color.YELLOW);
     // 创建地图4按钮
-    JButton map4Button = ButtonFactory.createButton("地图4", chineseFont, Color.YELLOW);
+    JButton map4Button = ButtonFactory.createButton("", chineseFont, Color.YELLOW);
 
-    public MapMenuPanel() {;}//构造方法1,用于在GamePanel中更新地图背景
-    // 构造方法2
+    // 构造方法1
     public MapMenuPanel(CardLayout cardLayout, JPanel cardPanel, int width, int height) {
         // 加载背景图片
         this.backgroundImage = ResourceManager.loadImage("/Images/StartMenu.png");
@@ -47,7 +46,7 @@ public class MapMenuPanel extends JPanel {
         // 设置按钮之间的间距
         gbc.insets = new Insets(10, 0, 10, 0);
         // 设置地图1的背景
-        setButtonBackground(map1Button, "Images/map1.png");
+        setButtonBackground(map1Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\yellow1.jpg");
         // 为地图1按钮添加动作监听器
         map1Button.addActionListener(new ActionListener() {
             @Override
@@ -63,7 +62,7 @@ public class MapMenuPanel extends JPanel {
         gbc.gridy = 0;
         // 将地图1按钮添加到面板中
         this.add(map1Button, gbc);
-        setButtonBackground(map2Button, "Images/map1.png"); // 设置地图2的背景
+        setButtonBackground(map2Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\grey2.jpg"); // 设置地图2的背景
         // 为地图2按钮添加动作监听器
         map2Button.addActionListener(new ActionListener() {
             @Override
@@ -84,7 +83,7 @@ public class MapMenuPanel extends JPanel {
 
 
         // 设置地图3的背景
-        setButtonBackground(map3Button, "Images/map1.png");
+        setButtonBackground(map3Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\grey3.jpg");
         // 为地图3按钮添加动作监听器
         map3Button.addActionListener(new ActionListener() {
             @Override
@@ -104,7 +103,7 @@ public class MapMenuPanel extends JPanel {
         this.add(map3Button, gbc);
 
         // 设置地图4的背景
-        setButtonBackground(map4Button, "Images/map1.png");
+        setButtonBackground(map4Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\grey4.jpg");
         // 为地图4按钮添加动作监听器
         map4Button.addActionListener(new ActionListener() {
             @Override
@@ -151,15 +150,17 @@ public class MapMenuPanel extends JPanel {
         super.paintComponent(g);
         // 在组件上绘制背景图片，图片覆盖整个组件区域
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        resetMapBackground();
     }
 
     // 用于设置按钮的背景图片
-     public void setButtonBackground(JButton button, String imagePath) {
+    public void setButtonBackground(JButton button, String imagePath) {
         try {
             // 使用ImageIcon加载图片
             ImageIcon icon = new ImageIcon(imagePath);
             // 设置按钮的图标
             button.setIcon(icon);
+            button.setText(""); // 设置按钮文本为空，确保不显示文字
             button.setHorizontalTextPosition(SwingConstants.CENTER); // 设置文本水平居中
             button.setVerticalTextPosition(SwingConstants.BOTTOM); // 设置文本在图标下方
         } catch (Exception e) {
@@ -167,17 +168,14 @@ public class MapMenuPanel extends JPanel {
         }
     }
     public void resetMapBackground(){
-        if(mapCleared[1] ){
-            setButtonBackground(map1Button, "Images/map2.png");
+        if(mapCleared [1]){
+            setButtonBackground(map2Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\yellow2.jpg");
         }
-        else if(mapCleared [2]){
-            setButtonBackground(map2Button, "Images/map2.png");
+        if(mapCleared [2]){
+            setButtonBackground(map3Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\yellow3.jpg");
         }
-        else if(mapCleared [3]){
-            setButtonBackground(map3Button, "Images/map2.png");
-        }
-        else if(mapCleared [4]){
-            setButtonBackground(map4Button, "Images/map2.png");
+        if(mapCleared [3]){
+            setButtonBackground(map4Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\yellow4.jpg");
         }
     }
 

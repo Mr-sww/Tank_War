@@ -2,8 +2,11 @@ package Engine;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * 坦克大战的主类
  */
@@ -11,11 +14,12 @@ import java.awt.event.*;
 public class GameFrame extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 5972735870004738773L;
+	private static List<Data> historyRecords=new ArrayList<Data>();//存放历史记录
 
 	public static boolean printable = true; // 记录暂停状态，此时线程不刷新界面
 	JMenuBar menubar;
-	JMenu menu1, menu2, menu3, menu4, menu5;
-	JMenuItem item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13;
+	JMenu menu1, menu2, menu3, menu4, menu5,menu6;
+	JMenuItem item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13,item14;
 
 	static String gameMode = null;
 	static String gameLevel = null;
@@ -76,6 +80,8 @@ public class GameFrame extends JFrame implements ActionListener {
 		} else if (e.getActionCommand().startsWith("Map")) {
 			setMap(e.getActionCommand());
 			gamePanel.init();
+		}else if(e.getActionCommand().equals("history")) {
+			showHistory(); // 显示历史记录
 		}
 
 	}
@@ -143,11 +149,17 @@ public class GameFrame extends JFrame implements ActionListener {
 		}
 
 		{
+			menu6 = MenuFactory.createMenu("历史记录", chineseFont);
+			item14 = MenuFactory.createItem("查看历史记录", chineseFont, this, "history");
+			menu6.add(item14);
+		}
+		{
 			menubar.add(menu1);
 			menubar.add(menu2);
 			menubar.add(menu3);
 			menubar.add(menu4);
-			menubar.add(menu5); // 确保所有菜单都被添加
+			menubar.add(menu5);
+			menubar.add(menu6); // 确保所有菜单都被添加
 		}
 
 		// 菜单Bar放到JFrame上
@@ -217,6 +229,58 @@ public class GameFrame extends JFrame implements ActionListener {
 		bgm.playOnce();
 
 
+	}
+
+	private void showHistory() {
+		loadHistory(); // 从文件加载历史记录
+		StringBuilder historyOutput = new StringBuilder();
+
+		// 检查是否有历史记录
+		if (historyRecords.isEmpty()) {
+			historyOutput.append("没有历史记录。\n");
+		} else {
+			for (Data record : historyRecords) {
+				historyOutput.append(record.toString()).append("\n");
+			}
+		}
+
+		// 显示对话框
+		JOptionPane.showMessageDialog(this, historyOutput.toString(), "历史记录", JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	private void loadHistory() {
+		historyRecords.clear(); // 清空现有记录
+		try (BufferedReader reader = new BufferedReader(new FileReader("history.txt"))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				String[] parts = line.split(",");
+				if (parts.length == 4) {
+					String map = parts[0];
+					String level = parts[1];
+					long duration = Long.parseLong(parts[2]);
+					String date = parts[3];
+					historyRecords.add(new Data(map, level, duration));
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void saveToFile(Data data) {
+		// 将历史记录写入文件
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter("history.txt", true))) {
+			writer.write(data.getRecord());
+			writer.newLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public static void recordWin(String map, String level, long duration) {
+		// 玩家获胜时记录信息
+		Data data = new Data(map, level, duration);
+		historyRecords.add(data); // 添加到内存中的历史记录
+		saveToFile(data); // 保存到文件
 	}
 
 }

@@ -57,13 +57,6 @@ public class Home {
 
 		if (live) { // 如果活着，则画出home
 			g.drawImage(homeImags[0], x, y,60,60, null);
-			if(tc.tanks.size()==0 && flag == 0)
-			{
-				Tank t =new Tank(400, 300, false, Direction.D, tc,500);
-				t.setLiveCount(-150);
-				tc.tanks.add(t);
-				flag=1;
-			}
 			for (int i = 0; i < tc.homeWall.size(); i++) {
 				BrickWall w = tc.homeWall.get(i);
 				w.draw(g);
