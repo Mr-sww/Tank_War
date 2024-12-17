@@ -34,13 +34,14 @@ public class GamePanel extends JPanel {
     public static JLabel countdownLabel3; // 倒计时标签
     // 定义一个名为 cardPanel 的 JPanel 类型的变量，用于存储卡片
     JPanel cardPanel;
+    private MapMenuPanel mapMenuPanel=new MapMenuPanel();
 
     // 声明一个 MapGenerator 类型的变量，用于生成游戏地图
     MapGenerator mapGenerator;
     // 声明一个 TankGenerator 类型的变量，用于生成游戏敌方坦克
     TankGenerator tankGenerator;
 
-
+    private  int Game_time_all=30; //游戏总用时默认为30秒
     // 定义一个名为 homeTank 的 Tank 类型的变量，用于存储玩家坦克
     public Tank homeTank;
     // 定义一个名为 home 的 Home 类型的变量，用于存储大本营
@@ -145,31 +146,39 @@ public class GamePanel extends JPanel {
                 Tank.speedY = 6;
                 Bullets.speedX = 10;
                 Bullets.speedY = 10;
-                Tank.Tankblood = 50;
+                Tank.Tankblood = 100;
+                this.Game_time_all=60;
+                Tank.BulletsNumber=30;
                 break;
             case "Level2":
-                Tank.count = 12;
-                Tank.speedX = 10;
-                Tank.speedY = 10;
+                Tank.count = 15;
+                Tank.speedX = 8;
+                Tank.speedY = 8;
                 Bullets.speedX = 12;
                 Bullets.speedY = 12;
-                Tank.Tankblood = 100;
+                Tank.Tankblood = 50;
+                this.Game_time_all=90;
+                Tank.BulletsNumber=28;
                 break;
             case "Level3":
-                Tank.count = 20;
-                Tank.speedX = 14;
-                Tank.speedY = 14;
+                Tank.count = 18;
+                Tank.speedX = 10;
+                Tank.speedY = 10;
                 Bullets.speedX = 16;
                 Bullets.speedY = 16;
                 Tank.Tankblood = 150;
+                this.Game_time_all=90;
+                Tank.BulletsNumber=25;
                 break;
             case "Level4":
                 Tank.count = 20;
-                Tank.speedX = 16;
-                Tank.speedY = 16;
+                Tank.speedX = 15;
+                Tank.speedY = 15;
                 Bullets.speedX = 18;
                 Bullets.speedY = 18;
                 Tank.Tankblood = 300;
+                this.Game_time_all=90;
+                Tank.BulletsNumber=23;
                 break;
         }
 
@@ -314,6 +323,10 @@ public class GamePanel extends JPanel {
         g.drawString("游戏耗时: ", 20, 70);
         g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
         g.drawString("" + elapsedTime + "秒", 120, 70);
+        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+        g.drawString("游戏剩余时间 ", 20, 100);
+        g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
+        g.drawString("" + Game_time_all + "秒", 180, 100);
         g.setFont(f1);
 
         g.setFont(new Font("TimesRoman", Font.BOLD, 20));
@@ -330,50 +343,66 @@ public class GamePanel extends JPanel {
         g.setFont(f1);
 
         // 如果玩家赢了（条件是敌方坦克全灭、大本营健在、玩家坦克仍有血量）
-        if(tanks.size()==0 && home.isLive() && homeTank.isLive() && isEnd == false)
-        {
-            Tank t= new Tank(400, 300, false, Direction.STOP, this,500);
-            t.setLiveCount(-(2*Tank.Tankblood));
-            tanks.add(t);
-            isEnd=true;
-        }
-        if (tanks.size() == 0 && home.isLive() && homeTank.isLive() && isEnd == true) {
-            Font f = g.getFont();
-            g.setFont(new Font("TimesRoman", Font.BOLD, 60));
-            this.otherWall.clear();
-            g.drawString("你赢了！ ", 310, 300);
-            g.setFont(f);
-            if (!(MapLevel == 4 && level == 4)) {
-                // 确保弹窗只弹一次，可以通过设置一个标记变量来控制
-                if (!dialogShown) {
-                    dialogShown = true; // 设置弹窗已显示
-                    // 弹出对话框
-                    int option = JOptionPane.showOptionDialog(null,
-                            "想要挑战更高难度吗？",   // 弹窗标题
-                            "恭喜！你赢了！",  // 弹窗信息
-                            JOptionPane.DEFAULT_OPTION, // 默认按钮
-                            JOptionPane.INFORMATION_MESSAGE,
-                            null, // 图标
-                            new Object[]{"下一关", "下一个level", "退出游戏"}, // 按钮
-                            "下一关"  // 默认选择
-                    );
+        if (tanks.size() == 0 && home.isLive() && homeTank.isLive()  ) {
+            if(isEnd==false)
+            {
+                Tank t= new Tank(400, 300, false, Direction.STOP, this,500);
+                t.setLiveCount(-(2*Tank.Tankblood));
+                tanks.add(t);
+                isEnd=true;
+            }
+            else {
+                Font f = g.getFont();
+                g.setFont(new Font("TimesRoman", Font.BOLD, 60));
+                this.otherWall.clear();
+                g.drawString("你赢了！ ", 310, 300);
+                g.setFont(f);
+                if(MapLevel==1){
+                    MapMenuPanel.mapCleared[1]=true;
+                }
+                if(MapLevel==2){
+                    MapMenuPanel.mapCleared[2]=true;
+                }
+                if(MapLevel==3){
+                    MapMenuPanel.mapCleared[3]=true;
+                }
+                if(MapLevel==4){
+                    MapMenuPanel.mapCleared[4]=true;
+                }
+                mapMenuPanel.resetMapBackground();
+                if (!(MapLevel == 4 && level == 4)) {
+                    // 确保弹窗只弹一次，可以通过设置一个标记变量来控制
+                    if (!dialogShown) {
+                        dialogShown = true; // 设置弹窗已显示
+                        // 弹出对话框
+                        int option = JOptionPane.showOptionDialog(null,
+                                "想要挑战更高难度吗？",   // 弹窗标题
+                                "恭喜！你赢了！",  // 弹窗信息
+                                JOptionPane.DEFAULT_OPTION, // 默认按钮
+                                JOptionPane.INFORMATION_MESSAGE,
+                                null, // 图标
+                                new Object[]{"下一关", "下一个level", "退出游戏"}, // 按钮
+                                "下一关"  // 默认选择
+                        );
 
-                    // 根据用户选择进行不同的处理
-                    switch (option) {
-                        case 0: // 下一关
-                            loadNextStage();  // 加载下一关
-                            break;
-                        case 1: // 下一个level
-                            loadNextLevel();  // 加载下一个level
-                            break;
-                        case 2: // 退出游戏
-                            System.exit(0);  // 退出游戏
-                            break;
-                        default:
-                            break;
+                        // 根据用户选择进行不同的处理
+                        switch (option) {
+                            case 0: // 下一关
+                                loadNextStage();  // 加载下一关
+                                break;
+                            case 1: // 下一个level
+                                loadNextLevel();  // 加载下一个level
+                                break;
+                            case 2: // 退出游戏
+                                System.exit(0);  // 退出游戏
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             }
+
         }
 
         if (homeTank.isLive() == false) {
@@ -511,6 +540,10 @@ public class GamePanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if (printable) {
                 elapsedTime++;
+                Game_time_all--;
+                if(Game_time_all<=0){
+                    home.setLive(false);
+                }
                 repaint(); // 每秒重绘一次面板以更新时间显示
             }
         }

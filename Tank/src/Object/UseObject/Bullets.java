@@ -262,17 +262,9 @@ public class Bullets {
 		if (this.live && this.getRect().intersects(t.getRect()) && t.isLive() && this.good != t.isGood()) {
 			BombTank e = new BombTank(t.getX(), t.getY(), tc);
 			tc.bombTanks.add(e);
-			if (t.isGood()) {
-				t.setLife(t.getLife() - 50); // 中一颗子弹寿命减少50，中4枪就死，总生命值200
-				if (t.getLife() <= 0)
-					t.setLive(false); // 当寿命为0时，设置寿命为死亡状态
-			} else {
-				t.setLiveCount(50);
-				if(t.getLiveCount() && t.isGood()==false)
-				{
-					t.setLive(false);
-				}
-			}
+			t.setLife(t.getLife() - 50); // 中一颗子弹寿命减少50，中4枪就死，总生命值200
+			if (t.getLife() <= 0)
+				t.setLive(false); // 当寿命为0时，设置寿命为死亡状态
 			this.live = false;
 			return true; // 射击成功，返回true
 		}

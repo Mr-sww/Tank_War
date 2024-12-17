@@ -14,8 +14,22 @@ public class MapMenuPanel extends JPanel {
     private CardLayout cardLayout;
     // 定义一个私有的 JPanel 类型的变量，用于存储卡片面板
     private JPanel cardPanel;
+    public static boolean[] mapCleared = new boolean[5];
+    // 用于存储地图通关状态
 
+    // 设置中文字体
+    Font chineseFont = new Font("宋体", Font.BOLD, 48);
+    // 创建地图1按钮
+    JButton map1Button = ButtonFactory.createButton("地图1", chineseFont, Color.YELLOW);
+    // 创建地图2按钮
+    JButton map2Button = ButtonFactory.createButton("地图2", chineseFont, Color.YELLOW);
+    // 创建地图2按钮
+    JButton map3Button = ButtonFactory.createButton("地图3", chineseFont, Color.YELLOW);
+    // 创建地图4按钮
+    JButton map4Button = ButtonFactory.createButton("地图4", chineseFont, Color.YELLOW);
 
+    public MapMenuPanel() {;}//构造方法1,用于在GamePanel中更新地图背景
+    // 构造方法2
     public MapMenuPanel(CardLayout cardLayout, JPanel cardPanel, int width, int height) {
         // 加载背景图片
         this.backgroundImage = ResourceManager.loadImage("/Images/StartMenu.png");
@@ -32,11 +46,8 @@ public class MapMenuPanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
         // 设置按钮之间的间距
         gbc.insets = new Insets(10, 0, 10, 0);
-        // 设置中文字体
-        Font chineseFont = new Font("宋体", Font.BOLD, 48);
-
-        // 创建地图1按钮
-        JButton map1Button = ButtonFactory.createButton("地图1", chineseFont, Color.YELLOW);
+        // 设置地图1的背景
+        setButtonBackground(map1Button, "Images/map1.png");
         // 为地图1按钮添加动作监听器
         map1Button.addActionListener(new ActionListener() {
             @Override
@@ -52,17 +63,17 @@ public class MapMenuPanel extends JPanel {
         gbc.gridy = 0;
         // 将地图1按钮添加到面板中
         this.add(map1Button, gbc);
-
-        // 创建地图2按钮
-        JButton map2Button = ButtonFactory.createButton("地图2", chineseFont, Color.YELLOW);
+        setButtonBackground(map2Button, "Images/map1.png"); // 设置地图2的背景
         // 为地图2按钮添加动作监听器
         map2Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 设置游戏地图为 Map2
-                GameFrame.gameMap = "Map2";
-                // 显示 LevelMenuPanel 卡片
-                cardLayout.show(cardPanel, "LevelMenuPanel");
+                if (mapCleared[1]) {
+                    GameFrame.gameMap = "Map2";
+                    cardLayout.show(cardPanel, "LevelMenuPanel");
+                } else {
+                    JOptionPane.showMessageDialog(null, "请先通关前面的地图！");
+                }
             }
         });
         // 设置地图2按钮在网格袋布局中的位置
@@ -71,16 +82,19 @@ public class MapMenuPanel extends JPanel {
         // 将地图2按钮添加到面板中
         this.add(map2Button, gbc);
 
-        // 创建地图3按钮
-        JButton map3Button = ButtonFactory.createButton("地图3", chineseFont, Color.YELLOW);
+
+        // 设置地图3的背景
+        setButtonBackground(map3Button, "Images/map1.png");
         // 为地图3按钮添加动作监听器
         map3Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 设置游戏地图为 Map3
-                GameFrame.gameMap = "Map3";
-                // 显示 LevelMenuPanel 卡片
-                cardLayout.show(cardPanel, "LevelMenuPanel");
+                if (mapCleared[2]) {
+                    GameFrame.gameMap = "Map3";
+                    cardLayout.show(cardPanel, "LevelMenuPanel");
+                } else {
+                    JOptionPane.showMessageDialog(null, "请先通关前面的地图！");
+                }
             }
         });
         // 设置地图3按钮在网格袋布局中的位置
@@ -89,16 +103,18 @@ public class MapMenuPanel extends JPanel {
         // 将地图3按钮添加到面板中
         this.add(map3Button, gbc);
 
-        // 创建地图4按钮
-        JButton map4Button = ButtonFactory.createButton("地图4", chineseFont, Color.YELLOW);
+        // 设置地图4的背景
+        setButtonBackground(map4Button, "Images/map1.png");
         // 为地图4按钮添加动作监听器
         map4Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 设置游戏地图为 Map4
-                GameFrame.gameMap = "Map4";
-                // 显示 LevelMenuPanel 卡片
-                cardLayout.show(cardPanel, "LevelMenuPanel");
+                if (mapCleared[3]) {
+                    GameFrame.gameMap = "Map4";
+                    cardLayout.show(cardPanel, "LevelMenuPanel");
+                } else {
+                    JOptionPane.showMessageDialog(null, "请先通关前面的地图！");
+                }
             }
         });
         // 设置地图4按钮在网格袋布局中的位置
@@ -135,6 +151,34 @@ public class MapMenuPanel extends JPanel {
         super.paintComponent(g);
         // 在组件上绘制背景图片，图片覆盖整个组件区域
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+    }
+
+    // 用于设置按钮的背景图片
+     public void setButtonBackground(JButton button, String imagePath) {
+        try {
+            // 使用ImageIcon加载图片
+            ImageIcon icon = new ImageIcon(imagePath);
+            // 设置按钮的图标
+            button.setIcon(icon);
+            button.setHorizontalTextPosition(SwingConstants.CENTER); // 设置文本水平居中
+            button.setVerticalTextPosition(SwingConstants.BOTTOM); // 设置文本在图标下方
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void resetMapBackground(){
+        if(mapCleared[1] ){
+            setButtonBackground(map1Button, "Images/map2.png");
+        }
+        else if(mapCleared [2]){
+            setButtonBackground(map2Button, "Images/map2.png");
+        }
+        else if(mapCleared [3]){
+            setButtonBackground(map3Button, "Images/map2.png");
+        }
+        else if(mapCleared [4]){
+            setButtonBackground(map4Button, "Images/map2.png");
+        }
     }
 
 }

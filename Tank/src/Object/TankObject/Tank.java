@@ -41,7 +41,8 @@ public class Tank {
 	private int step = r.nextInt(10) + 5; // 产生一个随机数,随机模拟坦克的移动路径
 
 
-	public  int BulletsNumber=30;   //初始化坦克的可用子弹数量
+	public static int BulletsNumber=30;   //初始化坦克的可用子弹数量
+	private  int BulletsNNumber=BulletsNumber;
 	public  int waittime =45;      //等待时间
 	private boolean flag =false;    //判断现在是否子弹数量为0
 
@@ -304,6 +305,7 @@ public class Tank {
 			int y = this.y + Tank.length / 2 - Bullets.length / 2;
 			Bullets m = new Bullets(x, y + 2, good, Kdirection, this.tc,false); // 没有给定方向时，向原来的方向发火
 			tc.bullets.add(m);
+			if(good)
 			BulletsNumber--;
 			return m;
 		}
@@ -375,11 +377,17 @@ public class Tank {
 	}
 
 	public int getLife() {
-		return life;
+		if(good)
+			return life;
+		else
+			return  liveCount;
 	}
 
 	public void setLife(int life) {
-		this.life = life;
+		if(good)
+			this.life = life;
+		else
+			this.liveCount= life;
 	}
 
 	private class DrawBloodbBar {
@@ -404,7 +412,12 @@ public class Tank {
 			int barY = y + offsetY; // 血条的Y坐标
 
 			// 血量计算
-			int currentWidth = barWidth * life / 200;
+			int currentWidth;
+			if(good)
+				currentWidth = barWidth * life / 200;
+			else
+				currentWidth = barWidth*liveCount/Tankblood;
+
 
 			// 绘制血条背景
 			g.drawRect(barX, barY, barWidth, barHeight);
@@ -438,7 +451,7 @@ public class Tank {
 			if(waittime==0){
 				flag=false;
 				waittime =lbwidth;
-				BulletsNumber=30;
+				BulletsNumber=BulletsNNumber;
 			}
 			g.drawRect(blx, bly, lbwidth, lbheight);
 			g.fillRect(blx, bly,currentwidth,lbheight);
