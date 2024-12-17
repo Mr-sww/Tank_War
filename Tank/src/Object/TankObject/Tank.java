@@ -19,6 +19,10 @@ import java.util.Random;
 
 public class Tank {
 	public static int speedX = 6, speedY = 6; // 静态全局变量速度
+	private int oldSpeedX = speedX;
+	private int oldSpeedY = speedY; // 记录上一次的速度，用于恢复速度
+	public static int sspeedx = speedX; // 坦克的速度，用来变化玩家坦克的速度
+	public static int sspeedy = speedY;
 	public static int count = 0;
 	public static final int width = 35, length = 35; // 坦克的全局大小，具有不可改变性
 	private Direction direction = Direction.STOP; // 初始化状态为静止
@@ -138,6 +142,13 @@ public class Tank {
 
 		this.oldX = x;
 		this.oldY = y;
+		if(good==true){
+			speedX = sspeedx;
+			speedY = sspeedy;
+		}else{
+			speedX = oldSpeedX;
+			speedY = oldSpeedY;
+		}
 
 		switch (direction) { // 选择移动方向
 			case L:
@@ -237,6 +248,12 @@ public class Tank {
 			case KeyEvent.VK_DOWN:// 监听向下键
 				bD = true;
 				break;
+			case KeyEvent.VK_G: // 加速键
+				if (good==true&&live) { // 仅在玩家坦克时加速
+					sspeedx = 20; // 加速
+					sspeedy = 20; // 加速
+				}
+				break;
 		}
 		decideDirection();// 调用函数确定移动方向
 	}
@@ -290,6 +307,12 @@ public class Tank {
 				bD = false;
 				break;
 
+			case KeyEvent.VK_G: // 释放加速键
+				if(good==true&&live){
+					sspeedx = oldSpeedX;
+					sspeedy = oldSpeedY;
+				}
+				break;
 		}
 		decideDirection(); // 释放键盘后确定移动方向
 	}

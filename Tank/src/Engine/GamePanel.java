@@ -133,8 +133,6 @@ public class GamePanel extends JPanel {
             if (!home.isLive()) // ½«homeÖØÖÃÉúÃü
                 home.setLive(true);
         }
-
-
         dialogShown = false;
         isEnd = false;
         Gun.flag = false;
