@@ -14,26 +14,32 @@ public class LevelMenuPanel extends JPanel {
     // 定义一个私有的 Image 类型的变量，用于存储背景图片
     private Image backgroundImage;
     // 定义一个私有的 CardLayout 类型的变量，用于管理卡片布局
-    private CardLayout cardLayout;
+    private CardLayout mainCardLayout;
     // 定义一个私有的 JPanel 类型的变量，用于存储卡片面板
-    private JPanel cardPanel;
+    private JPanel mainCardPanel;
     // 定义一个私有的 GamePanel 类型的变量，用于存储游戏面板
     private GamePanel gamePanel;
 
+    private CardLayout sideCardLayout;
+    // 定义一个私有的 JPanel 类型的变量，用于存储卡片面板
+    private JPanel sideCardPanel;
+    // 定义一个私有的 SideGamePanel 类型的变量，用于存储侧边游戏面板
+    SideGamePanel sideGamePanel;
 
-        /**
+
+    /**
      * 构造函数，初始化级别菜单面板
      *
-     * @param cardLayout 卡片布局管理器，用于在不同面板之间切换
-     * @param cardPanel 卡片面板，包含所有需要切换的面板
+     * @param mainCardLayout 卡片布局管理器，用于在不同面板之间切换
+     * @param mainCardPanel 卡片面板，包含所有需要切换的面板
      */
-    public LevelMenuPanel(CardLayout cardLayout, JPanel cardPanel,int width,int height) {
+    public LevelMenuPanel(CardLayout mainCardLayout, JPanel mainCardPanel, CardLayout sideCardLayout, JPanel sideCardPanel,int width, int height) {
         // 加载背景图片
         this.backgroundImage = ResourceManager.loadImage("/Images/StartMenu.png");
         // 初始化卡片布局管理器
-        this.cardLayout = cardLayout;
+        this.mainCardLayout = mainCardLayout;
         // 初始化卡片面板
-        this.cardPanel = cardPanel;
+        this.mainCardPanel = mainCardPanel;
         // 设置面板的大小
         this.setPreferredSize(new Dimension(width,height));
 
@@ -55,11 +61,13 @@ public class LevelMenuPanel extends JPanel {
                 // 设置游戏级别为级别1
                 GameFrame.gameLevel = "Level1";
                 // 在卡片面板中显示游戏面板
-                cardLayout.show(cardPanel, "GamePanel");
+                mainCardLayout.show(mainCardPanel, "GamePanel");
                 // 初始化游戏面板
                 gamePanel.init();
                 // 开始游戏
                 gamePanel.GameStart();
+
+                sideCardLayout.show(sideCardPanel, "SideGamePanel");
             }
         });
         // 设置按钮的鼠标监听器
@@ -90,11 +98,13 @@ public class LevelMenuPanel extends JPanel {
                 // 设置游戏级别为级别2
                 GameFrame.gameLevel = "Level2";
                 // 在卡片面板中显示游戏面板
-                cardLayout.show(cardPanel, "GamePanel");
+                mainCardLayout.show(mainCardPanel, "GamePanel");
                 // 初始化游戏面板
                 gamePanel.init();
                 // 开始游戏
                 gamePanel.GameStart();
+
+                sideCardLayout.show(sideCardPanel, "SideGamePanel");
             }
         });
         // 设置按钮的鼠标监听器
@@ -126,11 +136,13 @@ public class LevelMenuPanel extends JPanel {
                 // 设置游戏级别为级别3
                 GameFrame.gameLevel = "Level3";
                 // 在卡片面板中显示游戏面板
-                cardLayout.show(cardPanel, "GamePanel");
+                mainCardLayout.show(mainCardPanel, "GamePanel");
                 // 初始化游戏面板
                 gamePanel.init();
                 // 开始游戏
                 gamePanel.GameStart();
+
+                sideCardLayout.show(sideCardPanel, "SideGamePanel");
             }
         });
         // 设置按钮的鼠标监听器
@@ -160,11 +172,13 @@ public class LevelMenuPanel extends JPanel {
                 // 设置游戏级别为级别4
                 GameFrame.gameLevel = "Level4";
                 // 在卡片面板中显示游戏面板
-                cardLayout.show(cardPanel, "GamePanel");
+                mainCardLayout.show(mainCardPanel, "GamePanel");
                 // 初始化游戏面板
                 gamePanel.init();
                 // 开始游戏
                 gamePanel.GameStart();
+
+                sideCardLayout.show(sideCardPanel, "SideGamePanel");
             }
         });
         // 设置按钮的鼠标监听器
@@ -195,7 +209,7 @@ public class LevelMenuPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // 在卡片面板中显示地图菜单面板
-                cardLayout.show(cardPanel, "MapMenuPanel");
+                mainCardLayout.show(mainCardPanel, "MapMenuPanel");
             }
         });
         // 设置按钮的鼠标监听器
@@ -286,5 +300,8 @@ public class LevelMenuPanel extends JPanel {
         this.gamePanel = gamePanel;
     }
 
+    public void setSideGamePanel(SideGamePanel sideGamePanel) {
+        this.sideGamePanel = sideGamePanel;
+    }
 }
 

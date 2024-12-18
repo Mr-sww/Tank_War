@@ -2,7 +2,6 @@ package Object.UseObject;
 
 import Engine.Direction;
 import Engine.GameConfig;
-import Engine.GameFrame;
 import Engine.GamePanel;
 import Object.StaticObject.BrickWall;
 import Object.StaticObject.MetalWall;
@@ -131,7 +130,7 @@ public class Bullets {
 				break;
 		}
 
-		if (x < 0 || y < 0 || x > GameConfig.PANEL_WIDTH || y > GameConfig.PANEL_HEIGHT) {
+		if (x < 0 || y < 0 || x > GameConfig.MAIN_PANEL_WIDTH || y > GameConfig.MAIN_PANEL_HEIGHT) {
 			live = false;
 		}
 	}

@@ -5,8 +5,12 @@ package Engine;
  */
 public class GameConfig {
     // 窗口大小
-    public static final int PANEL_WIDTH = (60*21);
-    public static final int PANEL_HEIGHT = (60*21);
+    public static final int MAIN_PANEL_WIDTH = (60*21);
+    public static final int MAIN_PANEL_HEIGHT = (60*21);
+
+    // 侧边面板大小
+    public static final int SIDE_PANEL_WIDTH = (60*6);
+    public static final int SIDE_PANEL_HEIGHT = (60*21);
 
     // 坦克默认速度
     public static final int TANK_SPEED = 6;

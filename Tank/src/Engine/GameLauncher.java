@@ -1,6 +1,5 @@
 package Engine;
 
-import com.sun.corba.se.impl.orbutil.graph.Graph;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -15,7 +14,7 @@ public class GameLauncher {
     public static void main(String[] args){
         try {
             // 字体文件路径
-            File fontFile = new File("src/Engine/Font/font.ttf");
+            File fontFile = new File("src/Font/font.ttf");
             // 创建字体对象
             Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile);
             // 注册字体，使它可以被系统使用

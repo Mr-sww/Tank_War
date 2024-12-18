@@ -27,6 +27,7 @@ public class GamePanel extends JPanel {
     private static boolean isEnd = false; // 游戏是否结束
     public static boolean dialogShown = false; // 是否生成弹窗
     public boolean printable = true; // 记录暂停状态，此时线程不刷新界面
+
     // 定义一个名为 cardLayout 的 CardLayout 类型的变量，用于管理卡片的布局
     CardLayout cardLayout;
     public static JLabel countdownLabel1; // 倒计时标签
@@ -34,6 +35,8 @@ public class GamePanel extends JPanel {
     public static JLabel countdownLabel3; // 倒计时标签
     // 定义一个名为 cardPanel 的 JPanel 类型的变量，用于存储卡片
     JPanel cardPanel;
+    SideGamePanel sideGamePanel;
+    public GameStatus gameStatus;
 
     // 声明一个 MapGenerator 类型的变量，用于生成游戏地图
     MapGenerator mapGenerator;
@@ -55,7 +58,7 @@ public class GamePanel extends JPanel {
     // 定义一个计时器
     private Timer gameTimer;
     // 定义一个用于记录时间的变量
-    private int elapsedTime = 0;
+    int elapsedTime = 0;
 
     // 以下集合变量在构造方法中进行了初始化
     // 定义一个名为 theRiver 的 List 类型的变量，用于存储 River 对象
@@ -74,6 +77,7 @@ public class GamePanel extends JPanel {
     public List<BrickWall> otherWall = new ArrayList<BrickWall>();
     // 定义一个名为 metalWall 的 List 类型的变量，用于存储 MetalWall 对象
     public List<MetalWall> metalWall = new ArrayList<MetalWall>();
+
 
 
     /**
@@ -226,6 +230,10 @@ public class GamePanel extends JPanel {
         this.addKeyListener(new KeyMonitor());
         // 启动绘制线程，用于不断重绘游戏面板
         new Thread(new PaintThread()).start();
+    }
+
+    public void setSideGamePanel(SideGamePanel sideGamePanel) {
+        this.sideGamePanel = sideGamePanel;
     }
 
     /**

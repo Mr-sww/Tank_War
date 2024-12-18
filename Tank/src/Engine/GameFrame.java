@@ -25,10 +25,15 @@ public class GameFrame extends JFrame implements ActionListener {
 	static String gameLevel = null;
 	static String gameMap = null;
 
-	CardLayout cardLayout;
-	JPanel cardPanel;
+	CardLayout sideCardLayout;
+	JPanel sideCardPanel;
+
+	CardLayout mainCardLayout;
+	JPanel mainCardPanel;
 	GamePanel gamePanel;
 	MusicPlayer bgm;
+
+	JPanel panel;
 
 	public GameFrame() {
 		initFrame();
@@ -170,46 +175,80 @@ public class GameFrame extends JFrame implements ActionListener {
 		// 设置窗口的标题
 		this.setTitle("坦克大战——(重新开始：R键  开火：F键)");
 
+		sideCardLayout = new CardLayout();
+		sideCardPanel = new JPanel(sideCardLayout);
+		// 设置卡片面板的首选大小为游戏配置中定义的面板宽度和高度
+		sideCardPanel.setPreferredSize(new Dimension(GameConfig.SIDE_PANEL_WIDTH, GameConfig.SIDE_PANEL_HEIGHT));
+
+		SideNormalPanel sideNormalPanel = new SideNormalPanel(sideCardLayout, sideCardPanel,GameConfig.SIDE_PANEL_WIDTH,GameConfig.SIDE_PANEL_HEIGHT);
+		SideGamePanel sideGamePanel = new SideGamePanel(sideCardLayout, sideCardPanel,GameConfig.SIDE_PANEL_WIDTH,GameConfig.SIDE_PANEL_HEIGHT);
+
+		sideCardPanel.add(sideNormalPanel, "SideNormalPanel");
+		sideCardPanel.add(sideGamePanel, "SideGamePanel");
+
+		sideCardLayout.show(sideCardPanel, "SideNormalPanel");
+
+
 		// 开始卡片布局
-        cardLayout = new CardLayout();
+        mainCardLayout = new CardLayout();
         // 创建一个新的JPanel，使用卡片布局
-        cardPanel = new JPanel(cardLayout);
+        mainCardPanel = new JPanel(mainCardLayout);
         // 设置卡片面板的首选大小为游戏配置中定义的面板宽度和高度
-        cardPanel.setPreferredSize(new Dimension(GameConfig.PANEL_WIDTH, GameConfig.PANEL_HEIGHT));
+        mainCardPanel.setPreferredSize(new Dimension(GameConfig.MAIN_PANEL_WIDTH, GameConfig.MAIN_PANEL_HEIGHT));
 
 
 		// 创建一个 ModeMenuPanel 实例，用于显示游戏模式菜单
-		ModeMenuPanel modeMenuPanel = new ModeMenuPanel(cardLayout, cardPanel,GameConfig.PANEL_WIDTH,GameConfig.PANEL_HEIGHT);
+		ModeMenuPanel modeMenuPanel = new ModeMenuPanel(mainCardLayout, mainCardPanel,GameConfig.MAIN_PANEL_WIDTH,GameConfig.MAIN_PANEL_HEIGHT);
 		// 创建一个 MapMenuPanel 实例，用于显示游戏地图菜单
-		MapMenuPanel mapMenuPanel = new MapMenuPanel(cardLayout, cardPanel,GameConfig.PANEL_WIDTH,GameConfig.PANEL_HEIGHT);
+		MapMenuPanel mapMenuPanel = new MapMenuPanel(mainCardLayout, mainCardPanel,GameConfig.MAIN_PANEL_WIDTH,GameConfig.MAIN_PANEL_HEIGHT);
 		// 创建一个 LevelMenuPanel 实例，用于显示游戏级别菜单
-		LevelMenuPanel levelMenuPanel = new LevelMenuPanel(cardLayout, cardPanel,GameConfig.PANEL_WIDTH,GameConfig.PANEL_HEIGHT);
+		LevelMenuPanel levelMenuPanel = new LevelMenuPanel(mainCardLayout, mainCardPanel,sideCardLayout,sideCardPanel,GameConfig.MAIN_PANEL_WIDTH,GameConfig.MAIN_PANEL_HEIGHT);
 		// 创建一个 GamePanel 实例，用于显示游戏界面
-		gamePanel = new GamePanel(cardLayout, cardPanel,GameConfig.PANEL_WIDTH,GameConfig.PANEL_HEIGHT);
+		gamePanel = new GamePanel(mainCardLayout, mainCardPanel,GameConfig.MAIN_PANEL_WIDTH,GameConfig.MAIN_PANEL_HEIGHT);
 
 		// 设置 LevelMenuPanel 中的 GamePanel 实例，以便在选择级别后可以切换到游戏界面
 		levelMenuPanel.setGamePanel(gamePanel);
 
 		modeMenuPanel.setMapMenuPanel(mapMenuPanel);
 
+		gamePanel.setSideGamePanel(sideGamePanel);
+
+		sideGamePanel.setGameStatus(gamePanel.gameStatus);
+		levelMenuPanel.setSideGamePanel(sideGamePanel);
+
 		// 将 modeMenuPanel 添加到 cardPanel 中，并指定其名称为 "ModeMenuPanel"
-		cardPanel.add(modeMenuPanel, "ModeMenuPanel");
+		mainCardPanel.add(modeMenuPanel, "ModeMenuPanel");
 		// 将 mapMenuPanel 添加到 cardPanel 中，并指定其名称为 "MapMenuPanel"
-		cardPanel.add(mapMenuPanel, "MapMenuPanel");
+		mainCardPanel.add(mapMenuPanel, "MapMenuPanel");
 		// 将 levelMenuPanel 添加到 cardPanel 中，并指定其名称为 "LevelMenuPanel"
-		cardPanel.add(levelMenuPanel, "LevelMenuPanel");
+		mainCardPanel.add(levelMenuPanel, "LevelMenuPanel");
 		// 将 gamePanel 添加到 cardPanel 中，并指定其名称为 "GamePanel"
-		cardPanel.add(gamePanel, "GamePanel");
+		mainCardPanel.add(gamePanel, "GamePanel");
 		;
 		// 显示游戏模式菜单
-		cardLayout.show(cardPanel, "ModeMenuPanel");
+		mainCardLayout.show(mainCardPanel, "ModeMenuPanel");
 
 
+
+		// 创建一个垂直的分隔线
+		JSeparator separator = new JSeparator(SwingConstants.VERTICAL);
+		separator.setPreferredSize(new Dimension(5, GameConfig.MAIN_PANEL_HEIGHT)); // 设置分隔线的宽度
+
+
+		// 创建一个 JPanel 实例，用于将 cardPanel 、 separator 、 sidePanel组合在一起
+		panel = new JPanel();
+		panel.setLayout(new FlowLayout());
+
+		// 将 cardPanel 、 separator 、 sidePanel 添加到 mainPanel 中
+		panel.add(mainCardPanel);
+		panel.add(separator);
+		panel.add(sideCardPanel);
 
 		// 设置窗口的布局为 BorderLayout
 		this.setLayout(new BorderLayout());
-		// 将 cardPanel 添加到 JFrame 的中央位置
-		this.getContentPane().add(cardPanel, BorderLayout.CENTER);
+		// 将 mainPanel 添加到 JFrame 的中央位置
+		this.getContentPane().add(panel, BorderLayout.CENTER);
+
 		// 自动调整窗口大小以适应其内容
 		this.pack();
 
