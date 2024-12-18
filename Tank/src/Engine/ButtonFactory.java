@@ -14,7 +14,9 @@ public class ButtonFactory {
      */
     static JButton createButton(String text, Font font, Color foregroundColor) {
         // 创建一个新的 JButton 实例，文本为参数 text 指定的内容
-        JButton button = new JButton(text);
+        JButton button = new JButton();
+        // 设置按钮的文本为参数 text 指定的内容
+        button.setText(text);
         // 设置按钮的字体为参数 font 指定的字体
         button.setFont(font);
         // 设置按钮的文本颜色为参数 foregroundColor 指定的颜色

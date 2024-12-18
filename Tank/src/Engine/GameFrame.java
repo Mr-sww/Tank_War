@@ -190,6 +190,8 @@ public class GameFrame extends JFrame implements ActionListener {
 		// 设置 LevelMenuPanel 中的 GamePanel 实例，以便在选择级别后可以切换到游戏界面
 		levelMenuPanel.setGamePanel(gamePanel);
 
+		modeMenuPanel.setMapMenuPanel(mapMenuPanel);
+
 		// 将 modeMenuPanel 添加到 cardPanel 中，并指定其名称为 "ModeMenuPanel"
 		cardPanel.add(modeMenuPanel, "ModeMenuPanel");
 		// 将 mapMenuPanel 添加到 cardPanel 中，并指定其名称为 "MapMenuPanel"

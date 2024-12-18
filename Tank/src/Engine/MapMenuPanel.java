@@ -3,13 +3,18 @@ package Engine;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.*;
 
 // 定义一个名为 MapMenuPanel 的公共类，继承自 JPanel 类
 public class MapMenuPanel extends JPanel {
+    public int button_width=(4*60),button_height=(4*60);
 
     // 定义一个私有的 Image 类型的变量，用于存储背景图片
     private Image backgroundImage;
+    // 定义一个私有的 Image 类型的变量 backImage，用于存储back图标
+    private Image backImage;
     // 定义一个私有的 CardLayout 类型的变量，用于管理卡片布局
     private CardLayout cardLayout;
     // 定义一个私有的 JPanel 类型的变量，用于存储卡片面板
@@ -20,18 +25,22 @@ public class MapMenuPanel extends JPanel {
     // 设置中文字体
     Font chineseFont = new Font("宋体", Font.BOLD, 48);
     // 创建地图1按钮
-    JButton map1Button = ButtonFactory.createButton("", chineseFont, Color.YELLOW);
+    ImageButton map1Button = new ImageButton(ResourceManager.loadImage("/Images/yellow1.jpg"), button_width, button_height);
     // 创建地图2按钮
-    JButton map2Button = ButtonFactory.createButton("", chineseFont, Color.YELLOW);
+    ImageButton map2Button = new ImageButton(ResourceManager.loadImage("/Images/grey2.jpg"), button_width, button_height);
     // 创建地图2按钮
-    JButton map3Button = ButtonFactory.createButton("", chineseFont, Color.YELLOW);
+    ImageButton map3Button = new ImageButton(ResourceManager.loadImage("/Images/grey3.jpg"), button_width, button_height);
     // 创建地图4按钮
-    JButton map4Button = ButtonFactory.createButton("", chineseFont, Color.YELLOW);
+    ImageButton map4Button = new ImageButton(ResourceManager.loadImage("/Images/grey4.jpg"), button_width, button_height);
+    // 创建返回按钮
+    ImageButton backButton = new ImageButton(ResourceManager.loadImage("/Images/back.png"), button_width, button_height);
 
     // 构造方法1
     public MapMenuPanel(CardLayout cardLayout, JPanel cardPanel, int width, int height) {
         // 加载背景图片
         this.backgroundImage = ResourceManager.loadImage("/Images/StartMenu.png");
+        // 加载返回按钮的背景图片
+        this.backImage = ResourceManager.loadImage("/Images/back.png");
         // 初始化 CardLayout 对象
         this.cardLayout = cardLayout;
         // 初始化 cardPanel 对象
@@ -39,14 +48,14 @@ public class MapMenuPanel extends JPanel {
         // 设置面板的大小
         this.setPreferredSize(new Dimension(width, height));
 
-        // 设置布局为网格袋布局
-        this.setLayout(new GridBagLayout());
-        // 创建网格袋布局的约束对象
-        GridBagConstraints gbc = new GridBagConstraints();
-        // 设置按钮之间的间距
-        gbc.insets = new Insets(10, 0, 10, 0);
-        // 设置地图1的背景
-        setButtonBackground(map1Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\yellow1.jpg");
+//        // 设置布局为网格袋布局
+//        this.setLayout(new GridBagLayout());
+//        // 创建网格袋布局的约束对象
+//        GridBagConstraints gbc = new GridBagConstraints();
+//        // 设置按钮之间的间距
+//        gbc.insets = new Insets(10, 0, 10, 0);
+//        // 设置地图1的背景
+//        setButtonBackground(map1Button, "src/Images/yellow1.jpg");
         // 为地图1按钮添加动作监听器
         map1Button.addActionListener(new ActionListener() {
             @Override
@@ -57,12 +66,15 @@ public class MapMenuPanel extends JPanel {
                 cardLayout.show(cardPanel, "LevelMenuPanel");
             }
         });
-        // 设置地图1按钮在网格袋布局中的位置
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        // 将地图1按钮添加到面板中
-        this.add(map1Button, gbc);
-        setButtonBackground(map2Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\grey2.jpg"); // 设置地图2的背景
+//        // 设置地图1按钮在网格袋布局中的位置
+//        gbc.gridx = 0;
+//        gbc.gridy = 0;
+//        // 将地图1按钮添加到面板中
+//        this.add(map1Button, gbc);
+//        map1Button.setBounds(8*60,);
+
+
+//        setButtonBackground(map2Button, "src/Images/grey2.jpg"); // 设置地图2的背景
         // 为地图2按钮添加动作监听器
         map2Button.addActionListener(new ActionListener() {
             @Override
@@ -75,15 +87,16 @@ public class MapMenuPanel extends JPanel {
                 }
             }
         });
-        // 设置地图2按钮在网格袋布局中的位置
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        // 将地图2按钮添加到面板中
-        this.add(map2Button, gbc);
+//        // 设置地图2按钮在网格袋布局中的位置
+//        gbc.gridx = 1;
+//        gbc.gridy = 0;
+//        // 将地图2按钮添加到面板中
+//        this.add(map2Button, gbc);
 
 
-        // 设置地图3的背景
-        setButtonBackground(map3Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\grey3.jpg");
+
+//        // 设置地图3的背景
+//        setButtonBackground(map3Button, "src/Images/grey3.jpg");
         // 为地图3按钮添加动作监听器
         map3Button.addActionListener(new ActionListener() {
             @Override
@@ -96,14 +109,14 @@ public class MapMenuPanel extends JPanel {
                 }
             }
         });
-        // 设置地图3按钮在网格袋布局中的位置
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        // 将地图3按钮添加到面板中
-        this.add(map3Button, gbc);
+//        // 设置地图3按钮在网格袋布局中的位置
+//        gbc.gridx = 2;
+//        gbc.gridy = 0;
+//        // 将地图3按钮添加到面板中
+//        this.add(map3Button, gbc);
 
-        // 设置地图4的背景
-        setButtonBackground(map4Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\grey4.jpg");
+//        // 设置地图4的背景
+//        setButtonBackground(map4Button, "src/Images/grey4.jpg");
         // 为地图4按钮添加动作监听器
         map4Button.addActionListener(new ActionListener() {
             @Override
@@ -116,14 +129,13 @@ public class MapMenuPanel extends JPanel {
                 }
             }
         });
-        // 设置地图4按钮在网格袋布局中的位置
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        // 将地图4按钮添加到面板中
-        this.add(map4Button, gbc);
+//        // 设置地图4按钮在网格袋布局中的位置
+//        gbc.gridx = 3;
+//        gbc.gridy = 0;
+//        // 将地图4按钮添加到面板中
+//        this.add(map4Button, gbc);
 
-        // 创建返回按钮
-        JButton backButton = ButtonFactory.createButton("返回", chineseFont, Color.YELLOW);
+
         // 为返回按钮添加动作监听器
         backButton.addActionListener(new ActionListener() {
             @Override
@@ -132,11 +144,146 @@ public class MapMenuPanel extends JPanel {
                 cardLayout.show(cardPanel, "ModeMenuPanel");
             }
         });
-        // 设置返回按钮在网格袋布局中的位置
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        // 将返回按钮添加到面板中
-        this.add(backButton, gbc);
+//        // 设置返回按钮在网格袋布局中的位置
+//        gbc.gridx = 2;
+//        gbc.gridy = 1;
+//        // 将返回按钮添加到面板中
+//        this.add(backButton, gbc);
+
+//        setLayout(new GridBagLayout());
+//        GridBagConstraints gbc = new GridBagConstraints();
+//
+//        // 设置返回按钮的位置和大小
+//        gbc.gridx = 0; // 横坐标
+//        gbc.gridy = 0; // 纵坐标
+//        gbc.gridwidth = 1; // 占据的列数
+//        gbc.gridheight = 1; // 占据的行数
+//        gbc.weightx = 0.0; // 水平权重
+//        gbc.weighty = 0.0; // 垂直权重
+//        gbc.anchor = GridBagConstraints.NORTHWEST; // 锚点位置
+//        add(backButton, gbc);
+//
+//        // 创建一个子面板来放置中部的4个按钮
+//        JPanel centerPanel = new JPanel();
+//        centerPanel.setLayout(new GridLayout(1, 4, 10, 10)); // 1行4列，水平和垂直间距为10
+//        centerPanel.add(map1Button);
+//        centerPanel.add(map2Button);
+//        centerPanel.add(map3Button);
+//        centerPanel.add(map4Button);
+//
+//        // 设置子面板的位置和大小
+//        gbc.gridx = 0;
+//        gbc.gridy = 1;
+//        gbc.gridwidth = GridBagConstraints.REMAINDER; // 占据剩余的所有列
+//        gbc.gridheight = 1;
+//        gbc.weightx = 1.0; // 水平权重
+//        gbc.weighty = 1.0; // 垂直权重
+//        gbc.fill = GridBagConstraints.HORIZONTAL; // 水平填充
+//        gbc.anchor = GridBagConstraints.CENTER; // 锚点位置
+//        add(centerPanel, gbc);
+
+        setLayout(null);
+        backButton.setBounds(1*60+30,30,120,80);
+
+        // 创建一个子面板来放置中部的4个按钮
+        JPanel centerPanel = new JPanel(new FlowLayout()) ;
+        centerPanel.add(map1Button);
+        centerPanel.add(map2Button);
+        centerPanel.add(map3Button);
+        centerPanel.add(map4Button);
+        centerPanel.setBackground(Color.BLACK);
+        centerPanel.setBounds(0,7*60,1260,4*60);
+
+        this.add(backButton);
+        this.add(centerPanel);
+
+        ImageLabel backLabel=new ImageLabel(ResourceManager.loadImage("/Images/Label1.png"),1*60-40,30+10,1*60,1*60);
+        backLabel.setVisible(false);
+        // 设置按钮的鼠标监听器
+        backButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                backLabel.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                backLabel.setVisible(false);
+            }
+        });
+        this.add(backLabel);
+
+        int xspace=4*60;
+
+        ImageLabel label1=new ImageLabel(ResourceManager.loadImage("/Images/Label2.png"),4*60-30,5*60,1*60+30,1*60+30);
+        label1.setVisible(false);
+        // 设置按钮的鼠标监听器
+        map1Button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                label1.setVisible(true);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                label1.setVisible(false);
+            }
+        });
+        this.add(label1);
+
+        ImageLabel label2=new ImageLabel(ResourceManager.loadImage("/Images/Label2.png"),4*60-30+1*xspace+10,5*60,1*60+30,1*60+30);
+        label2.setVisible(false);
+        // 设置按钮的鼠标监听器
+        map2Button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if(mapCleared[1]){
+                    label2.setVisible(true);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                label2.setVisible(false);
+            }
+        });
+        this.add(label2);
+
+        ImageLabel label3=new ImageLabel(ResourceManager.loadImage("/Images/Label2.png"),4*60-30+2*xspace+10,5*60,1*60+30,1*60+30);
+        label3.setVisible(false);
+        // 设置按钮的鼠标监听器
+        map3Button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if(mapCleared[2]){
+                    label3.setVisible(true);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                label3.setVisible(false);
+            }
+        });
+        this.add(label3);
+
+        ImageLabel label4=new ImageLabel(ResourceManager.loadImage("/Images/Label2.png"),4*60-30+3*xspace+10+10,5*60,1*60+30,1*60+30);
+        label4.setVisible(false);
+        // 设置按钮的鼠标监听器
+        map4Button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if(mapCleared[3]){
+                    label4.setVisible(true);
+                }
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                label4.setVisible(false);
+            }
+        });
+        this.add(label4);
     }
 
     /**
@@ -169,15 +316,43 @@ public class MapMenuPanel extends JPanel {
     }
     public void resetMapBackground(){
         if(mapCleared [1]){
-            setButtonBackground(map2Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\yellow2.jpg");
+            map2Button.setImage(ResourceManager.loadImage("/Images/yellow2.jpg"));
         }
         if(mapCleared [2]){
-            setButtonBackground(map3Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\yellow3.jpg");
+            map3Button.setImage(ResourceManager.loadImage("/Images/yellow3.jpg"));
         }
         if(mapCleared [3]){
-            setButtonBackground(map4Button, "D:\\Users\\SW\\Documents\\GitHub\\Tank_War\\Tank\\src\\Images\\yellow4.jpg");
+            map4Button.setImage(ResourceManager.loadImage("/Images/yellow4.jpg"));
         }
     }
 
+}
+class ImageButton extends JButton {
+
+    private Image image;
+    public ImageButton(Image image,int width,int height)  {
+        this.setPreferredSize(new Dimension(width, height));
+        // 加载图片
+        this.image = image;
+        // 设置按钮在获得焦点时不绘制焦点框
+        this.setFocusPainted(false);
+        // 设置按钮为透明，即不绘制按钮的背景
+        this.setOpaque(false);
+        // 设置按钮的内容区域不填充颜色，即内容区域透明
+        this.setContentAreaFilled(false);
+        // 设置按钮的边框不绘制
+        this.setBorderPainted(false);
+    }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        if (image != null) { // 增加检查，确保 image 不为 null
+            g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
+    public void setImage(Image image) {
+        this.image = image;
+        repaint();
+    }
 }
 
