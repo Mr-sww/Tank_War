@@ -2,6 +2,7 @@ package Object.UseObject;
 
 import Engine.Direction;
 import Engine.GameConfig;
+import Engine.GameFrame;
 import Engine.GamePanel;
 import Object.StaticObject.BrickWall;
 import Object.StaticObject.MetalWall;
@@ -261,6 +262,7 @@ public class Bullets {
 		if (this.live && this.getRect().intersects(t.getRect()) && t.isLive() && this.good != t.isGood()) {
 			BombTank e = new BombTank(t.getX(), t.getY(), tc);
 			tc.bombTanks.add(e);
+			GameFrame.soundManager.playSound("explode");
 			t.setLife(t.getLife() - 50); // 中一颗子弹寿命减少50，中4枪就死，总生命值200
 			if (t.getLife() <= 0)
 				t.setLive(false); // 当寿命为0时，设置寿命为死亡状态
@@ -275,6 +277,9 @@ public class Bullets {
 			this.live = false;
 			this.tc.otherWall.remove(w); // 子弹打到CommonWall墙上时则移除此击中墙
 			this.tc.homeWall.remove(w);
+			if(this.isgood){
+				GameFrame.soundManager.playSound("wall");
+			}
 			return true;
 		}
 		return false;

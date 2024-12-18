@@ -19,6 +19,8 @@ public class Home {
 
 	private boolean live = true;
 
+	private boolean once = true;
+
 	private static Toolkit tk = Toolkit.getDefaultToolkit(); // 全局静态变量
 	private static Image[] homeImags = null;
 	static {
@@ -33,6 +35,10 @@ public class Home {
 	}
 
 	public void gameOver(Graphics g) {
+		if(once){
+			GameFrame.soundManager.playSound("lose");
+			once = false;
+		}
 
 		tc.tanks.clear();// 作清理页面工作
 		tc.metalWall.clear();

@@ -1,8 +1,8 @@
 package Engine;
 
 public class GameStatus {
-    public int playerID;
     public int gameTime;
+    public int leftTime;
     public int enemyTankCount;
     public int playerTankLife;
     public int bulletCount;
@@ -16,6 +16,7 @@ public class GameStatus {
 
     public void update(){
         setGameTime(gamePanel.elapsedTime);
+        setLeftTime(gamePanel.Game_time_all);
         setEnemyTankCount(gamePanel.tanks.size());
         setPlayerTankLife(gamePanel.homeTank.getLife());
         setBulletCount(gamePanel.homeTank.BulletsNumber);
@@ -27,6 +28,14 @@ public class GameStatus {
 
     public void setGameTime(int gameTime) {
         this.gameTime = gameTime;
+    }
+
+    public int getLeftTime() {
+        return leftTime;
+    }
+
+    public void setLeftTime(int leftTime) {
+        this.leftTime = leftTime;
     }
 
     public int getEnemyTankCount() {

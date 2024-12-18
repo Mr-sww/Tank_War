@@ -404,8 +404,11 @@ public class Tank {
 			int y = this.y + Tank.length / 2 - Bullets.length / 2;
 			Bullets m = new Bullets(x, y + 2, good, Kdirection, this.tc,false); // 没有给定方向时，向原来的方向发火
 			tc.bullets.add(m);
-			if(good)
+			if(good){
 				BulletsNumber--;
+				GameFrame.soundManager.playSound("shoot");
+			}
+
 			return m;
 		}
 		return  null;

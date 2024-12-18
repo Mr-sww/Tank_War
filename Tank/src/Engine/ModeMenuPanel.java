@@ -57,6 +57,7 @@ public class ModeMenuPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 label1.setVisible(true);
+                GameFrame.soundManager.playSound("select");
             }
 
             @Override
@@ -92,6 +93,7 @@ public class ModeMenuPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 label2.setVisible(true);
+                GameFrame.soundManager.playSound("select");
             }
 
             @Override
@@ -105,27 +107,26 @@ public class ModeMenuPanel extends JPanel {
         this.add(doublePlayerButton);
         this.add(label2);
 
-        //双人合作
-        JButton cooperateButton = ButtonFactory.createButton("双人合作", chineseFont, Color.YELLOW);
-        cooperateButton.setBounds(8 * 60, 7 * 60 + 2 * ysapce, 5 * 60, 1 * 60);
+        //设置
+        JButton settingsButton = ButtonFactory.createButton("设置", chineseFont, Color.YELLOW);
+        settingsButton.setBounds(8 * 60, 7 * 60 + 2 * ysapce, 5 * 60, 1 * 60);
         ImageLabel label3 = new ImageLabel((ResourceManager.loadImage("/Images/Label1.png")), 8 * 60 - 1 * 60 + 30, 7 * 60 + 2 * ysapce - 5, 1 * 60, 1 * 60);
         label3.setVisible(false);
         // 为双人合作按钮添加动作监听器
-        cooperateButton.addActionListener(new ActionListener() {
+        settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 设置游戏模式为双人合作模式
-                GameFrame.gameMode = "Cooperative";
-                // 显示地图选择面板
-                cardLayout.show(cardPanel, "MapMenuPanel");
+                SettingsPanel settingsPanel = new SettingsPanel(GameFrame.soundManager);
+                settingsPanel.setVisible(true);
                 mapMenuPanel.repaint();
             }
         });
         // 设置按钮的鼠标监听器
-        cooperateButton.addMouseListener(new MouseAdapter() {
+        settingsButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 label3.setVisible(true);
+                GameFrame.soundManager.playSound("select");
             }
 
             @Override
@@ -136,8 +137,42 @@ public class ModeMenuPanel extends JPanel {
 //        gbc.gridx = 0;
 //        gbc.gridy = 2;
 //        this.add(cooperateButton, gbc);
-        this.add(cooperateButton);
+        this.add(settingsButton);
         this.add(label3);
+
+//        //双人合作
+//        JButton cooperateButton = ButtonFactory.createButton("双人合作", chineseFont, Color.YELLOW);
+//        cooperateButton.setBounds(8 * 60, 7 * 60 + 2 * ysapce, 5 * 60, 1 * 60);
+//        ImageLabel label3 = new ImageLabel((ResourceManager.loadImage("/Images/Label1.png")), 8 * 60 - 1 * 60 + 30, 7 * 60 + 2 * ysapce - 5, 1 * 60, 1 * 60);
+//        label3.setVisible(false);
+//        // 为双人合作按钮添加动作监听器
+//        cooperateButton.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                // 设置游戏模式为双人合作模式
+//                GameFrame.gameMode = "Cooperative";
+//                // 显示地图选择面板
+//                cardLayout.show(cardPanel, "MapMenuPanel");
+//                mapMenuPanel.repaint();
+//            }
+//        });
+//        // 设置按钮的鼠标监听器
+//        cooperateButton.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseEntered(MouseEvent e) {
+//                label3.setVisible(true);
+//            }
+//
+//            @Override
+//            public void mouseExited(MouseEvent e) {
+//                label3.setVisible(false);
+//            }
+//        });
+////        gbc.gridx = 0;
+////        gbc.gridy = 2;
+////        this.add(cooperateButton, gbc);
+//        this.add(cooperateButton);
+//        this.add(label3);
 
         //退出游戏
         JButton exitButton = ButtonFactory.createButton("退出游戏", chineseFont, Color.YELLOW);
@@ -158,6 +193,7 @@ public class ModeMenuPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 label4.setVisible(true);
+                GameFrame.soundManager.playSound("select");
             }
 
             @Override

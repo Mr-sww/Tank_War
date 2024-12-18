@@ -204,6 +204,7 @@ public class MapMenuPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 backLabel.setVisible(true);
+                GameFrame.soundManager.playSound("select");
             }
 
             @Override
@@ -222,6 +223,7 @@ public class MapMenuPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 label1.setVisible(true);
+                GameFrame.soundManager.playSound("select");
             }
 
             @Override
@@ -239,6 +241,7 @@ public class MapMenuPanel extends JPanel {
             public void mouseEntered(MouseEvent e) {
                 if(mapCleared[1]){
                     label2.setVisible(true);
+                    GameFrame.soundManager.playSound("select");
                 }
             }
 
@@ -257,6 +260,7 @@ public class MapMenuPanel extends JPanel {
             public void mouseEntered(MouseEvent e) {
                 if(mapCleared[2]){
                     label3.setVisible(true);
+                    GameFrame.soundManager.playSound("select");
                 }
             }
 
@@ -275,6 +279,7 @@ public class MapMenuPanel extends JPanel {
             public void mouseEntered(MouseEvent e) {
                 if(mapCleared[3]){
                     label4.setVisible(true);
+                    GameFrame.soundManager.playSound("select");
                 }
             }
 

@@ -30,12 +30,14 @@ public class TankGenerator {
                 int col= r.nextInt(21);
                 // 如果该位置可以生成坦克
                 if(mp.containsKey((new SimpleEntry<>(row,col)))){
-                    // 在该位置生成坦克
-                    gamePanel.tanks.add(new Tank(col*60, row*60, false, Direction.D, gamePanel,50,0));
                     // 从 mp 中移除该位置
                     mp.remove((new SimpleEntry<>(row,col)));
-                    // 跳出内层循环
-                    break;
+                    if(0<=row&&row<10&&0<=col&&col<10) {
+                        // 在该位置生成坦克
+                        gamePanel.tanks.add(new Tank(col*60, row*60, false, Direction.D, gamePanel,50,0));
+                        // 跳出内层循环
+                        break;
+                    }
                 }
             }
         }

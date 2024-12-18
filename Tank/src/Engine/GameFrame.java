@@ -31,9 +31,10 @@ public class GameFrame extends JFrame implements ActionListener {
 	CardLayout mainCardLayout;
 	JPanel mainCardPanel;
 	GamePanel gamePanel;
-	MusicPlayer bgm;
 
 	JPanel panel;
+
+	public static SoundManager soundManager=new SoundManager();
 
 	public GameFrame() {
 		initFrame();
@@ -262,14 +263,26 @@ public class GameFrame extends JFrame implements ActionListener {
 		// 设置窗口是否可调整大小。false 表示窗口不可调整大小
 		this.setResizable(false);
 
+//
+//		// 创建一个名为 bgm 的 MusicPlayer 对象，用于播放背景音乐
+//
+//
+//		// 调用 bgm 对象的 playOnce 方法，播放一次背景音乐
+//		bgm.playOnce();
 
-		// 创建一个名为 bgm 的 MusicPlayer 对象，用于播放背景音乐
-		bgm = new MusicPlayer("src/Music/bgm.wav");
+		soundManager.loadSound("src/Music/bgm1.wav", "BGM1");
+		soundManager.loadSound("src/Music/bgm2.wav", "BGM2");
+		soundManager.loadSound("src/Music/bgm3.wav", "BGM3");
+		soundManager.loadSound("src/Music/shoot.wav", "shoot");
+		soundManager.loadSound("src/Music/explode.wav", "explode");
+		soundManager.loadSound("src/Music/wall.wav", "wall");
+		soundManager.loadSound("src/Music/win.wav", "win");
+		soundManager.loadSound("src/Music/lose.wav", "lose");
+		soundManager.loadSound("src/Music/select.wav", "select");
 
-		// 调用 bgm 对象的 playOnce 方法，播放一次背景音乐
-		bgm.playOnce();
-
-
+		if (soundManager.isBGMEnabled()) {
+			soundManager.playSelectedBGM();
+		}
 	}
 
 	private void showHistory() {

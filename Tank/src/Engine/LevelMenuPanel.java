@@ -64,6 +64,7 @@ public class LevelMenuPanel extends JPanel {
                 mainCardLayout.show(mainCardPanel, "GamePanel");
                 // 初始化游戏面板
                 gamePanel.init();
+                sideGamePanel.init();
                 // 开始游戏
                 gamePanel.GameStart();
 
@@ -75,6 +76,7 @@ public class LevelMenuPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 label1.setVisible(true);
+                GameFrame.soundManager.playSound("select");
             }
 
             @Override
@@ -101,6 +103,7 @@ public class LevelMenuPanel extends JPanel {
                 mainCardLayout.show(mainCardPanel, "GamePanel");
                 // 初始化游戏面板
                 gamePanel.init();
+                sideGamePanel.init();
                 // 开始游戏
                 gamePanel.GameStart();
 
@@ -112,6 +115,7 @@ public class LevelMenuPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 label2.setVisible(true);
+                GameFrame.soundManager.playSound("select");
             }
 
             @Override
@@ -139,6 +143,7 @@ public class LevelMenuPanel extends JPanel {
                 mainCardLayout.show(mainCardPanel, "GamePanel");
                 // 初始化游戏面板
                 gamePanel.init();
+                sideGamePanel.init();
                 // 开始游戏
                 gamePanel.GameStart();
 
@@ -150,6 +155,7 @@ public class LevelMenuPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 label3.setVisible(true);
+                GameFrame.soundManager.playSound("select");
             }
 
             @Override
@@ -175,6 +181,7 @@ public class LevelMenuPanel extends JPanel {
                 mainCardLayout.show(mainCardPanel, "GamePanel");
                 // 初始化游戏面板
                 gamePanel.init();
+                sideGamePanel.init();
                 // 开始游戏
                 gamePanel.GameStart();
 
@@ -186,6 +193,7 @@ public class LevelMenuPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 label4.setVisible(true);
+                GameFrame.soundManager.playSound("select");
             }
 
             @Override
@@ -217,6 +225,7 @@ public class LevelMenuPanel extends JPanel {
             @Override
             public void mouseEntered(MouseEvent e) {
                 backLabel.setVisible(true);
+                GameFrame.soundManager.playSound("select");
             }
 
             @Override

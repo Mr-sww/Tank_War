@@ -28,6 +28,8 @@ public class GamePanel extends JPanel {
     public static boolean dialogShown = false; // 是否生成弹窗
     public boolean printable = true; // 记录暂停状态，此时线程不刷新界面
 
+    private boolean once=true;
+
     // 定义一个名为 cardLayout 的 CardLayout 类型的变量，用于管理卡片的布局
     CardLayout cardLayout;
     public static JLabel countdownLabel1; // 倒计时标签
@@ -43,7 +45,7 @@ public class GamePanel extends JPanel {
     // 声明一个 TankGenerator 类型的变量，用于生成游戏敌方坦克
     TankGenerator tankGenerator;
 
-    private int Game_time_all = 30; //游戏总用时默认为30秒
+    public int Game_time_all = 30; //游戏总用时默认为30秒
     // 定义一个名为 homeTank 的 Tank 类型的变量，用于存储玩家坦克
     public Tank homeTank;
     public Tank player2Tank; // 第二个玩家的坦克
@@ -103,15 +105,21 @@ public class GamePanel extends JPanel {
         tankGenerator = new TankGenerator();
         // 将当前的 GamePanel 实例设置给 tankGenerator，以便 tankGenerator 可以访问和修改 GamePanel 的属性和方法
         tankGenerator.setGamePanel(this);
-        countdownLabel1 = new JLabel("未获得三连发枪");
-        countdownLabel1.setFont(new Font("TimesRoman", Font.BOLD, 20));
-        countdownLabel1.setForeground(Color.RED);
-        this.add(countdownLabel1);
-        countdownLabel3 = new JLabel("未获得导弹");
-        countdownLabel3.setFont(new Font("TimesRoman", Font.BOLD, 20));
-        countdownLabel3.setForeground(Color.RED);
-        this.add(countdownLabel3);
 
+
+        Font chineseFont=new Font("mplus_hzk_12", Font.ITALIC, 40);
+        countdownLabel1 = new JLabel("未获得三连发枪");
+        countdownLabel1.setFont(chineseFont);
+        countdownLabel1.setForeground(Color.RED);
+        //this.add(countdownLabel1);
+        countdownLabel3 = new JLabel("未获得导弹");
+        countdownLabel3.setFont(chineseFont);
+        countdownLabel3.setForeground(Color.RED);
+        //this.add(countdownLabel3);
+
+
+        gameStatus = new GameStatus();
+        gameStatus.setGamePanel(this);
     }
 
     /**
@@ -225,6 +233,7 @@ public class GamePanel extends JPanel {
         this.addKeyListener(new KeyMonitor());
         // 启动绘制线程，用于不断重绘游戏面板
         new Thread(new PaintThread()).start();
+        GameFrame.soundManager.stopBGM();
     }
 
     public void setSideGamePanel(SideGamePanel sideGamePanel) {
@@ -331,38 +340,43 @@ public class GamePanel extends JPanel {
     public void gamePanelPaint(Graphics g) {
 
 
-        Color c = g.getColor();
-        g.setColor(Color.green); // 设置字体显示属性
+//        Color c = g.getColor();
+//        g.setColor(Color.green); // 设置字体显示属性
+//
+//        Font f1 = g.getFont();
+//        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+//        g.drawString("游戏耗时: ", 20, 70);
+//        g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
+//        g.drawString("" + elapsedTime + "秒", 120, 70);
+//        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+//        g.drawString("游戏剩余时间 ", 20, 100);
+//        g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
+//        g.drawString("" + Game_time_all + "秒", 180, 100);
+//        g.setFont(f1);
+//
+//        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+//        g.drawString("区域内还有敌方坦克: ", 200, 70);
+//        g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
+//        g.drawString("" + tanks.size(), 400, 70);
+//        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
+//        g.drawString("剩余生命值: ", 500, 70);
+//        g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
+//        g.drawString("" + homeTank.getLife(), 650, 70);
+//        g.drawString("剩余子弹个数：", 100, 30);
+//        g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
+//        g.drawString("" + homeTank.BulletsNumber, 400, 30);
+//        g.setFont(f1);
 
-        Font f1 = g.getFont();
-        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
-        g.drawString("游戏耗时: ", 20, 70);
-        g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
-        g.drawString("" + elapsedTime + "秒", 120, 70);
-        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
-        g.drawString("游戏剩余时间 ", 20, 100);
-        g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
-        g.drawString("" + Game_time_all + "秒", 180, 100);
-        g.setFont(f1);
-
-        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
-        g.drawString("区域内还有敌方坦克: ", 200, 70);
-        g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
-        g.drawString("" + tanks.size(), 400, 70);
-        g.setFont(new Font("TimesRoman", Font.BOLD, 20));
-        g.drawString("剩余生命值: ", 500, 70);
-        g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
-        g.drawString("" + homeTank.getLife(), 650, 70);
-        g.drawString("剩余子弹个数：", 100, 30);
-        g.setFont(new Font("TimesRoman", Font.ITALIC, 30));
-        g.drawString("" + homeTank.BulletsNumber, 400, 30);
-        g.setFont(f1);
+        gameStatus.update();
+        sideGamePanel.update();
 
         // 如果玩家赢了（条件是敌方坦克全灭、大本营健在、玩家坦克仍有血量）
         if (GameFrame.gameMode.equals("Single") &&tanks.size() == 0 && home.isLive() && homeTank.isLive()) {
+
             isWin(g);
         }
         else if (GameFrame.gameMode.equals("Versus") && tanks.size() == 0 && home.isLive() && (homeTank.isLive() || player2Tank.isLive())) {
+
             isWin(g);
         }
 
@@ -374,7 +388,7 @@ public class GamePanel extends JPanel {
             g.setFont(f);
             gameTimer.stop();
         }
-        g.setColor(c);
+        //g.setColor(c);
 
         for (int i = 0; i < theRiver.size(); i++) { // 画出河流
             River r = theRiver.get(i);
@@ -556,6 +570,11 @@ public class GamePanel extends JPanel {
             Font f = g.getFont();
             g.setFont(new Font("TimesRoman", Font.BOLD, 60));
             this.otherWall.clear();
+
+            if(once) {
+                GameFrame.soundManager.playSound("win");
+                once = false;
+            }
             g.drawString("你赢了！ ", 310, 300);
             g.setFont(f);
             if (MapLevel == 1) {
