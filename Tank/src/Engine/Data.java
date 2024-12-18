@@ -9,11 +9,11 @@ public class Data implements Serializable {
     private String date;
     private long duration; // 耗时，单位为毫秒
 
-    public Data(String map, String level, long duration) {
+    public Data(String map, String level, long duration, String date) {
         this.map = map;
         this.level = level;
         this.duration = duration;
-        this.date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        this.date = date;
     }
 
     @Override

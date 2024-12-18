@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 坦克大战的主类
  */
@@ -313,7 +316,7 @@ public class GameFrame extends JFrame implements ActionListener {
 					String level = parts[1];
 					long duration = Long.parseLong(parts[2]);
 					String date = parts[3];
-					historyRecords.add(new Data(map, level, duration));
+					historyRecords.add(new Data(map, level, duration,date));
 				}
 			}
 		} catch (IOException e) {
@@ -331,8 +334,10 @@ public class GameFrame extends JFrame implements ActionListener {
 		}
 	}
 	public static void recordWin(String map, String level, long duration) {
+		// 获取当前时间并格式化为字符串
+		String currentDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 		// 玩家获胜时记录信息
-		Data data = new Data(map, level, duration);
+		Data data = new Data(map, level, duration, currentDate);
 		historyRecords.add(data); // 添加到内存中的历史记录
 		saveToFile(data); // 保存到文件
 	}
