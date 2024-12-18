@@ -34,7 +34,7 @@ public class GameFrame extends JFrame implements ActionListener {
 
 	JPanel panel;
 
-	public static SoundManager soundManager=new SoundManager();
+	public static SoundManager soundManager=SoundManager.getInstance();
 
 	public GameFrame() {
 		initFrame();

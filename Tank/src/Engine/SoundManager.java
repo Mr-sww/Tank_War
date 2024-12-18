@@ -19,6 +19,17 @@ public class SoundManager {
 
     private Clip currentBGMClip;
 
+    private static SoundManager instance;
+
+    private SoundManager() {}
+
+    public static SoundManager getInstance() {
+        if (instance == null) {
+            instance = new SoundManager();
+        }
+        return instance;
+    }
+
     public void loadSound(String fileName, String key) {
         try {
             File soundFile = new File(fileName);
