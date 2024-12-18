@@ -127,7 +127,7 @@ public class GamePanel extends JPanel {
      * 根据游戏难度和地图设置坦克数量、速度、子弹速度等参数，并实例化各种游戏对象。
      */
     public void init() {
-        if (tanks.size() != 0) {
+        if (tanks.size() != 0||isEnd) {
             tanks.clear(); // 清理
             bullets.clear();
             trees.clear();
@@ -560,11 +560,9 @@ public class GamePanel extends JPanel {
             isEnd = true;
 
         } else {
-            gameTimer.stop();
-
             // 只有在未记录历史的情况下写入文件
             if (!historyLogged) {
-                GameFrame.recordWin("地图" + MapLevel, "等级" + level, elapsedTime);
+                GameFrame.recordWin("地图" + MapLevel, "等级" + level, elapsedTime*1000);
                 historyLogged = true; // 设置为已记录历史
             }
             Font f = g.getFont();

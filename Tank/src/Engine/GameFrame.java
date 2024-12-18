@@ -21,7 +21,7 @@ public class GameFrame extends JFrame implements ActionListener {
 	JMenu menu1, menu2, menu3, menu4, menu5,menu6;
 	JMenuItem item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13,item14;
 
-	static String gameMode = null;
+	public static String gameMode = null;
 	static String gameLevel = null;
 	static String gameMap = null;
 
@@ -43,7 +43,7 @@ public class GameFrame extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("NewGame")) {
-			printable = false;
+			gamePanel.printable = false;
 			Object[] options = {"确定", "取消"};
 			int response = JOptionPane.showOptionDialog(this, "您确认要开始新游戏！", "", JOptionPane.YES_OPTION,
 					JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
@@ -105,7 +105,7 @@ public class GameFrame extends JFrame implements ActionListener {
 		menubar = new JMenuBar();
 
 		// 创建一个字体对象，字体为微软雅黑，样式为普通，大小为 15 磅
-		Font chineseFont = new Font("微软雅黑", Font.PLAIN, 15);
+		Font chineseFont = new Font("mplus_hzk_12", Font.PLAIN, 30);
 
 		// 创建并添加各个菜单和菜单项
 		{
@@ -174,7 +174,7 @@ public class GameFrame extends JFrame implements ActionListener {
 		// 设置窗口的图标为指定的图片
 		this.setIconImage(ResourceManager.loadImage("/Images/frameIcon.jpg"));
 		// 设置窗口的标题
-		this.setTitle("坦克大战——(重新开始：R键  开火：F键)");
+		this.setTitle("坦克大战");
 
 		sideCardLayout = new CardLayout();
 		sideCardPanel = new JPanel(sideCardLayout);

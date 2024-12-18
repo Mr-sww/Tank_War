@@ -24,7 +24,7 @@ public class Tank {
 	public static int sspeedx = speedX; // 坦克的速度，用来变化玩家坦克的速度
 	public static int sspeedy = speedY;
 	public static int count = 0;
-	public static final int width = 35, length = 35; // 坦克的全局大小，具有不可改变性
+	public static final int width = 50, length = 50; // 坦克的全局大小，具有不可改变性
 	private Direction direction = Direction.STOP; // 初始化状态为静止
 	private Direction Kdirection = Direction.U; // 初始化方向为向上
 	public static int Tankblood=50;
@@ -55,8 +55,12 @@ public class Tank {
 
 	private static Toolkit tk = Toolkit.getDefaultToolkit();// 控制面板
 	private static Image[] tankImags = null; // 存储全局静态
+	private static Image[] tankImagsSingle = null; // 存储全局静态
+	private static Image[] tankImags1 = null; // 存储全局静态
+	private static Image[] tankImags2 = null; // 存储全局静态
+	private static Image[] tankImagsEnemy = null; // 存储全局静态
 	static {
-		tankImags = new Image[] {
+		tankImagsEnemy = new Image[] {
 				tk.getImage(BombTank.class.getResource("/Images/tankD.gif")),
 				tk.getImage(BombTank.class.getResource("/Images/tankU.gif")),
 				tk.getImage(BombTank.class.getResource("/Images/tankL.gif")),
@@ -65,6 +69,36 @@ public class Tank {
 				tk.getImage(BombTank.class.getResource("/Images/tankLU.gif")),
 				tk.getImage(BombTank.class.getResource("/Images/tankRD.gif")),
 				tk.getImage(BombTank.class.getResource("/Images/tankRU.gif")),
+		};
+		tankImagsSingle = new Image[] {
+				tk.getImage(BombTank.class.getResource("/Images/singletankD.png")),
+				tk.getImage(BombTank.class.getResource("/Images/singletankU.png")),
+				tk.getImage(BombTank.class.getResource("/Images/singletankL.png")),
+				tk.getImage(BombTank.class.getResource("/Images/singletankR.png")),
+				tk.getImage(BombTank.class.getResource("/Images/singletankLD.png")),
+				tk.getImage(BombTank.class.getResource("/Images/singletankLU.png")),
+				tk.getImage(BombTank.class.getResource("/Images/singletankRD.png")),
+				tk.getImage(BombTank.class.getResource("/Images/singletankRU.png")),
+		};
+		tankImags1 = new Image[] {
+				tk.getImage(BombTank.class.getResource("/Images/1tankD.png")),
+				tk.getImage(BombTank.class.getResource("/Images/1tankU.png")),
+				tk.getImage(BombTank.class.getResource("/Images/1tankL.png")),
+				tk.getImage(BombTank.class.getResource("/Images/1tankR.png")),
+				tk.getImage(BombTank.class.getResource("/Images/1tankLD.png")),
+				tk.getImage(BombTank.class.getResource("/Images/1tankLU.png")),
+				tk.getImage(BombTank.class.getResource("/Images/1tankRD.png")),
+				tk.getImage(BombTank.class.getResource("/Images/1tankRU.png")),
+		};
+		tankImags2 = new Image[] {
+				tk.getImage(BombTank.class.getResource("/Images/2tankD.png")),
+				tk.getImage(BombTank.class.getResource("/Images/2tankU.png")),
+				tk.getImage(BombTank.class.getResource("/Images/2tankL.png")),
+				tk.getImage(BombTank.class.getResource("/Images/2tankR.png")),
+				tk.getImage(BombTank.class.getResource("/Images/2tankLD.png")),
+				tk.getImage(BombTank.class.getResource("/Images/2tankLU.png")),
+				tk.getImage(BombTank.class.getResource("/Images/2tankRD.png")),
+				tk.getImage(BombTank.class.getResource("/Images/2tankRU.png")),
 		};
 	}
 
@@ -107,33 +141,43 @@ public class Tank {
 			new DrawLoadBullets().draw(g);
 		}
 
+		if(good){
+			if("Single".equals(GameFrame.gameMode))tankImags= tankImagsSingle;
+			else{
+				if(no==1)tankImags= tankImags1;
+				else tankImags=tankImags2;
+			}
+		}else{
+			tankImags=tankImagsEnemy;
+		}
+
 		switch (Kdirection) {
 			// 根据方向选择坦克的图片
 			case D:
-				g.drawImage(tankImags[0], x, y, null);
+				g.drawImage(tankImags[0], x, y,width,length, null);
 				break;
 
 			case U:
-				g.drawImage(tankImags[1], x, y, null);
+				g.drawImage(tankImags[1], x, y,width,length, null);
 				break;
 			case L:
-				g.drawImage(tankImags[2], x, y, null);
+				g.drawImage(tankImags[2], x, y,width,length, null);
 				break;
 
 			case R:
-				g.drawImage(tankImags[3], x, y, null);
+				g.drawImage(tankImags[3], x, y,width,length, null);
 				break;
 			case LD:
-				g.drawImage(tankImags[4], x, y, null);
+				g.drawImage(tankImags[4], x, y,width,length, null);
 				break;
 			case LU:
-				g.drawImage(tankImags[5], x, y, null);
+				g.drawImage(tankImags[5], x, y,width,length, null);
 				break;
 			case RD:
-				g.drawImage(tankImags[6], x, y, null);
+				g.drawImage(tankImags[6], x, y,width,length, null);
 				break;
 			case RU:
-				g.drawImage(tankImags[7], x, y, null);
+				g.drawImage(tankImags[7], x, y,width,length, null);
 				break;
 		}
 
@@ -596,7 +640,7 @@ public class Tank {
 					int finalI = i;
 					SwingUtilities.invokeLater(() -> {
 						if (GamePanel.countdownLabel1!= null) {
-							GamePanel.countdownLabel1.setText("三连发枪的有效时间：" + finalI + "秒");
+							GamePanel.countdownLabel1.setText("三连发枪：" + finalI + "秒");
 						}
 					});
 					try {
@@ -609,7 +653,7 @@ public class Tank {
 				Gun.flag = false; // 倒计时结束，将 flag 设置为 false
 				SwingUtilities.invokeLater(() -> {
 					if (GamePanel.countdownLabel1 != null) {
-						GamePanel.countdownLabel1.setText("三连发枪的有效时间已结束！");
+						GamePanel.countdownLabel1.setText("三连发枪已结束！");
 					}
 				});
 			});
@@ -643,7 +687,7 @@ public class Tank {
 					int finalI = i;
 					SwingUtilities.invokeLater(() -> {
 						if (GamePanel.countdownLabel3 != null) {
-							GamePanel.countdownLabel3.setText("导弹的有效时间：" + finalI + "秒");
+							GamePanel.countdownLabel3.setText("导弹：" + finalI + "秒");
 						}
 					});
 					try {
@@ -656,7 +700,7 @@ public class Tank {
 				Laser.flag = false; // 倒计时结束，将 flag 设置为 false
 				SwingUtilities.invokeLater(() -> {
 					if (GamePanel.countdownLabel3 != null) {
-						GamePanel.countdownLabel3.setText("导弹的有效时间已结束！");
+						GamePanel.countdownLabel3.setText("导弹已结束！");
 					}
 				});
 			});
