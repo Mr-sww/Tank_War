@@ -284,7 +284,7 @@ public class Bullets {
 	public boolean hitWall(MetalWall w) { // 子弹打到金属墙上
 		if (this.live && this.getRect().intersects(w.getRect())) {
 			this.live = false;
-			if(Missle.flag==true)
+			if(Laser.flag==true)
 			{
 				this.tc.metalWall.remove(w); // 子弹打到金属墙上时则移除此击中墙
 			}

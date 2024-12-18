@@ -54,11 +54,11 @@ public class GamePanel extends JPanel {
     public Blood blood;
     Gun gun = new Gun();
     Laser laser = new Laser();
-    private Missle missle = new Missle();
     // 定义一个计时器
     private Timer gameTimer;
     // 定义一个用于记录时间的变量
     int elapsedTime = 0;
+    private boolean historyLogged = false;
 
     // 以下集合变量在构造方法中进行了初始化
     // 定义一个名为 theRiver 的 List 类型的变量，用于存储 River 对象
@@ -107,10 +107,6 @@ public class GamePanel extends JPanel {
         countdownLabel1.setFont(new Font("TimesRoman", Font.BOLD, 20));
         countdownLabel1.setForeground(Color.RED);
         this.add(countdownLabel1);
-        countdownLabel2 = new JLabel("未获得霰弹枪");
-        countdownLabel2.setFont(new Font("TimesRoman", Font.BOLD, 20));
-        countdownLabel2.setForeground(Color.RED);
-        this.add(countdownLabel2);
         countdownLabel3 = new JLabel("未获得导弹");
         countdownLabel3.setFont(new Font("TimesRoman", Font.BOLD, 20));
         countdownLabel3.setForeground(Color.RED);
@@ -147,7 +143,6 @@ public class GamePanel extends JPanel {
         dialogShown = false;
         isEnd = false;
         Gun.flag = false;
-        Missle.flag = false;
         switch (GameFrame.gameLevel) {
             case "Level1":
                 Tank.count = 15;
@@ -397,7 +392,6 @@ public class GamePanel extends JPanel {
         homeTank.draw(g); // 画出自己家的坦克
         homeTank.eat(blood);// 加血--生命值
         homeTank.eat(gun);
-        homeTank.eat(missle);
         homeTank.eat(laser);
         if (GameFrame.gameMode.equals("Versus")) {
             if (player2Tank != null) {
@@ -407,7 +401,6 @@ public class GamePanel extends JPanel {
             }
             player2Tank.eat(blood);// 加血--生命值
             player2Tank.eat(gun);
-            player2Tank.eat(missle);
             player2Tank.eat(laser);
         }
         for (int i = 0; i < bullets.size(); i++) { // 对每一个子弹
@@ -471,7 +464,6 @@ public class GamePanel extends JPanel {
 
         blood.draw(g);// 画出加血包
         gun.draw(g);// 画出子弹包
-        missle.draw(g);// 画出导弹包
         laser.draw(g);// 画出激光包
 
         for (int i = 0; i < trees.size(); i++) { // 画出trees
@@ -547,7 +539,6 @@ public class GamePanel extends JPanel {
     }
 
     private void isWin(Graphics g) {
-        gameTimer.stop();
         if (isEnd == false) {
             Tank t = new Tank(400, 300, false, Direction.STOP, this, 500, 1);
             t.setLiveCount(-(2 * Tank.Tankblood));
@@ -556,7 +547,12 @@ public class GamePanel extends JPanel {
 
         } else {
             gameTimer.stop();
-            GameFrame.recordWin("地图" + MapLevel, "等级" + level, elapsedTime * 1000); // 替换为实际地图和等级
+
+            // 只有在未记录历史的情况下写入文件
+            if (!historyLogged) {
+                GameFrame.recordWin("地图" + MapLevel, "等级" + level, elapsedTime);
+                historyLogged = true; // 设置为已记录历史
+            }
             Font f = g.getFont();
             g.setFont(new Font("TimesRoman", Font.BOLD, 60));
             this.otherWall.clear();

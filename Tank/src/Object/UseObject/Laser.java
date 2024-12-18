@@ -6,6 +6,9 @@ import Object.StaticObject.BrickWall;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * µºµØ¿‡
+ */
 public class Laser {
 
     public static final int width = 60;
