@@ -267,15 +267,15 @@ public class GameFrame extends JFrame implements ActionListener {
 		// 设置窗口是否可调整大小。false 表示窗口不可调整大小
 		this.setResizable(false);
 
-		soundManager.loadSound("src/Music/bgm1.wav", "BGM1");
-		soundManager.loadSound("src/Music/bgm2.wav", "BGM2");
-		soundManager.loadSound("src/Music/bgm3.wav", "BGM3");
-		soundManager.loadSound("src/Music/shoot.wav", "shoot");
-		soundManager.loadSound("src/Music/explode.wav", "explode");
-		soundManager.loadSound("src/Music/wall.wav", "wall");
-		soundManager.loadSound("src/Music/win.wav", "win");
-		soundManager.loadSound("src/Music/lose.wav", "lose");
-		soundManager.loadSound("src/Music/select.wav", "select");
+		soundManager.loadSound("/Music/bgm1.wav", "BGM1");
+		soundManager.loadSound("/Music/bgm2.wav", "BGM2");
+		soundManager.loadSound("/Music/bgm3.wav", "BGM3");
+		soundManager.loadSound("/Music/shoot.wav", "shoot");
+		soundManager.loadSound("/Music/explode.wav", "explode");
+		soundManager.loadSound("/Music/wall.wav", "wall");
+		soundManager.loadSound("/Music/win.wav", "win");
+		soundManager.loadSound("/Music/lose.wav", "lose");
+		soundManager.loadSound("/Music/select.wav", "select");
 
 		settingsPanel.loadSettings();
 	}
