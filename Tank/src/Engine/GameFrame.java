@@ -267,13 +267,6 @@ public class GameFrame extends JFrame implements ActionListener {
 		// 设置窗口是否可调整大小。false 表示窗口不可调整大小
 		this.setResizable(false);
 
-//
-//		// 创建一个名为 bgm 的 MusicPlayer 对象，用于播放背景音乐
-//
-//
-//		// 调用 bgm 对象的 playOnce 方法，播放一次背景音乐
-//		bgm.playOnce();
-
 		soundManager.loadSound("src/Music/bgm1.wav", "BGM1");
 		soundManager.loadSound("src/Music/bgm2.wav", "BGM2");
 		soundManager.loadSound("src/Music/bgm3.wav", "BGM3");
@@ -285,9 +278,6 @@ public class GameFrame extends JFrame implements ActionListener {
 		soundManager.loadSound("src/Music/select.wav", "select");
 
 		settingsPanel.loadSettings();
-//		if (soundManager.isBGMEnabled()) {
-//			soundManager.playSelectedBGM();
-//		}
 	}
 
 	private void showHistory() {

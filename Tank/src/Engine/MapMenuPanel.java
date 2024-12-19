@@ -47,15 +47,6 @@ public class MapMenuPanel extends JPanel {
         this.cardPanel = cardPanel;
         // 设置面板的大小
         this.setPreferredSize(new Dimension(width, height));
-
-//        // 设置布局为网格袋布局
-//        this.setLayout(new GridBagLayout());
-//        // 创建网格袋布局的约束对象
-//        GridBagConstraints gbc = new GridBagConstraints();
-//        // 设置按钮之间的间距
-//        gbc.insets = new Insets(10, 0, 10, 0);
-//        // 设置地图1的背景
-//        setButtonBackground(map1Button, "src/Images/yellow1.jpg");
         // 为地图1按钮添加动作监听器
         map1Button.addActionListener(new ActionListener() {
             @Override
@@ -66,15 +57,8 @@ public class MapMenuPanel extends JPanel {
                 cardLayout.show(cardPanel, "LevelMenuPanel");
             }
         });
-//        // 设置地图1按钮在网格袋布局中的位置
-//        gbc.gridx = 0;
-//        gbc.gridy = 0;
-//        // 将地图1按钮添加到面板中
-//        this.add(map1Button, gbc);
-//        map1Button.setBounds(8*60,);
 
 
-//        setButtonBackground(map2Button, "src/Images/grey2.jpg"); // 设置地图2的背景
         // 为地图2按钮添加动作监听器
         map2Button.addActionListener(new ActionListener() {
             @Override
@@ -87,16 +71,7 @@ public class MapMenuPanel extends JPanel {
                 }
             }
         });
-//        // 设置地图2按钮在网格袋布局中的位置
-//        gbc.gridx = 1;
-//        gbc.gridy = 0;
-//        // 将地图2按钮添加到面板中
-//        this.add(map2Button, gbc);
 
-
-
-//        // 设置地图3的背景
-//        setButtonBackground(map3Button, "src/Images/grey3.jpg");
         // 为地图3按钮添加动作监听器
         map3Button.addActionListener(new ActionListener() {
             @Override
@@ -109,14 +84,7 @@ public class MapMenuPanel extends JPanel {
                 }
             }
         });
-//        // 设置地图3按钮在网格袋布局中的位置
-//        gbc.gridx = 2;
-//        gbc.gridy = 0;
-//        // 将地图3按钮添加到面板中
-//        this.add(map3Button, gbc);
 
-//        // 设置地图4的背景
-//        setButtonBackground(map4Button, "src/Images/grey4.jpg");
         // 为地图4按钮添加动作监听器
         map4Button.addActionListener(new ActionListener() {
             @Override
@@ -129,11 +97,6 @@ public class MapMenuPanel extends JPanel {
                 }
             }
         });
-//        // 设置地图4按钮在网格袋布局中的位置
-//        gbc.gridx = 3;
-//        gbc.gridy = 0;
-//        // 将地图4按钮添加到面板中
-//        this.add(map4Button, gbc);
 
 
         // 为返回按钮添加动作监听器
@@ -144,43 +107,6 @@ public class MapMenuPanel extends JPanel {
                 cardLayout.show(cardPanel, "ModeMenuPanel");
             }
         });
-//        // 设置返回按钮在网格袋布局中的位置
-//        gbc.gridx = 2;
-//        gbc.gridy = 1;
-//        // 将返回按钮添加到面板中
-//        this.add(backButton, gbc);
-
-//        setLayout(new GridBagLayout());
-//        GridBagConstraints gbc = new GridBagConstraints();
-//
-//        // 设置返回按钮的位置和大小
-//        gbc.gridx = 0; // 横坐标
-//        gbc.gridy = 0; // 纵坐标
-//        gbc.gridwidth = 1; // 占据的列数
-//        gbc.gridheight = 1; // 占据的行数
-//        gbc.weightx = 0.0; // 水平权重
-//        gbc.weighty = 0.0; // 垂直权重
-//        gbc.anchor = GridBagConstraints.NORTHWEST; // 锚点位置
-//        add(backButton, gbc);
-//
-//        // 创建一个子面板来放置中部的4个按钮
-//        JPanel centerPanel = new JPanel();
-//        centerPanel.setLayout(new GridLayout(1, 4, 10, 10)); // 1行4列，水平和垂直间距为10
-//        centerPanel.add(map1Button);
-//        centerPanel.add(map2Button);
-//        centerPanel.add(map3Button);
-//        centerPanel.add(map4Button);
-//
-//        // 设置子面板的位置和大小
-//        gbc.gridx = 0;
-//        gbc.gridy = 1;
-//        gbc.gridwidth = GridBagConstraints.REMAINDER; // 占据剩余的所有列
-//        gbc.gridheight = 1;
-//        gbc.weightx = 1.0; // 水平权重
-//        gbc.weighty = 1.0; // 垂直权重
-//        gbc.fill = GridBagConstraints.HORIZONTAL; // 水平填充
-//        gbc.anchor = GridBagConstraints.CENTER; // 锚点位置
-//        add(centerPanel, gbc);
 
         setLayout(null);
         backButton.setBounds(1*60+30,30,120,80);

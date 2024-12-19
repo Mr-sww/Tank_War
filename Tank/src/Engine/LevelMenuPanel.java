@@ -201,9 +201,6 @@ public class LevelMenuPanel extends JPanel {
                 label4.setVisible(false);
             }
         });
-//        gbc.gridx = 0;
-//        gbc.gridy = 3;
-//        this.add(exitButton, gbc);
         this.add(level4Button);
         this.add(label4);
 
@@ -236,53 +233,6 @@ public class LevelMenuPanel extends JPanel {
         this.add(backButton);
         this.add(backLabel);
 
-
-
-
-
-//        // 设置布局为网格袋布局
-//        this.setLayout(new GridBagLayout());
-//        // 创建网格袋布局的约束对象
-//        GridBagConstraints gbc = new GridBagConstraints();
-//        // 设置按钮之间的间距
-//        gbc.insets = new Insets(10, 0, 10, 0);
-//        // 设置中文字体
-//        Font chineseFont = new Font("宋体", Font.BOLD, 48);
-//
-
-//        // 设置级别1按钮在网格袋布局中的位置
-//        gbc.gridx = 0;
-//        gbc.gridy = 0;
-//        // 将级别1按钮添加到当前面板
-//        this.add(level1Button,gbc);
-//
-//
-//        // 设置级别2按钮在网格袋布局中的位置
-//        gbc.gridx = 0;
-//        gbc.gridy = 1;
-//        // 将级别2按钮添加到当前面板
-//        this.add(level2Button,gbc);
-//
-//
-//        // 设置级别3按钮在网格袋布局中的位置
-//        gbc.gridx = 0;
-//        gbc.gridy = 2;
-//        // 将级别3按钮添加到当前面板
-//        this.add(level3Button,gbc);
-//
-//
-//        // 设置级别4按钮在网格袋布局中的位置
-//        gbc.gridx = 0;
-//        gbc.gridy = 3;
-//        // 将级别4按钮添加到当前面板
-//        this.add(level4Button,gbc);
-//
-//
-//        // 设置返回按钮在网格袋布局中的位置
-//        gbc.gridx = 0;
-//        gbc.gridy = 4;
-//        // 将返回按钮添加到当前面板
-//        this.add(backButton,gbc);
     }
 
 

@@ -188,7 +188,6 @@ public class MapGenerator {
                     gamePanel.home=new Home(j * 60, i * 60, gamePanel);
                 if(map[i][j]==7)
                     gamePanel.homeTank=new Tank(j * 60, i * 60, true, Direction.STOP, gamePanel,200,1);
-                // 如果当前位置的元素值为 0，则将当前位置的坐标作为键，true 作为值添加到 res 中
                 if(map[i][j]==8)
                     if(GameFrame.gameMode.equals("Versus"))
                     {
@@ -196,6 +195,7 @@ public class MapGenerator {
                     } else if (GameFrame.gameMode.equals("Single")) {
                         res.put(new SimpleEntry<>(i, j), true);
                     }
+                // 如果当前位置的元素值为 0，则将当前位置的坐标作为键，true 作为值添加到 res 中
                 if (map[i][j] == 0)
                     res.put(new SimpleEntry<>(i, j), true);
             }

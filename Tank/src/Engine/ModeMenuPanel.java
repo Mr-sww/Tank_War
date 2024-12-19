@@ -28,8 +28,6 @@ public class ModeMenuPanel extends JPanel {
         this.setPreferredSize(new Dimension(width, height));
 
         this.setLayout(null);
-//        GridBagConstraints gbc = new GridBagConstraints();
-//        gbc.insets = new Insets(10, 0, 10, 0); // 设置按钮之间的间距
         // 设置中文字体
         Font chineseFont = new Font("mplus_hzk_12", Font.PLAIN, 48);
 
@@ -39,7 +37,7 @@ public class ModeMenuPanel extends JPanel {
         JButton singleButton = ButtonFactory.createButton("单人对战", chineseFont, Color.YELLOW);
         singleButton.setBounds(8 * 60, 7 * 60, 5 * 60, 1 * 60);
         ImageLabel label1 = new ImageLabel((ResourceManager.loadImage("/Images/Label1.png")), 8 * 60 - 1 * 60 + 30, 7 * 60 - 5, 1 * 60, 1 * 60);
-        //JLabel label1=LabelFactory.createLabel(ResourceManager.loadImage("/Images/Label1.png"),8*60-2*60-30, 7*60-5, 5*60, 1*60);
+
         label1.setVisible(false);
         // 为单人对战按钮添加动作监听器
         singleButton.addActionListener(new ActionListener() {
@@ -67,15 +65,11 @@ public class ModeMenuPanel extends JPanel {
         });
         this.add(singleButton);
         this.add(label1);
-//        gbc.gridx = 0;
-//        gbc.gridy = 0;
-//        this.add(singleButton, gbc);
 
         //双人对战
         JButton doublePlayerButton = ButtonFactory.createButton("双人对战", chineseFont, Color.YELLOW);
         doublePlayerButton.setBounds(8 * 60, 7 * 60 + 1 * ysapce, 5 * 60, 1 * 60);
         ImageLabel label2 = new ImageLabel((ResourceManager.loadImage("/Images/Label1.png")), 8 * 60 - 1 * 60 + 30, 7 * 60 + 1 * ysapce - 5, 1 * 60, 1 * 60);
-        //JLabel label2=LabelFactory.createLabel(ResourceManager.loadImage("/Images/Label1.png"),8*60-2*60-30, 7*60+1*ysapce-5, 5*60, 1*60);
         label2.setVisible(false);
         // 为双人对战按钮添加动作监听器
         doublePlayerButton.addActionListener(new ActionListener() {
@@ -101,9 +95,6 @@ public class ModeMenuPanel extends JPanel {
                 label2.setVisible(false);
             }
         });
-//        gbc.gridx = 0;
-//        gbc.gridy = 1;
-//        this.add(doublePlayerButton, gbc);
         this.add(doublePlayerButton);
         this.add(label2);
 
@@ -134,45 +125,9 @@ public class ModeMenuPanel extends JPanel {
                 label3.setVisible(false);
             }
         });
-//        gbc.gridx = 0;
-//        gbc.gridy = 2;
-//        this.add(cooperateButton, gbc);
         this.add(settingsButton);
         this.add(label3);
 
-//        //双人合作
-//        JButton cooperateButton = ButtonFactory.createButton("双人合作", chineseFont, Color.YELLOW);
-//        cooperateButton.setBounds(8 * 60, 7 * 60 + 2 * ysapce, 5 * 60, 1 * 60);
-//        ImageLabel label3 = new ImageLabel((ResourceManager.loadImage("/Images/Label1.png")), 8 * 60 - 1 * 60 + 30, 7 * 60 + 2 * ysapce - 5, 1 * 60, 1 * 60);
-//        label3.setVisible(false);
-//        // 为双人合作按钮添加动作监听器
-//        cooperateButton.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                // 设置游戏模式为双人合作模式
-//                GameFrame.gameMode = "Cooperative";
-//                // 显示地图选择面板
-//                cardLayout.show(cardPanel, "MapMenuPanel");
-//                mapMenuPanel.repaint();
-//            }
-//        });
-//        // 设置按钮的鼠标监听器
-//        cooperateButton.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseEntered(MouseEvent e) {
-//                label3.setVisible(true);
-//            }
-//
-//            @Override
-//            public void mouseExited(MouseEvent e) {
-//                label3.setVisible(false);
-//            }
-//        });
-////        gbc.gridx = 0;
-////        gbc.gridy = 2;
-////        this.add(cooperateButton, gbc);
-//        this.add(cooperateButton);
-//        this.add(label3);
 
         //退出游戏
         JButton exitButton = ButtonFactory.createButton("退出游戏", chineseFont, Color.YELLOW);
@@ -201,9 +156,6 @@ public class ModeMenuPanel extends JPanel {
                 label4.setVisible(false);
             }
         });
-//        gbc.gridx = 0;
-//        gbc.gridy = 3;
-//        this.add(exitButton, gbc);
         this.add(exitButton);
         this.add(label4);
     }
