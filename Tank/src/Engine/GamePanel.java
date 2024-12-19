@@ -31,12 +31,17 @@ public class GamePanel extends JPanel {
     private boolean once=true;
 
     // 定义一个名为 cardLayout 的 CardLayout 类型的变量，用于管理卡片的布局
-    CardLayout cardLayout;
+    CardLayout mainCardLayout;
     public static JLabel countdownLabel1; // 倒计时标签
     public static JLabel countdownLabel2; // 倒计时标签
     public static JLabel countdownLabel3; // 倒计时标签
     // 定义一个名为 cardPanel 的 JPanel 类型的变量，用于存储卡片
-    JPanel cardPanel;
+    JPanel mainCardPanel;
+
+    CardLayout sideCardLayout;
+    JPanel sideCardPanel;
+
+
     SideGamePanel sideGamePanel;
     public GameStatus gameStatus;
 
@@ -85,18 +90,22 @@ public class GamePanel extends JPanel {
     /**
      * 构造方法，用于初始化游戏面板。
      *
-     * @param cardLayout 卡片布局管理器，用于管理多个面板的切换。
-     * @param cardPanel  卡片面板，包含多个游戏面板。
+     * @param mainCardLayout 卡片布局管理器，用于管理多个面板的切换。
+     * @param mainCardPanel  卡片面板，包含多个游戏面板。
      */
-    public GamePanel(CardLayout cardLayout, JPanel cardPanel, int width, int height) {
+    public GamePanel(CardLayout mainCardLayout, JPanel mainCardPanel, CardLayout sideCardLayout,JPanel sideCardPanel,int width, int height) {
         // 初始化 cardLayout 变量，用于管理卡片布局
-        this.cardLayout = cardLayout;
+        this.mainCardLayout = mainCardLayout;
         // 初始化 cardPanel 变量，用于存储卡片
-        this.cardPanel = cardPanel;
+        this.mainCardPanel = mainCardPanel;
+        this.sideCardLayout = sideCardLayout;
+        this.sideCardPanel = sideCardPanel;
+
         // 初始化计时器
         gameTimer = new Timer(1000, new TimerListener());
         //设置面板大小
-        this.setPreferredSize(new Dimension(width, height));
+        //this.setPreferredSize(new Dimension(width, height));
+        this.setSize(width,height);
         // 创建一个 MapGenerator 类的实例，用于生成游戏地图
         mapGenerator = new MapGenerator();
         // 将当前的 GamePanel 实例设置给 mapGenerator，以便 mapGenerator 可以访问和修改 GamePanel 的属性和方法
@@ -535,7 +544,6 @@ public class GamePanel extends JPanel {
             }
             w.draw(g);
         }
-
     }
 
     // 计时器监听器
@@ -587,7 +595,7 @@ public class GamePanel extends JPanel {
             if (MapLevel == 4) {
                 MapMenuPanel.mapCleared[4] = true;
             }
-            if (!(MapLevel == 4 && level == 4)) {
+            if ((MapLevel != 4 && level != 4)) {
                 // 确保弹窗只弹一次，可以通过设置一个标记变量来控制
                 if (!dialogShown) {
                     dialogShown = true; // 设置弹窗已显示
@@ -598,7 +606,7 @@ public class GamePanel extends JPanel {
                             JOptionPane.DEFAULT_OPTION, // 默认按钮
                             JOptionPane.INFORMATION_MESSAGE,
                             null, // 图标
-                            new Object[]{"下一关", "下一个level", "退出游戏"}, // 按钮
+                            new Object[]{"下一关", "下一个level", "返回主菜单","退出游戏"}, // 按钮
                             "下一关"  // 默认选择
                     );
 
@@ -610,7 +618,15 @@ public class GamePanel extends JPanel {
                         case 1: // 下一个level
                             loadNextLevel();  // 加载下一个level
                             break;
-                        case 2: // 退出游戏
+                        case 2:// 返回主菜单
+                            mainCardLayout.show(mainCardPanel, "ModeMenuPanel");
+                            sideCardLayout.show(sideCardPanel, "SideNormalPanel");
+                            sideGamePanel.clear();
+                            if (GameFrame.soundManager.isBGMEnabled()) {
+                                GameFrame.soundManager.playSelectedBGM();
+                            }
+                            break;
+                        case 3: // 退出游戏
                             System.exit(0);  // 退出游戏
                             break;
                         default:

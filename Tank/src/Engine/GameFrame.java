@@ -208,7 +208,7 @@ public class GameFrame extends JFrame implements ActionListener {
 		// 创建一个 LevelMenuPanel 实例，用于显示游戏级别菜单
 		LevelMenuPanel levelMenuPanel = new LevelMenuPanel(mainCardLayout, mainCardPanel,sideCardLayout,sideCardPanel,GameConfig.MAIN_PANEL_WIDTH,GameConfig.MAIN_PANEL_HEIGHT);
 		// 创建一个 GamePanel 实例，用于显示游戏界面
-		gamePanel = new GamePanel(mainCardLayout, mainCardPanel,GameConfig.MAIN_PANEL_WIDTH,GameConfig.MAIN_PANEL_HEIGHT);
+		gamePanel = new GamePanel(mainCardLayout, mainCardPanel,sideCardLayout,sideCardPanel,GameConfig.MAIN_PANEL_WIDTH,GameConfig.MAIN_PANEL_HEIGHT);
 
 		// 设置 LevelMenuPanel 中的 GamePanel 实例，以便在选择级别后可以切换到游戏界面
 		levelMenuPanel.setGamePanel(gamePanel);

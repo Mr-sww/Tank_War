@@ -62,6 +62,14 @@ public class SideGamePanel extends JPanel {
 
         repaint();
     }
+    public void clear(){
+        // 清空 JPanel
+        this.removeAll();
+        // 重新验证和重新绘制面板
+        this.revalidate();
+        this.repaint();
+    }
+
     public void setGameStatus(GameStatus gameStatus) {
         this.gameStatus = gameStatus;
     }

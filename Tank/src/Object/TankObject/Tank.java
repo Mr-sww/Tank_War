@@ -235,8 +235,8 @@ public class Tank {
 
 		if (x < 0)
 			x = 0;
-		if (y < 40) // 防止走出规定区域
-			y = 40;
+		if (y < 0) // 防止走出规定区域
+			y = 0;
 		if (x + Tank.width > GameConfig.MAIN_PANEL_WIDTH) // 超过区域则恢复到边界
 			x = GameConfig.MAIN_PANEL_WIDTH - Tank.width;
 		if (y + Tank.length > GameConfig.MAIN_PANEL_HEIGHT)
