@@ -38,6 +38,7 @@ public class GameFrame extends JFrame implements ActionListener {
 	JPanel panel;
 
 	public static SoundManager soundManager=SoundManager.getInstance();
+	public static SettingsPanel settingsPanel=new SettingsPanel(soundManager);
 
 	public GameFrame() {
 		initFrame();
@@ -283,9 +284,10 @@ public class GameFrame extends JFrame implements ActionListener {
 		soundManager.loadSound("src/Music/lose.wav", "lose");
 		soundManager.loadSound("src/Music/select.wav", "select");
 
-		if (soundManager.isBGMEnabled()) {
-			soundManager.playSelectedBGM();
-		}
+		settingsPanel.loadSettings();
+//		if (soundManager.isBGMEnabled()) {
+//			soundManager.playSelectedBGM();
+//		}
 	}
 
 	private void showHistory() {
